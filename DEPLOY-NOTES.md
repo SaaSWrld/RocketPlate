@@ -1,8 +1,10 @@
 # RocketPlate — Cinematic Launch Site (v1)
 
-## Review it the right way
-Do NOT judge this in a chat preview pane. Zip this folder (or drag the folder itself)
-onto **app.netlify.com/drop** and review the live deploy. The 3D rocket, Google Fonts,
+## Live deploy — LIVE ✅ (2026-07-07)
+**https://rocketplate.netlify.app** — Netlify site `rocketplate`
+(id `fa64163e-5ea6-4062-95ce-e7fe87f519a9`, team `dreone6`).
+Redeploy from this folder with the Netlify MCP `deploy-site` operation or the Netlify CLI.
+Review the site on the live deploy, not a chat preview pane — the 3D rocket, Google Fonts,
 and scroll choreography only behave correctly on a real deploy.
 
 ## What's inside
