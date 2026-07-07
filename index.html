@@ -467,7 +467,7 @@ footer{
         <span class="cuisine"><span class="em">🍔</span> Smash burgers</span>
         <span class="cuisine"><span class="em">🍝</span> Italian</span>
         <span class="cuisine"><span class="em">🌮</span> Mexican</span>
-        <span class="cuisine"><span class="em">🇨🇺</span> Cuban &amp; Latin</span>
+        <span class="cuisine"><span class="em">🥪</span> Cuban &amp; Latin</span>
         <span class="cuisine"><span class="em">🦐</span> Fresh seafood</span>
         <span class="cuisine"><span class="em">🥗</span> Fresh &amp; light</span>
       </div>
@@ -659,7 +659,10 @@ const isMobile = window.matchMedia("(max-width: 960px)").matches;
    );
    -- enable RLS; allow anon INSERT only.
 ------------------------------------------------------------- */
-const SUPABASE = { url: "", anonKey: "" };
+const SUPABASE = {
+  url: "https://uhmyjevtfrynunxfsyof.supabase.co",
+  anonKey: "sb_publishable_wsUbTQXWP3dYHyJDbhOmEQ_LSEPOZfO"
+};
 
 /* ================= header ================= */
 const hdr = document.getElementById("hdr");

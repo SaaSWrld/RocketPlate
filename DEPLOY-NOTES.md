@@ -10,11 +10,14 @@ and scroll choreography only behave correctly on a real deploy.
   assets, no watermarks), GSAP scroll reveals, segmented waitlist form
 - `logo.png` — extracted from your SVG, transparent background
 
-## Wire the waitlist (before launch)
-1. In Supabase, run the SQL in the comment block near the top of the <script> in index.html
-   (creates the `waitlist` table). Enable RLS, allow anon INSERT only.
-2. Fill in `SUPABASE.url` and `SUPABASE.anonKey` in the same block.
-Until wired, the form honestly reports "backend not connected" — no fake success, no localStorage.
+## Waitlist backend — WIRED ✅ (2026-07-07)
+Supabase project: **RocketPlate** (`uhmyjevtfrynunxfsyof`, us-east-1, org "A SaaS Nation").
+- `public.waitlist` table created via migration `create_waitlist_table` with RLS enabled:
+  anon role can INSERT only (no select/update/delete). Server-side checks on segment,
+  email format, and field lengths.
+- `SUPABASE.url` + publishable key are filled in index.html.
+- Verified end-to-end: form submit → 201 → row in table → success message.
+View signups: Supabase dashboard → Table Editor → waitlist.
 
 ## Flight choreography
 The rocket's scroll path lives in `KF_DESKTOP` / `KF_MOBILE` arrays:
