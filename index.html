@@ -396,6 +396,7 @@ footer{
 
 /* ---------- interaction vocabulary ---------- */
 .wrd{display:inline-block;will-change:transform}
+.wsp{white-space:pre}
 .field:focus-within label{color:var(--rocket-blue)}
 .form-progress{height:4px;background:rgba(28,58,110,.08);border-radius:99px;overflow:hidden;margin-bottom:20px}
 .form-progress i{
@@ -808,13 +809,10 @@ if (!prefersReduced && window.gsap) {
           const frag = document.createDocumentFragment();
           child.textContent.split(/(\s+)/).forEach(tok => {
             if (!tok) return;
-            if (/^\s+$/.test(tok)) frag.appendChild(document.createTextNode(tok));
-            else {
-              const w = document.createElement("span");
-              w.className = "wrd";
-              w.textContent = tok;
-              frag.appendChild(w);
-            }
+            const w = document.createElement("span");
+            w.className = /^\s+$/.test(tok) ? "wsp" : "wrd";
+            w.textContent = tok;
+            frag.appendChild(w);
           });
           node.replaceChild(frag, child);
         } else if (child.nodeType === 1 && child.tagName !== "BR") walk(child);
