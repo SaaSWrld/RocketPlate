@@ -52,7 +52,7 @@ body{
 
 /* ---------- ambient background ---------- */
 .bg-wash{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
+  position:fixed;inset:-8% 0;z-index:0;pointer-events:none;
   background:
     radial-gradient(1200px 800px at 85% -10%, rgba(242,140,40,.14), transparent 60%),
     radial-gradient(1000px 700px at -10% 40%, rgba(11,94,143,.10), transparent 60%),
@@ -97,6 +97,15 @@ nav a:hover::after{width:100%}
 .btn-primary{
   background:var(--crimson);color:#fff;
   box-shadow:0 12px 28px -10px rgba(192,24,42,.55);
+  position:relative;overflow:hidden;
+}
+@media (prefers-reduced-motion:no-preference){
+  .btn-primary::after{
+    content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;
+    background:linear-gradient(105deg,transparent 15%,rgba(255,255,255,.38) 50%,transparent 85%);
+    transform:skewX(-18deg);transition:left .7s cubic-bezier(.22,1,.36,1);pointer-events:none;
+  }
+  .btn-primary:hover::after{left:135%}
 }
 .btn-primary:hover{transform:translateY(-3px) scale(1.02);background:var(--crimson-hot);box-shadow:0 18px 34px -10px rgba(192,24,42,.6)}
 .btn-primary:active{transform:translateY(-1px) scale(.99)}
@@ -182,9 +191,12 @@ h3{font-size:1.3rem;font-weight:600}
   background:var(--card);border-radius:var(--radius);padding:34px 30px;
   box-shadow:var(--shadow);border:1px solid rgba(28,58,110,.07);
   position:relative;overflow:hidden;
-  transition:transform .3s cubic-bezier(.34,1.2,.64,1), box-shadow .3s;
+  transition:transform .3s cubic-bezier(.34,1.2,.64,1), box-shadow .3s, border-color .3s;
 }
-.step:hover{transform:translateY(-6px);box-shadow:0 26px 60px -20px rgba(28,58,110,.35)}
+.step:hover{
+  transform:translateY(-6px);border-color:rgba(242,140,40,.4);
+  box-shadow:0 26px 60px -20px rgba(28,58,110,.35), 0 12px 34px -14px rgba(242,140,40,.35);
+}
 .step .time{
   font-family:var(--font-mono);font-size:.8rem;letter-spacing:.1em;
   color:#fff;background:var(--rocket-blue);
@@ -254,9 +266,13 @@ h3{font-size:1.3rem;font-weight:600}
   background:var(--card);border-radius:var(--radius);padding:40px 36px;
   box-shadow:var(--shadow);border:1px solid rgba(28,58,110,.08);
   display:flex;flex-direction:column;
-  transition:transform .3s cubic-bezier(.34,1.2,.64,1), box-shadow .3s;
+  transition:transform .3s cubic-bezier(.34,1.2,.64,1), box-shadow .3s, border-color .3s;
 }
-.plan:hover{transform:translateY(-8px);box-shadow:0 30px 70px -22px rgba(28,58,110,.4)}
+.plan:hover{
+  transform:translateY(-8px);
+  box-shadow:0 30px 70px -22px rgba(28,58,110,.4), 0 14px 40px -16px rgba(242,140,40,.3);
+}
+.plan:not(.premium):hover{border-color:rgba(242,140,40,.4)}
 .plan.premium{border:2px solid var(--crimson);position:relative}
 .plan .tag{
   position:absolute;top:-14px;left:50%;transform:translateX(-50%);
@@ -351,8 +367,58 @@ footer{
   font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;
 }
 
+/* ---------- problem / receipt ---------- */
+#why .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:60px;align-items:center}
+.receipt{
+  background:#fff;border-radius:18px;padding:30px 28px;max-width:430px;
+  box-shadow:var(--shadow);border:1px solid rgba(28,58,110,.08);
+  font-family:var(--font-mono);font-size:.92rem;color:#3A4E77;
+  transform:rotate(1.2deg);margin-left:auto;
+}
+.receipt .r-head{
+  font-size:.68rem;letter-spacing:.16em;color:#7285A8;
+  border-bottom:2px solid rgba(28,58,110,.12);padding-bottom:12px;margin-bottom:6px;
+}
+.receipt .line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px dashed rgba(28,58,110,.14)}
+.receipt .line.fee span:last-child{color:var(--crimson);font-weight:500}
+.receipt .total{
+  display:flex;justify-content:space-between;padding-top:14px;
+  font-weight:700;font-size:1.18rem;color:var(--crimson);
+}
+.receipt .cold{margin-top:14px;font-size:.8rem;color:#7285A8;font-style:italic}
+.flat-chip{
+  display:inline-flex;align-items:center;gap:10px;margin-top:22px;
+  font-family:var(--font-mono);font-size:.82rem;letter-spacing:.06em;color:var(--navy);
+  background:rgba(11,94,143,.08);border:1.5px solid rgba(11,94,143,.25);
+  padding:10px 18px;border-radius:999px;
+}
+.flat-chip b{color:var(--rocket-blue)}
+
+/* ---------- interaction vocabulary ---------- */
+.wrd{display:inline-block;will-change:transform}
+.field:focus-within label{color:var(--rocket-blue)}
+.form-progress{height:4px;background:rgba(28,58,110,.08);border-radius:99px;overflow:hidden;margin-bottom:20px}
+.form-progress i{
+  display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--rocket-blue),var(--orange));
+  transition:width .5s cubic-bezier(.22,1,.36,1);
+}
+.m-cta{
+  position:fixed;left:16px;right:16px;bottom:14px;z-index:60;
+  display:none;align-items:center;justify-content:center;gap:8px;
+  padding:16px;border-radius:999px;
+  background:var(--crimson);color:#fff;font-weight:600;font-size:1rem;text-decoration:none;
+  box-shadow:0 14px 34px -10px rgba(192,24,42,.6);
+  transform:translateY(140%);transition:transform .45s cubic-bezier(.22,1,.36,1);
+}
+.m-cta.show{transform:none}
+@media (prefers-reduced-motion:reduce){.m-cta{transition:none}}
+
 /* ---------- responsive ---------- */
 @media (max-width:960px){
+  #why .wrap{grid-template-columns:1fr;gap:40px}
+  .receipt{margin-left:0;transform:none}
+  .m-cta{display:flex}
   .hero-grid{grid-template-columns:1fr;text-align:left}
   #kitchens .wrap, #restaurants .wrap{grid-template-columns:1fr;gap:40px}
   .steps-grid{grid-template-columns:1fr;gap:18px}
@@ -417,6 +483,29 @@ footer{
       <span><b class="spark">★</b> FOUNDING 100 · FIRST WEEK FREE</span>
     </div>
   </div>
+
+  <!-- PROBLEM -->
+  <section id="why">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow rv">The problem with delivery apps</span>
+        <h2>The <span class="accent">$13.50</span> dinner<br>that costs $27.</h2>
+        <p class="lede rv">App delivery stacks fee on fee until a weeknight dinner feels like a splurge — then hands it to you lukewarm. That math doesn't work five nights a week.</p>
+        <p class="lede rv" style="margin-top:14px">RocketPlate flips it: one flat weekly price, cooked same-day by real local kitchens, delivered hot on one nightly route.</p>
+        <span class="flat-chip rv">ROCKETPLATE: <b>≈&nbsp;$17&nbsp;A&nbsp;PLATE</b> · EVERYTHING&nbsp;INCLUDED</span>
+      </div>
+      <div class="receipt rv" aria-label="A typical delivery app checkout">
+        <div class="r-head">TYPICAL DELIVERY APP · CHECKOUT</div>
+        <div class="line"><span>Chicken bowl</span><span>$13.50</span></div>
+        <div class="line fee"><span>Service fee</span><span>+$2.43</span></div>
+        <div class="line fee"><span>Delivery fee</span><span>+$4.99</span></div>
+        <div class="line fee"><span>Small-order fee</span><span>+$2.00</span></div>
+        <div class="line fee"><span>Driver tip</span><span>+$4.00</span></div>
+        <div class="total"><span>Total</span><span class="t-num" data-base="13.50" data-total="26.92">$26.92</span></div>
+        <div class="cold">…and it still shows up lukewarm.</div>
+      </div>
+    </div>
+  </section>
 
   <!-- HOW IT WORKS -->
   <section id="how">
@@ -587,6 +676,7 @@ footer{
             <button type="button" data-value="driver">Driver</button>
             <button type="button" data-value="investor_press">Investor / Press</button>
           </div>
+          <div class="form-progress rv" aria-hidden="true"><i id="formProg"></i></div>
           <div class="fields rv">
             <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" placeholder="Alex Rivera" required></div>
             <div class="field"><label for="f-zip">ZIP code</label><input id="f-zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="33186" maxlength="10" required></div>
@@ -601,6 +691,8 @@ footer{
   </section>
 
 </main>
+
+<a href="#join" class="m-cta">Claim a Founding 100 spot 🚀</a>
 
 <footer>
   <div class="foot-grid">
@@ -632,6 +724,7 @@ footer{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script>
 /* =====================================================================
    ROCKETPLATE — cinematic 3D launch site
@@ -672,17 +765,135 @@ addEventListener("scroll", () => hdr.classList.toggle("scrolled", scrollY > 24),
 const track = document.getElementById("tickerTrack");
 track.innerHTML += track.innerHTML; // seamless loop
 
-/* ================= reveals ================= */
+/* ================= interaction vocabulary =================
+   Tokens (see INTERACTION-DIRECTION.md):
+   EASE      power3.out — cards, generic reveals
+   EASE_LONG expo.out   — headlines, hero moments, lock-ins
+   Group stagger 0.10s · word stagger 0.045s · reveal ~0.9s   */
+window.__scrollVel = 0;
 if (!prefersReduced && window.gsap) {
   gsap.registerPlugin(ScrollTrigger);
+  const EASE = "power3.out", EASE_LONG = "expo.out";
+
+  /* ---- weighted smooth scroll (Lenis) ---- */
+  if (window.Lenis) {
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+    });
+    window.__lenis = lenis;
+    lenis.on("scroll", e => {
+      ScrollTrigger.update();
+      window.__scrollVel = e.velocity || 0;
+    });
+    gsap.ticker.add(time => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+    /* anchors glide under the fixed header instead of jumping */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", ev => {
+        const id = a.getAttribute("href");
+        if (id.length > 1 && document.querySelector(id)) {
+          ev.preventDefault();
+          lenis.scrollTo(id, { offset: -76, duration: 1.4 });
+        }
+      });
+    });
+  }
+
+  /* ---- tier 1: headlines split into staggered words ---- */
+  const splitWords = el => {
+    const walk = node => {
+      [...node.childNodes].forEach(child => {
+        if (child.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          child.textContent.split(/(\s+)/).forEach(tok => {
+            if (!tok) return;
+            if (/^\s+$/.test(tok)) frag.appendChild(document.createTextNode(tok));
+            else {
+              const w = document.createElement("span");
+              w.className = "wrd";
+              w.textContent = tok;
+              frag.appendChild(w);
+            }
+          });
+          node.replaceChild(frag, child);
+        } else if (child.nodeType === 1 && child.tagName !== "BR") walk(child);
+      });
+    };
+    walk(el);
+    return el.querySelectorAll(".wrd");
+  };
+  document.querySelectorAll("h1, main h2").forEach(h => {
+    h.classList.remove("rv");
+    h.style.opacity = 1; h.style.transform = "none";
+    gsap.from(splitWords(h), {
+      y: "0.6em", opacity: 0, duration: 0.85, ease: EASE_LONG, stagger: 0.045,
+      scrollTrigger: { trigger: h, start: "top 86%", once: true }
+    });
+  });
+
+  /* ---- tier 2: card groups enter as one choreographed beat ---- */
+  [".steps-grid", ".cuisine-wall", ".plans", ".resto-points", ".founding-perks"].forEach(sel => {
+    const grp = document.querySelector(sel);
+    if (!grp) return;
+    grp.classList.remove("rv");
+    grp.style.opacity = 1; grp.style.transform = "none";
+    const kids = [...grp.children];
+    kids.forEach(k => k.classList.remove("rv"));
+    gsap.from(kids, {
+      y: 44, opacity: 0, duration: 0.9, ease: EASE, stagger: 0.1,
+      scrollTrigger: { trigger: grp, start: "top 84%", once: true }
+    });
+  });
+
+  /* ---- tier 3: generic reveals ---- */
   document.querySelectorAll(".rv").forEach(el => {
     gsap.to(el, {
-      opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
+      opacity: 1, y: 0, duration: 0.9, ease: EASE,
       scrollTrigger: { trigger: el, start: "top 88%", once: true }
     });
   });
+
+  /* ---- special moment: the fees stack up ---- */
+  const receipt = document.querySelector(".receipt");
+  if (receipt) {
+    gsap.from(receipt.querySelectorAll(".line, .total, .cold"), {
+      x: 18, opacity: 0, duration: 0.6, ease: EASE, stagger: 0.14,
+      scrollTrigger: { trigger: receipt, start: "top 80%", once: true }
+    });
+    const tEl = receipt.querySelector(".t-num");
+    const counter = { v: parseFloat(tEl.dataset.base) };
+    gsap.to(counter, {
+      v: parseFloat(tEl.dataset.total), duration: 1.5, ease: "power2.out", delay: 0.55,
+      onUpdate: () => { tEl.textContent = "$" + counter.v.toFixed(2); },
+      scrollTrigger: { trigger: receipt, start: "top 80%", once: true }
+    });
+  }
+
+  /* ---- special moment: join card locks into attention ---- */
+  gsap.from(".join-card", {
+    y: 70, scale: 0.965, duration: 1.1, ease: EASE_LONG,
+    scrollTrigger: { trigger: "#join", start: "top 72%", once: true }
+  });
+
+  /* ---- ambient depth: background wash drifts slower than content ---- */
+  gsap.to(".bg-wash", {
+    yPercent: -6, ease: "none",
+    scrollTrigger: { start: "top top", end: "max", scrub: true }
+  });
+
+  /* ---- sticky mobile CTA: visible mid-journey, never over the form ---- */
+  const mcta = document.querySelector(".m-cta");
+  if (mcta) {
+    ScrollTrigger.create({
+      start: () => innerHeight * 0.9,
+      end: () => ScrollTrigger.maxScroll(window) - innerHeight * 1.4,
+      onToggle: self => mcta.classList.toggle("show", self.isActive)
+    });
+  }
 } else {
   document.querySelectorAll(".rv").forEach(el => { el.style.opacity = 1; el.style.transform = "none"; });
+  document.querySelector(".m-cta")?.classList.add("show");
 }
 
 /* ================= 3D ROCKET ================= */
@@ -870,23 +1081,25 @@ if (!prefersReduced && window.gsap) {
      [p, x, y, rotY(turns), tiltZ, scale, flame, smoke]           */
   const KF_DESKTOP = [
     [0.00,  2.0, -0.55, 0.00,  0.00, 1.00, 0.55, 1.0],  // hero: on pad, right
-    [0.10,  1.9,  0.35, 0.12, -0.06, 1.00, 1.00, 0.0],  // liftoff
-    [0.24, -2.1,  0.30, 0.50, -0.45, 0.95, 0.90, 0.0],  // how-it-works: bank left, half turn
-    [0.40,  2.2,  0.05, 1.00,  0.42, 0.92, 0.85, 0.0],  // kitchens: cross right, full turn
-    [0.56, -2.3,  0.45, 1.50, -0.18, 0.70, 0.70, 0.0],  // pricing: small mascot, upper left
-    [0.74,  2.1, -0.10, 2.00,  0.25, 0.80, 0.80, 0.0],  // restaurants: right side
-    [0.90,  0.0,  1.25, 2.50,  0.00, 0.90, 1.35, 0.0],  // join: center over form, nose up
-    [1.00,  0.0,  1.9,  2.75,  0.00, 0.85, 1.5,  0.0]   // footer: drifting up
+    [0.07,  1.9,  0.35, 0.12, -0.06, 1.00, 1.00, 0.0],  // liftoff
+    [0.17,  2.2,  0.15, 0.40,  0.30, 0.80, 0.85, 0.0],  // problem: hovers right of receipt copy
+    [0.30, -2.1,  0.30, 0.75, -0.45, 0.95, 0.90, 0.0],  // how-it-works: bank left
+    [0.45,  2.4,  0.05, 1.25,  0.42, 0.92, 0.85, 0.0],  // kitchens: cross far right
+    [0.60, -2.3,  0.45, 1.75, -0.18, 0.70, 0.70, 0.0],  // pricing: small mascot, upper left
+    [0.76,  2.1, -0.10, 2.25,  0.25, 0.80, 0.80, 0.0],  // restaurants: right side
+    [0.90,  0.0,  1.25, 2.75,  0.00, 0.90, 1.35, 0.0],  // join: center over form, nose up
+    [1.00,  0.0,  1.9,  3.00,  0.00, 0.85, 1.5,  0.0]   // footer: drifting up
   ];
   const KF_MOBILE = [
-    [0.00,  0.0,  0.9,  0.00,  0.00, 0.72, 0.55, 1.0],  // hero: above copy, centered
-    [0.10,  0.0,  1.3,  0.12, -0.05, 0.70, 1.00, 0.0],
-    [0.24, -0.85, 1.15, 0.50, -0.35, 0.58, 0.90, 0.0],
-    [0.40,  0.85, 1.15, 1.00,  0.35, 0.55, 0.85, 0.0],
-    [0.56, -0.85, 1.25, 1.50, -0.15, 0.48, 0.70, 0.0],
-    [0.74,  0.85, 1.15, 2.00,  0.20, 0.52, 0.80, 0.0],
-    [0.90,  0.0,  1.35, 2.50,  0.00, 0.58, 1.35, 0.0],
-    [1.00,  0.0,  1.9,  2.75,  0.00, 0.55, 1.5,  0.0]
+    [0.00,  0.5, -2.05, 0.00,  0.00, 0.60, 0.55, 1.0],  // hero: on pad, lower right, clear of CTAs
+    [0.07,  0.0,  1.3,  0.12, -0.05, 0.62, 1.00, 0.0],  // liftoff: climbs past the copy
+    [0.17,  0.85, 1.2,  0.40,  0.25, 0.55, 0.85, 0.0],  // problem
+    [0.30, -0.85, 1.15, 0.75, -0.35, 0.58, 0.90, 0.0],
+    [0.45,  0.85, 1.15, 1.25,  0.35, 0.55, 0.85, 0.0],
+    [0.60, -0.85, 1.25, 1.75, -0.15, 0.48, 0.70, 0.0],
+    [0.76,  0.85, 1.15, 2.25,  0.20, 0.52, 0.80, 0.0],
+    [0.90,  0.0,  1.35, 2.75,  0.00, 0.58, 1.35, 0.0],
+    [1.00,  0.0,  1.9,  3.00,  0.00, 0.55, 1.5,  0.0]
   ];
   const KF = isMobile ? KF_MOBILE : KF_DESKTOP;
 
@@ -948,11 +1161,13 @@ if (!prefersReduced && window.gsap) {
     rocket.rotation.z = tilt;
     rocket.scale.setScalar(sc);
 
-    /* flame flicker */
+    /* flame flicker + scroll-velocity throttle (fast scroll = longer exhaust) */
     const flick = prefersReduced ? 1 : (0.85 + Math.sin(t * 22) * 0.1 + Math.sin(t * 9.7) * 0.08);
-    flame.scale.set(1, fl * flick, 1);
+    window.__scrollVel *= 0.94;
+    const throttle = prefersReduced ? 0 : Math.min(Math.abs(window.__scrollVel) / 60, 0.55);
+    flame.scale.set(1, fl * flick * (1 + throttle), 1);
     flame.visible = fl > 0.05;
-    fLight.intensity = fl * flick * 1.2;
+    fLight.intensity = fl * flick * (1.2 + throttle);
 
     /* plate orbit */
     plateOrbit.rotation.y = prefersReduced ? 0.8 : t * 0.7;
@@ -992,6 +1207,18 @@ if (!prefersReduced && window.gsap) {
     b.classList.add("active");
     segment = b.dataset.value;
   }));
+
+  /* progress bar fills as fields become valid */
+  const prog = document.getElementById("formProg");
+  const updateProg = () => {
+    if (!prog) return;
+    let n = 0;
+    if (form.name.value.trim()) n++;
+    if (form.zip.value.trim().length >= 3) n++;
+    if (/^\S+@\S+\.\S+$/.test(form.email.value.trim())) n++;
+    prog.style.width = (n / 3 * 100) + "%";
+  };
+  ["name", "zip", "email"].forEach(f => form[f].addEventListener("input", updateProg));
 
   /* restaurant CTA pre-selects the restaurant segment */
   document.querySelectorAll('[data-seg="restaurant"]').forEach(a => {
@@ -1035,6 +1262,17 @@ if (!prefersReduced && window.gsap) {
       msg.textContent = "You're on the list. Watch your inbox — Founding 100 invites go out in waitlist order. 🚀";
       msg.classList.add("ok");
       form.reset();
+      updateProg();
+      /* success: message settles in, the button's rocket does a mini launch */
+      if (window.gsap && !prefersReduced) {
+        gsap.fromTo(msg, { y: 14, opacity: 0, scale: 0.96 },
+          { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" });
+        const rk = btn.querySelector(".arrow");
+        if (rk) gsap.timeline()
+          .to(rk, { y: -30, x: 20, rotation: -10, opacity: 0, duration: 0.5, ease: "power2.in" })
+          .set(rk, { y: 16, x: -12, rotation: 0 })
+          .to(rk, { y: 0, x: 0, opacity: 1, duration: 0.55, ease: "power3.out" });
+      }
     } catch (err) {
       msg.textContent = "Something went wrong saving your spot. Please try again in a moment.";
       msg.classList.add("err");
