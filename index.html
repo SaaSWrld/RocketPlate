@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RocketPlate — Your favorite local meals, delivered hot daily</title>
+<meta name="description" content="Independent Miami kitchens cook your dinner fresh every afternoon. RocketPlate delivers it hot to your door on one nightly route — no delivery fees, no tips, no surprises. Launching in Miami-Dade, ZIP 33186.">
+<meta property="og:title" content="RocketPlate — Hot local dinners, delivered daily">
+<meta property="og:description" content="No delivery fees. No tips. No surprises. Join the Founding 100 in Miami-Dade.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1C3A6E;
+  --rocket-blue:#0B5E8F;
+  --crimson:#C0182A;
+  --crimson-hot:#CC1F1F;
+  --orange:#F28C28;
+  --cream:#FFF8EE;
+  --steel:#BECCD6;
+  --ink:#16294D;
+  --card:#FFFDF8;
+  --shadow: 0 18px 50px -18px rgba(28,58,110,.28);
+  --radius:22px;
+  --font-display:"Fraunces", Georgia, serif;
+  --font-body:"Outfit", system-ui, sans-serif;
+  --font-mono:"IBM Plex Mono", ui-monospace, monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html.lenis, html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{
+  font-family:var(--font-body);
+  background:var(--cream);
+  color:var(--ink);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--orange);color:#fff}
+
+/* ---------- 3D canvas ---------- */
+#stage{
+  position:fixed;inset:0;
+  width:100%;height:100vh;
+  z-index:5;
+  pointer-events:none;
+}
+
+/* ---------- ambient background ---------- */
+.bg-wash{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(1200px 800px at 85% -10%, rgba(242,140,40,.14), transparent 60%),
+    radial-gradient(1000px 700px at -10% 40%, rgba(11,94,143,.10), transparent 60%),
+    radial-gradient(900px 900px at 70% 110%, rgba(192,24,42,.08), transparent 60%);
+}
+.grain{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.35;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.80 0 0 0 0 0.72 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- header ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px clamp(18px,4vw,48px);
+  background:rgba(255,248,238,.72);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(28,58,110,.08);
+  transition:box-shadow .3s;
+}
+header.scrolled{box-shadow:0 8px 30px -14px rgba(28,58,110,.25)}
+.logo img{height:44px;display:block}
+nav{display:flex;gap:clamp(14px,2.4vw,34px);align-items:center}
+nav a{
+  color:var(--navy);text-decoration:none;font-weight:500;font-size:.94rem;
+  position:relative;padding:4px 0;
+}
+nav a::after{
+  content:"";position:absolute;left:0;bottom:0;height:2px;width:0;
+  background:var(--crimson);border-radius:2px;transition:width .28s cubic-bezier(.6,0,.2,1);
+}
+nav a:hover::after{width:100%}
+.nav-links{display:flex;gap:clamp(14px,2.4vw,34px)}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-body);font-weight:600;font-size:1rem;
+  padding:14px 26px;border-radius:999px;border:none;cursor:pointer;
+  text-decoration:none;transition:transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s, background .22s;
+  will-change:transform;
+}
+.btn-primary{
+  background:var(--crimson);color:#fff;
+  box-shadow:0 12px 28px -10px rgba(192,24,42,.55);
+}
+.btn-primary:hover{transform:translateY(-3px) scale(1.02);background:var(--crimson-hot);box-shadow:0 18px 34px -10px rgba(192,24,42,.6)}
+.btn-primary:active{transform:translateY(-1px) scale(.99)}
+.btn-ghost{
+  background:transparent;color:var(--navy);
+  box-shadow:inset 0 0 0 2px rgba(28,58,110,.28);
+}
+.btn-ghost:hover{transform:translateY(-3px);box-shadow:inset 0 0 0 2px var(--navy)}
+.btn-sm{padding:10px 20px;font-size:.9rem}
+.btn .arrow{transition:transform .22s}
+.btn:hover .arrow{transform:translateX(4px)}
+
+/* ---------- layout primitives ---------- */
+main{position:relative;z-index:10}
+section{position:relative;padding:clamp(90px,12vh,150px) clamp(20px,6vw,80px)}
+.wrap{max-width:1200px;margin:0 auto;position:relative}
+.eyebrow{
+  font-family:var(--font-mono);font-size:.78rem;letter-spacing:.14em;
+  color:var(--crimson);text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:10px;margin-bottom:18px;
+}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--orange);border-radius:2px}
+h1,h2,h3{font-family:var(--font-display);color:var(--navy);line-height:1.08;letter-spacing:-.01em}
+h1{font-size:clamp(2.6rem,6.2vw,4.6rem);font-weight:600}
+h2{font-size:clamp(2rem,4.2vw,3.2rem);font-weight:600;margin-bottom:20px}
+h3{font-size:1.3rem;font-weight:600}
+.lede{font-size:clamp(1.05rem,1.6vw,1.25rem);color:#3A4E77;max-width:56ch}
+.accent{color:var(--crimson)}
+.accent-o{color:var(--orange)}
+
+/* reveal system */
+.rv{opacity:0;transform:translateY(34px)}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1!important;transform:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- hero ---------- */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding-top:120px;
+}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:40px;align-items:center;width:100%;max-width:1240px;margin:0 auto}
+.hero-copy{max-width:620px}
+.hero-copy .lede{margin:24px 0 36px}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.hero-note{
+  margin-top:26px;font-family:var(--font-mono);font-size:.78rem;color:#5A6C92;
+  display:flex;gap:18px;flex-wrap:wrap;
+}
+.hero-note span{display:inline-flex;align-items:center;gap:7px}
+.hero-note b{color:var(--navy)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--orange);display:inline-block}
+.scroll-cue{
+  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.2em;color:#7285A8;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.scroll-cue .line{width:2px;height:44px;background:linear-gradient(var(--orange),transparent);border-radius:2px;animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(.55);opacity:.5}}
+@media (prefers-reduced-motion:reduce){.scroll-cue .line{animation:none}}
+
+/* ---------- ticker ---------- */
+.ticker{
+  position:relative;z-index:12;
+  background:var(--navy);color:var(--cream);
+  padding:16px 0;overflow:hidden;white-space:nowrap;
+  transform:rotate(-1.2deg) scale(1.02);
+  box-shadow:var(--shadow);
+}
+.ticker-track{display:inline-flex;gap:0;animation:tick 30s linear infinite}
+@media (prefers-reduced-motion:reduce){.ticker-track{animation:none}}
+.ticker span{
+  font-family:var(--font-mono);font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:0 28px;display:inline-flex;align-items:center;gap:28px;
+}
+.ticker .spark{color:var(--orange)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ---------- how it works ---------- */
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:54px}
+.step{
+  background:var(--card);border-radius:var(--radius);padding:34px 30px;
+  box-shadow:var(--shadow);border:1px solid rgba(28,58,110,.07);
+  position:relative;overflow:hidden;
+  transition:transform .3s cubic-bezier(.34,1.2,.64,1), box-shadow .3s;
+}
+.step:hover{transform:translateY(-6px);box-shadow:0 26px 60px -20px rgba(28,58,110,.35)}
+.step .time{
+  font-family:var(--font-mono);font-size:.8rem;letter-spacing:.1em;
+  color:#fff;background:var(--rocket-blue);
+  display:inline-block;padding:6px 14px;border-radius:999px;margin-bottom:18px;
+}
+.step:nth-child(2) .time{background:var(--orange)}
+.step:nth-child(3) .time{background:var(--crimson)}
+.step h3{margin-bottom:12px}
+.step p{color:#3A4E77;font-size:.98rem}
+.step .n{
+  position:absolute;right:18px;top:10px;
+  font-family:var(--font-display);font-weight:700;font-size:4.4rem;
+  color:rgba(28,58,110,.06);line-height:1;
+}
+.cutoff-strip{
+  margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;
+}
+.cutoff{
+  font-family:var(--font-mono);font-size:.78rem;color:var(--navy);
+  background:rgba(190,204,214,.28);border:1px solid rgba(28,58,110,.12);
+  padding:9px 16px;border-radius:999px;
+}
+.cutoff b{color:var(--crimson)}
+
+/* ---------- kitchens ---------- */
+#kitchens .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:60px;align-items:center}
+.cuisine-wall{display:flex;flex-wrap:wrap;gap:14px}
+.cuisine{
+  font-weight:600;font-size:1.02rem;color:var(--navy);
+  background:var(--card);border:1.5px solid rgba(28,58,110,.14);
+  padding:14px 22px;border-radius:16px;box-shadow:0 8px 22px -12px rgba(28,58,110,.25);
+  display:inline-flex;align-items:center;gap:10px;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1), border-color .25s, background .25s;
+  cursor:default;
+}
+.cuisine:hover{transform:translateY(-4px) rotate(-1deg);border-color:var(--orange);background:#FFF3E2}
+.cuisine .em{font-size:1.2rem}
+.mystery{
+  margin-top:26px;font-size:.95rem;color:#5A6C92;
+  border-left:3px solid var(--orange);padding-left:16px;
+}
+
+/* ---------- pricing ---------- */
+#pricing{background:linear-gradient(180deg, rgba(28,58,110,0) 0%, rgba(28,58,110,.05) 18%, rgba(28,58,110,.05) 82%, rgba(28,58,110,0) 100%)}
+.founding-banner{
+  background:var(--navy);color:var(--cream);
+  border-radius:var(--radius);padding:26px 34px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  box-shadow:var(--shadow);margin-bottom:44px;
+  position:relative;overflow:hidden;
+}
+.founding-banner::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle, rgba(242,140,40,.4), transparent 70%);
+}
+.founding-banner h3{color:var(--cream);font-size:1.5rem;margin-bottom:6px}
+.founding-banner p{color:var(--steel);font-size:.95rem;max-width:52ch}
+.founding-perks{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
+.perk{
+  font-family:var(--font-mono);font-size:.76rem;letter-spacing:.06em;
+  background:rgba(255,248,238,.12);border:1px solid rgba(255,248,238,.25);
+  padding:8px 15px;border-radius:999px;color:var(--cream);
+}
+.perk b{color:var(--orange)}
+.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;max-width:900px;margin:0 auto}
+.plan{
+  background:var(--card);border-radius:var(--radius);padding:40px 36px;
+  box-shadow:var(--shadow);border:1px solid rgba(28,58,110,.08);
+  display:flex;flex-direction:column;
+  transition:transform .3s cubic-bezier(.34,1.2,.64,1), box-shadow .3s;
+}
+.plan:hover{transform:translateY(-8px);box-shadow:0 30px 70px -22px rgba(28,58,110,.4)}
+.plan.premium{border:2px solid var(--crimson);position:relative}
+.plan .tag{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:var(--crimson);color:#fff;font-family:var(--font-mono);
+  font-size:.72rem;letter-spacing:.12em;padding:6px 16px;border-radius:999px;
+}
+.plan .name{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:#5A6C92;margin-bottom:14px}
+.plan .price{font-family:var(--font-display);font-weight:700;font-size:3.2rem;color:var(--navy);line-height:1}
+.plan .per{font-size:.95rem;color:#5A6C92;margin:8px 0 24px}
+.plan ul{list-style:none;margin-bottom:30px;flex:1}
+.plan li{padding:9px 0;border-bottom:1px dashed rgba(28,58,110,.12);font-size:.97rem;color:#3A4E77;display:flex;gap:10px;align-items:flex-start}
+.plan li::before{content:"✓";color:var(--orange);font-weight:700;flex-shrink:0}
+.plan .btn{justify-content:center}
+
+/* ---------- restaurants ---------- */
+#restaurants .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:60px;align-items:center}
+.resto-points{margin-top:30px;display:flex;flex-direction:column;gap:18px}
+.rpoint{display:flex;gap:16px;align-items:flex-start}
+.rpoint .ic{
+  width:44px;height:44px;border-radius:14px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--orange),var(--crimson));
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+  box-shadow:0 10px 22px -10px rgba(192,24,42,.5);
+}
+.rpoint h3{font-size:1.08rem;margin-bottom:3px}
+.rpoint p{font-size:.94rem;color:#3A4E77}
+.deadzone-card{
+  background:var(--navy);border-radius:var(--radius);padding:40px 36px;color:var(--cream);
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.deadzone-card h3{color:var(--cream);font-size:1.4rem;margin-bottom:14px}
+.dz-bars{display:flex;align-items:flex-end;gap:8px;height:130px;margin:26px 0 10px}
+.dz-bar{flex:1;border-radius:6px 6px 3px 3px;background:rgba(190,204,214,.3);position:relative;transition:height .8s cubic-bezier(.34,1.2,.64,1)}
+.dz-bar.hot{background:linear-gradient(180deg,var(--orange),var(--crimson));box-shadow:0 8px 20px -6px rgba(242,140,40,.55)}
+.dz-labels{display:flex;gap:8px;font-family:var(--font-mono);font-size:.6rem;color:var(--steel)}
+.dz-labels span{flex:1;text-align:center}
+.dz-note{font-size:.9rem;color:var(--steel);margin-top:18px}
+.dz-note b{color:var(--orange)}
+
+/* ---------- waitlist ---------- */
+#join{min-height:92vh;display:flex;align-items:center}
+.join-card{
+  background:var(--card);border-radius:28px;box-shadow:0 40px 90px -30px rgba(28,58,110,.45);
+  border:1px solid rgba(28,58,110,.08);
+  max-width:680px;margin:0 auto;padding:clamp(34px,5vw,58px);
+  position:relative;
+}
+.join-card .eyebrow{justify-content:center;width:100%}
+.join-card h2{text-align:center}
+.join-card .lede{text-align:center;margin:14px auto 34px}
+.seg{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px;
+}
+.seg button{
+  font-family:var(--font-body);font-weight:600;font-size:.86rem;
+  padding:12px 8px;border-radius:14px;cursor:pointer;
+  border:1.5px solid rgba(28,58,110,.16);background:transparent;color:#3A4E77;
+  transition:all .2s;
+}
+.seg button.active{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:0 10px 24px -10px rgba(28,58,110,.5)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fields .full{grid-column:1/-1}
+.field label{display:block;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#5A6C92;margin-bottom:7px}
+.field input{
+  width:100%;padding:15px 18px;border-radius:14px;font-family:var(--font-body);font-size:1rem;
+  border:1.5px solid rgba(28,58,110,.16);background:#fff;color:var(--ink);
+  transition:border-color .2s, box-shadow .2s;
+}
+.field input:focus{outline:none;border-color:var(--rocket-blue);box-shadow:0 0 0 4px rgba(11,94,143,.12)}
+#join .btn-primary{width:100%;justify-content:center;margin-top:22px;padding:18px;font-size:1.08rem}
+.form-msg{margin-top:16px;font-size:.9rem;text-align:center;display:none;padding:12px 16px;border-radius:12px}
+.form-msg.err{display:block;background:rgba(192,24,42,.08);color:var(--crimson);border:1px solid rgba(192,24,42,.25)}
+.form-msg.ok{display:block;background:rgba(11,94,143,.08);color:var(--rocket-blue);border:1px solid rgba(11,94,143,.25)}
+.fineprint{margin-top:18px;text-align:center;font-size:.78rem;color:#7285A8}
+
+/* ---------- footer ---------- */
+footer{
+  position:relative;z-index:10;
+  background:var(--navy);color:var(--steel);
+  padding:60px clamp(20px,6vw,80px) 40px;
+}
+.foot-grid{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.foot-brand img{height:40px;filter:brightness(0) invert(1);opacity:.92;margin-bottom:14px}
+.foot-brand p{font-size:.88rem;max-width:34ch}
+.foot-col h4{color:var(--cream);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px}
+.foot-col a{display:block;color:var(--steel);text-decoration:none;font-size:.92rem;padding:5px 0;transition:color .2s}
+.foot-col a:hover{color:var(--orange)}
+.foot-bottom{
+  max-width:1200px;margin:44px auto 0;padding-top:24px;
+  border-top:1px solid rgba(190,204,214,.18);
+  display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:1fr;text-align:left}
+  #kitchens .wrap, #restaurants .wrap{grid-template-columns:1fr;gap:40px}
+  .steps-grid{grid-template-columns:1fr;gap:18px}
+  .plans{grid-template-columns:1fr}
+  #hero{padding-top:150px;min-height:auto;padding-bottom:46vh} /* leave sky for rocket on mobile */
+  .seg{grid-template-columns:repeat(2,1fr)}
+  .fields{grid-template-columns:1fr}
+  nav .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-wash"></div>
+<div class="grain"></div>
+<canvas id="stage" aria-hidden="true"></canvas>
+
+<header id="hdr">
+  <a class="logo" href="#hero" aria-label="RocketPlate home"><img src="logo.png" alt="RocketPlate"></a>
+  <nav>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#kitchens">Kitchens</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#restaurants">Restaurants</a>
+    </div>
+    <a href="#join" class="btn btn-primary btn-sm">Join the Founding 100</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow rv">Now boarding · Miami-Dade · ZIP 33186</span>
+        <h1 class="rv">Your favorite <span class="accent">local meals</span>, delivered <span class="accent-o">hot</span> daily.</h1>
+        <p class="lede rv">No delivery fees. No tips. No surprises. Independent Miami kitchens cook your dinner fresh every afternoon — and we bring it to your door hot, on one nightly route.</p>
+        <div class="hero-ctas rv">
+          <a href="#join" class="btn btn-primary">Claim a Founding 100 spot <span class="arrow">→</span></a>
+          <a href="#restaurants" class="btn btn-ghost">Partner your restaurant</a>
+        </div>
+        <div class="hero-note rv">
+          <span><span class="dot"></span> Cooked fresh <b>same day</b></span>
+          <span><span class="dot"></span> At your door <b>4:15–6:30 PM</b></span>
+          <span><span class="dot"></span> Cancel anytime</span>
+        </div>
+      </div>
+      <div><!-- rocket flight lane --></div>
+    </div>
+    <div class="scroll-cue"><span>SCROLL FOR LIFTOFF</span><span class="line"></span></div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="tickerTrack">
+      <span><b class="spark">★</b> HOT AT THE DOOR — NEVER REHEATED</span>
+      <span><b class="spark">★</b> ZERO DELIVERY FEES · ZERO TIPS</span>
+      <span><b class="spark">★</b> INDEPENDENT MIAMI KITCHENS</span>
+      <span><b class="spark">★</b> ONE NIGHTLY ROUTE · 4:15–6:30 PM</span>
+      <span><b class="spark">★</b> FOUNDING 100 · FIRST WEEK FREE</span>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="wrap">
+      <span class="eyebrow rv">The daily launch sequence</span>
+      <h2 class="rv">Dinner runs on a <span class="accent">schedule</span>,<br>not an app queue.</h2>
+      <p class="lede rv">Every RocketPlate dinner follows the same flight plan — that's how it arrives hot without fees, tips, or a driver juggling six other orders.</p>
+      <div class="steps-grid">
+        <div class="step rv">
+          <span class="n">1</span>
+          <span class="time">2:00 – 4:00 PM</span>
+          <h3>Kitchens batch-cook</h3>
+          <p>Independent restaurants cook subscriber meals during their quiet afternoon window. Fresh, same-day, made by the kitchens your neighborhood already loves.</p>
+        </div>
+        <div class="step rv">
+          <span class="n">2</span>
+          <span class="time">4:15 PM</span>
+          <h3>One route lifts off</h3>
+          <p>Meals leave hot in a single evening batch route across your zone. No third-party apps, no marketplace roulette — just kitchen to door.</p>
+        </div>
+        <div class="step rv">
+          <span class="n">3</span>
+          <span class="time">4:15 – 6:30 PM</span>
+          <h3>Hot at your door</h3>
+          <p>Dinner arrives ready to eat, right in the evening window. Set it, forget it, eat well every night.</p>
+        </div>
+      </div>
+      <div class="cutoff-strip rv">
+        <span class="cutoff">Change tomorrow's meal until <b>9:00 PM tonight</b></span>
+        <span class="cutoff">Same-day add-ons until <b>1:00 PM</b></span>
+        <span class="cutoff">Skip or pause anytime</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- KITCHENS -->
+  <section id="kitchens">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow rv">Kitchens you already love</span>
+        <h2 class="rv">Real restaurants.<br><span class="accent">Real</span> dinner.</h2>
+        <p class="lede rv">This isn't meal prep and it isn't a ghost kitchen. Your rotation is cooked by independent, neighborhood restaurants — a different craving covered every night of the week.</p>
+        <p class="mystery rv">Partner kitchens are revealed at launch. Founding 100 members taste them first.</p>
+      </div>
+      <div class="cuisine-wall rv">
+        <span class="cuisine"><span class="em">🥡</span> Peruvian-Chinese fusion</span>
+        <span class="cuisine"><span class="em">🔥</span> Wood-smoked BBQ</span>
+        <span class="cuisine"><span class="em">🍔</span> Smash burgers</span>
+        <span class="cuisine"><span class="em">🍝</span> Italian</span>
+        <span class="cuisine"><span class="em">🌮</span> Mexican</span>
+        <span class="cuisine"><span class="em">🇨🇺</span> Cuban &amp; Latin</span>
+        <span class="cuisine"><span class="em">🦐</span> Fresh seafood</span>
+        <span class="cuisine"><span class="em">🥗</span> Fresh &amp; light</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="wrap">
+      <span class="eyebrow rv">Simple weekly pricing</span>
+      <h2 class="rv">One price. <span class="accent">Everything</span> included.</h2>
+      <p class="lede rv" style="margin-bottom:44px">The price you see is the price you pay. Delivery, service, and the driver's cut are all in — tipping isn't a thing here.</p>
+
+      <div class="founding-banner rv">
+        <div>
+          <h3>The Founding 100</h3>
+          <p>The first hundred subscribers in ZIP 33186 launch with us — and get treated like it.</p>
+        </div>
+        <div class="founding-perks">
+          <span class="perk"><b>FIRST WEEK</b> FREE</span>
+          <span class="perk"><b>33% OFF</b> MONTH TWO</span>
+          <span class="perk"><b>12-MONTH</b> RATE LOCK</span>
+        </div>
+      </div>
+
+      <div class="plans">
+        <div class="plan rv">
+          <span class="name">Basic</span>
+          <div class="price">$84.99<span style="font-size:1.1rem;font-weight:500;color:#5A6C92">/wk</span></div>
+          <p class="per">5 hot dinners · weeknights covered</p>
+          <ul>
+            <li>Monday–Friday delivery, 4:15–6:30 PM</li>
+            <li>Rotating menu from independent local kitchens</li>
+            <li>Swap tomorrow's meal until 9 PM tonight</li>
+            <li>No delivery fees, no tips, ever</li>
+            <li>Skip weeks or cancel anytime</li>
+          </ul>
+          <a href="#join" class="btn btn-ghost">Start with Basic</a>
+        </div>
+        <div class="plan premium rv">
+          <span class="tag">EVERY NIGHT COVERED</span>
+          <span class="name">Premium</span>
+          <div class="price">$124.99<span style="font-size:1.1rem;font-weight:500;color:#5A6C92">/wk</span></div>
+          <p class="per">7 hot dinners · the full week, handled</p>
+          <ul>
+            <li>All seven nights, including weekends</li>
+            <li>Rotating menu from independent local kitchens</li>
+            <li>Swap tomorrow's meal until 9 PM tonight</li>
+            <li>Same-day add-ons until 1 PM</li>
+            <li>No delivery fees, no tips, ever</li>
+            <li>Skip weeks or cancel anytime</li>
+          </ul>
+          <a href="#join" class="btn btn-primary">Go Premium <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESTAURANTS -->
+  <section id="restaurants">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow rv">For restaurant owners</span>
+        <h2 class="rv">Your <span class="accent">2–4 PM</span> just became revenue.</h2>
+        <p class="lede rv">RocketPlate turns your slowest hours into a predictable, prepaid batch order — confirmed the night before, cooked on your schedule, picked up in one go.</p>
+        <div class="resto-points">
+          <div class="rpoint rv">
+            <span class="ic">📋</span>
+            <div><h3>Counts locked by 10 PM the night before</h3><p>You know exactly what you're cooking before you close. Final adjustments arrive by 1 PM day-of.</p></div>
+          </div>
+          <div class="rpoint rv">
+            <span class="ic">👨‍🍳</span>
+            <div><h3>Zero front-of-house disruption</h3><p>One batch, one pickup window. No tablets chirping through dinner service, no drivers crowding your counter.</p></div>
+          </div>
+          <div class="rpoint rv">
+            <span class="ic">🤝</span>
+            <div><h3>You cook. We do everything else.</h3><p>Subscriptions, payments, packaging standards, routing, delivery, and customer care are all on us.</p></div>
+          </div>
+        </div>
+        <div style="margin-top:36px" class="rv">
+          <a href="#join" class="btn btn-primary" data-seg="restaurant">Apply as a founding kitchen <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="deadzone-card rv">
+        <h3>The dead-zone window</h3>
+        <p style="color:var(--steel);font-size:.94rem">A typical independent restaurant's day has a valley right where RocketPlate's batch window sits.</p>
+        <div class="dz-bars" aria-hidden="true">
+          <div class="dz-bar" style="height:55%"></div>
+          <div class="dz-bar" style="height:80%"></div>
+          <div class="dz-bar" style="height:60%"></div>
+          <div class="dz-bar hot" style="height:22%"></div>
+          <div class="dz-bar hot" style="height:18%"></div>
+          <div class="dz-bar" style="height:65%"></div>
+          <div class="dz-bar" style="height:95%"></div>
+          <div class="dz-bar" style="height:75%"></div>
+        </div>
+        <div class="dz-labels">
+          <span>11A</span><span>12P</span><span>1P</span><span>2P</span><span>3P</span><span>5P</span><span>7P</span><span>9P</span>
+        </div>
+        <p class="dz-note">Those two quiet hours become <b>batch-cooked, prepaid volume</b> — with your kitchen already staffed and hot.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOIN / WAITLIST -->
+  <section id="join">
+    <div class="wrap" style="width:100%">
+      <div class="join-card">
+        <span class="eyebrow rv" style="display:flex">T-minus launch · Kendall / Pinecrest first</span>
+        <h2 class="rv">Get on the <span class="accent">launch list</span></h2>
+        <p class="lede rv">Founding 100 spots go in waitlist order. Tell us who you are and where you are — we'll take it from there.</p>
+
+        <form id="waitlistForm" novalidate>
+          <div class="seg rv" role="group" aria-label="I am a">
+            <button type="button" class="active" data-value="subscriber">Hungry human</button>
+            <button type="button" data-value="restaurant">Restaurant</button>
+            <button type="button" data-value="driver">Driver</button>
+            <button type="button" data-value="investor_press">Investor / Press</button>
+          </div>
+          <div class="fields rv">
+            <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" placeholder="Alex Rivera" required></div>
+            <div class="field"><label for="f-zip">ZIP code</label><input id="f-zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="33186" maxlength="10" required></div>
+            <div class="field full"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+          </div>
+          <button type="submit" class="btn btn-primary rv">Reserve my spot <span class="arrow">🚀</span></button>
+          <div class="form-msg" id="formMsg" role="status"></div>
+          <p class="fineprint rv">First week free · 33% off month two · 12-month rate lock for the Founding 100. We'll only email you about launch. Unsubscribe anytime.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <img src="logo.png" alt="RocketPlate">
+      <p>Hot local dinners on one nightly route. Built in Miami-Dade, starting in Kendall / Pinecrest.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Explore</h4>
+      <a href="#how">How it works</a>
+      <a href="#kitchens">Kitchens</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#restaurants">For restaurants</a>
+    </div>
+    <div class="foot-col">
+      <h4>Company</h4>
+      <a href="#join">Join the waitlist</a>
+      <a href="#" aria-disabled="true">Privacy policy</a>
+      <a href="#" aria-disabled="true">Terms of service</a>
+      <a href="#" aria-disabled="true">Contact</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 ROCKETPLATE · MIAMI-DADE COUNTY, FL</span>
+    <span>ROCKETPLATE.IO</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* =====================================================================
+   ROCKETPLATE — cinematic 3D launch site
+   - Procedural toy rocket (no external 3D assets)
+   - Scroll-choreographed flight path with rotation sequence
+   - Reduced-motion + mobile fallbacks
+   ===================================================================== */
+
+const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isMobile = window.matchMedia("(max-width: 960px)").matches;
+
+/* ---------------- Supabase waitlist config ----------------
+   Wire this to the real project before launch. Until configured,
+   the form reports honestly that the backend isn't connected —
+   no fake success states, no localStorage.
+
+   Suggested table:
+   create table public.waitlist (
+     id uuid primary key default gen_random_uuid(),
+     created_at timestamptz default now(),
+     segment text not null,          -- subscriber | restaurant | driver | investor_press
+     name text not null,
+     email text not null,
+     zip text not null
+   );
+   -- enable RLS; allow anon INSERT only.
+------------------------------------------------------------- */
+const SUPABASE = { url: "", anonKey: "" };
+
+/* ================= header ================= */
+const hdr = document.getElementById("hdr");
+addEventListener("scroll", () => hdr.classList.toggle("scrolled", scrollY > 24), { passive: true });
+
+/* ================= ticker duplication ================= */
+const track = document.getElementById("tickerTrack");
+track.innerHTML += track.innerHTML; // seamless loop
+
+/* ================= reveals ================= */
+if (!prefersReduced && window.gsap) {
+  gsap.registerPlugin(ScrollTrigger);
+  document.querySelectorAll(".rv").forEach(el => {
+    gsap.to(el, {
+      opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 88%", once: true }
+    });
+  });
+} else {
+  document.querySelectorAll(".rv").forEach(el => { el.style.opacity = 1; el.style.transform = "none"; });
+}
+
+/* ================= 3D ROCKET ================= */
+(function initRocket(){
+  if (!window.THREE) return;
+  const canvas = document.getElementById("stage");
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile ? 1.5 : 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+  camera.position.set(0, 0, 9);
+
+  /* ---- lights: warm toy-studio look ---- */
+  scene.add(new THREE.HemisphereLight(0xfff4e0, 0xd8e2ec, 0.85));
+  const key = new THREE.DirectionalLight(0xffffff, 0.9);
+  key.position.set(4, 6, 6);
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0xf28c28, 0.35);
+  rim.position.set(-5, 2, -4);
+  scene.add(rim);
+
+  const C = {
+    cream:  0xFFF6E8,
+    navy:   0x1C3A6E,
+    blue:   0x0B5E8F,
+    red:    0xC0182A,
+    orange: 0xF28C28,
+    steel:  0xBECCD6,
+    glass:  0x14315e,
+    flameO: 0xF28C28,
+    flameY: 0xFFD34D,
+    smoke:  0xF3EFE9
+  };
+  const mat = (color, rough = 0.38, metal = 0.05) =>
+    new THREE.MeshStandardMaterial({ color, roughness: rough, metalness: metal });
+
+  const rocket = new THREE.Group();
+
+  /* ---- plump toy body via lathe ---- */
+  const bodyPts = [];
+  const prof = [
+    [0.00, -1.05], [0.42, -1.02], [0.55, -0.85], [0.62, -0.45],
+    [0.63,  0.00], [0.58,  0.45], [0.46,  0.85], [0.36,  1.05]
+  ];
+  prof.forEach(p => bodyPts.push(new THREE.Vector2(p[0], p[1])));
+  const body = new THREE.Mesh(new THREE.LatheGeometry(bodyPts, 48), mat(C.cream, 0.32));
+  rocket.add(body);
+
+  /* ---- crimson nose cone (rounded) ---- */
+  const nosePts = [];
+  const nprof = [
+    [0.36, 0.00], [0.34, 0.18], [0.28, 0.40], [0.19, 0.58], [0.09, 0.70], [0.00, 0.74]
+  ];
+  nprof.forEach(p => nosePts.push(new THREE.Vector2(p[0], p[1])));
+  const nose = new THREE.Mesh(new THREE.LatheGeometry(nosePts, 48), mat(C.red, 0.3));
+  nose.position.y = 1.04;
+  rocket.add(nose);
+
+  /* ---- orange collar between body and nose ---- */
+  const collar = new THREE.Mesh(new THREE.TorusGeometry(0.355, 0.045, 16, 48), mat(C.orange, 0.3));
+  collar.rotation.x = Math.PI / 2;
+  collar.position.y = 1.045;
+  rocket.add(collar);
+
+  /* ---- porthole: orange ring + navy glass + highlight ---- */
+  const port = new THREE.Group();
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.26, 0.06, 16, 48), mat(C.orange, 0.28));
+  port.add(ring);
+  const glass = new THREE.Mesh(
+    new THREE.SphereGeometry(0.24, 32, 32),
+    new THREE.MeshStandardMaterial({ color: C.glass, roughness: 0.08, metalness: 0.2 })
+  );
+  glass.scale.z = 0.55;
+  port.add(glass);
+  const glint = new THREE.Mesh(
+    new THREE.SphereGeometry(0.055, 16, 16),
+    new THREE.MeshBasicMaterial({ color: 0xffffff })
+  );
+  glint.position.set(0.08, 0.09, 0.16);
+  port.add(glint);
+  port.position.set(0, 0.32, 0.55);
+  port.rotation.x = -0.12;
+  rocket.add(port);
+
+  /* ---- small red button + indicator lights ---- */
+  const btnR = new THREE.Mesh(new THREE.SphereGeometry(0.06, 16, 16), mat(C.red, 0.25));
+  btnR.position.set(0, -0.18, 0.615);
+  btnR.scale.z = 0.5;
+  rocket.add(btnR);
+
+  /* ---- fins ×3, rocket blue, chunky ---- */
+  const finShape = new THREE.Shape();
+  finShape.moveTo(0, 0);
+  finShape.quadraticCurveTo(0.55, -0.12, 0.66, -0.75);
+  finShape.quadraticCurveTo(0.66, -0.98, 0.44, -0.95);
+  finShape.quadraticCurveTo(0.18, -0.85, 0, -0.55);
+  finShape.lineTo(0, 0);
+  const finGeo = new THREE.ExtrudeGeometry(finShape, { depth: 0.12, bevelEnabled: true, bevelSize: 0.05, bevelThickness: 0.05, bevelSegments: 4 });
+  for (let i = 0; i < 3; i++) {
+    const fin = new THREE.Mesh(finGeo, mat(C.blue, 0.34));
+    const holder = new THREE.Group();
+    fin.position.set(0.5, -0.35, -0.06);
+    holder.add(fin);
+    holder.rotation.y = (i / 3) * Math.PI * 2 + Math.PI / 6;
+    rocket.add(holder);
+  }
+
+  /* ---- nozzle stack ---- */
+  const noz1 = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.28, 0.16, 32), mat(C.red, 0.3));
+  noz1.position.y = -1.1;
+  rocket.add(noz1);
+  const noz2 = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.2, 0.18, 32), mat(0x2a3a55, 0.5, 0.4));
+  noz2.position.y = -1.26;
+  rocket.add(noz2);
+
+  /* ---- flame: layered cones + light ---- */
+  const flame = new THREE.Group();
+  const fOuter = new THREE.Mesh(
+    new THREE.ConeGeometry(0.22, 0.9, 24),
+    new THREE.MeshBasicMaterial({ color: C.flameO, transparent: true, opacity: 0.85 })
+  );
+  fOuter.rotation.x = Math.PI;
+  fOuter.position.y = -0.45;
+  flame.add(fOuter);
+  const fInner = new THREE.Mesh(
+    new THREE.ConeGeometry(0.12, 0.55, 24),
+    new THREE.MeshBasicMaterial({ color: C.flameY, transparent: true, opacity: 0.95 })
+  );
+  fInner.rotation.x = Math.PI;
+  fInner.position.y = -0.3;
+  flame.add(fInner);
+  const fLight = new THREE.PointLight(0xF28C28, 1.1, 6);
+  fLight.position.y = -0.4;
+  flame.add(fLight);
+  flame.position.y = -1.32;
+  rocket.add(flame);
+
+  /* ---- SIGNATURE: orbiting dinner plate (the payload) ---- */
+  const plateGrp = new THREE.Group();
+  const platePts = [];
+  [[0.0,0],[0.30,0],[0.40,0.02],[0.47,0.07],[0.5,0.1]].forEach(p => platePts.push(new THREE.Vector2(p[0], p[1])));
+  const plate = new THREE.Mesh(new THREE.LatheGeometry(platePts, 40), mat(0xFFFDF8, 0.25));
+  plateGrp.add(plate);
+  const rimRing = new THREE.Mesh(new THREE.TorusGeometry(0.485, 0.018, 12, 40), mat(C.steel, 0.3, 0.3));
+  rimRing.rotation.x = Math.PI / 2;
+  rimRing.position.y = 0.095;
+  plateGrp.add(rimRing);
+  const dome = new THREE.Mesh(
+    new THREE.SphereGeometry(0.2, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2),
+    new THREE.MeshStandardMaterial({ color: C.red, roughness: 0.2, metalness: 0.15 })
+  );
+  dome.position.y = 0.03;
+  plateGrp.add(dome);
+  const knob = new THREE.Mesh(new THREE.SphereGeometry(0.035, 12, 12), mat(C.orange, 0.25));
+  knob.position.y = 0.23;
+  plateGrp.add(knob);
+  plateGrp.scale.setScalar(0.75);
+  const plateOrbit = new THREE.Group();
+  plateOrbit.add(plateGrp);
+  plateOrbit.rotation.z = 0.28;
+  rocket.add(plateOrbit);
+
+  /* ---- launch smoke pad ---- */
+  const smoke = new THREE.Group();
+  const smokeMat = new THREE.MeshStandardMaterial({ color: C.smoke, roughness: 0.95, transparent: true, opacity: 1 });
+  const puffs = [];
+  for (let i = 0; i < 12; i++) {
+    const r = 0.28 + Math.random() * 0.34;
+    const p = new THREE.Mesh(new THREE.SphereGeometry(r, 20, 20), smokeMat.clone());
+    const a = (i / 12) * Math.PI * 2;
+    const rad = 0.5 + Math.random() * 0.55;
+    p.position.set(Math.cos(a) * rad, -1.45 - Math.random() * 0.25 + r * 0.3, Math.sin(a) * rad * 0.7);
+    p.userData.base = p.position.clone();
+    p.userData.ph = Math.random() * Math.PI * 2;
+    smoke.add(p);
+    puffs.push(p);
+  }
+  scene.add(smoke);
+  scene.add(rocket);
+
+  /* ================= flight choreography =================
+     Keyframes across page scroll progress p ∈ [0,1].
+     [p, x, y, rotY(turns), tiltZ, scale, flame, smoke]           */
+  const KF_DESKTOP = [
+    [0.00,  2.0, -0.55, 0.00,  0.00, 1.00, 0.55, 1.0],  // hero: on pad, right
+    [0.10,  1.9,  0.35, 0.12, -0.06, 1.00, 1.00, 0.0],  // liftoff
+    [0.24, -2.1,  0.30, 0.50, -0.45, 0.95, 0.90, 0.0],  // how-it-works: bank left, half turn
+    [0.40,  2.2,  0.05, 1.00,  0.42, 0.92, 0.85, 0.0],  // kitchens: cross right, full turn
+    [0.56, -2.3,  0.45, 1.50, -0.18, 0.70, 0.70, 0.0],  // pricing: small mascot, upper left
+    [0.74,  2.1, -0.10, 2.00,  0.25, 0.80, 0.80, 0.0],  // restaurants: right side
+    [0.90,  0.0,  1.25, 2.50,  0.00, 0.90, 1.35, 0.0],  // join: center over form, nose up
+    [1.00,  0.0,  1.9,  2.75,  0.00, 0.85, 1.5,  0.0]   // footer: drifting up
+  ];
+  const KF_MOBILE = [
+    [0.00,  0.0,  0.9,  0.00,  0.00, 0.72, 0.55, 1.0],  // hero: above copy, centered
+    [0.10,  0.0,  1.3,  0.12, -0.05, 0.70, 1.00, 0.0],
+    [0.24, -0.85, 1.15, 0.50, -0.35, 0.58, 0.90, 0.0],
+    [0.40,  0.85, 1.15, 1.00,  0.35, 0.55, 0.85, 0.0],
+    [0.56, -0.85, 1.25, 1.50, -0.15, 0.48, 0.70, 0.0],
+    [0.74,  0.85, 1.15, 2.00,  0.20, 0.52, 0.80, 0.0],
+    [0.90,  0.0,  1.35, 2.50,  0.00, 0.58, 1.35, 0.0],
+    [1.00,  0.0,  1.9,  2.75,  0.00, 0.55, 1.5,  0.0]
+  ];
+  const KF = isMobile ? KF_MOBILE : KF_DESKTOP;
+
+  const ease = t => t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2) / 2;
+  function sample(p) {
+    if (p <= KF[0][0]) return KF[0].slice(1);
+    if (p >= KF[KF.length-1][0]) return KF[KF.length-1].slice(1);
+    for (let i = 0; i < KF.length - 1; i++) {
+      const a = KF[i], b = KF[i+1];
+      if (p >= a[0] && p <= b[0]) {
+        const t = ease((p - a[0]) / (b[0] - a[0]));
+        const out = [];
+        for (let j = 1; j < a.length; j++) out.push(a[j] + (b[j] - a[j]) * t);
+        return out;
+      }
+    }
+    return KF[0].slice(1);
+  }
+
+  /* scroll progress with damping */
+  let targetP = 0, curP = 0;
+  function readScroll() {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    targetP = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+  }
+  addEventListener("scroll", readScroll, { passive: true });
+  readScroll();
+
+  /* subtle mouse parallax (desktop only) */
+  let mx = 0, my = 0;
+  if (!isMobile && !prefersReduced) {
+    addEventListener("pointermove", e => {
+      mx = (e.clientX / innerWidth - 0.5) * 2;
+      my = (e.clientY / innerHeight - 0.5) * 2;
+    }, { passive: true });
+  }
+
+  function resize() {
+    const w = innerWidth, h = innerHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  addEventListener("resize", resize);
+  resize();
+
+  const clock = new THREE.Clock();
+  function frame() {
+    const t = clock.getElapsedTime();
+    curP += (targetP - curP) * (prefersReduced ? 1 : 0.07);
+    const [x, y, turns, tilt, sc, fl, sm] = sample(prefersReduced ? 0 : curP);
+
+    /* idle life on top of choreography */
+    const bob = prefersReduced ? 0 : Math.sin(t * 1.6) * 0.06;
+    const sway = prefersReduced ? 0 : Math.sin(t * 0.9) * 0.03;
+
+    rocket.position.set(x + mx * 0.15 + sway, y + bob + my * -0.08, 0);
+    rocket.rotation.y = turns * Math.PI * 2 + (prefersReduced ? 0 : t * 0.25);
+    rocket.rotation.z = tilt;
+    rocket.scale.setScalar(sc);
+
+    /* flame flicker */
+    const flick = prefersReduced ? 1 : (0.85 + Math.sin(t * 22) * 0.1 + Math.sin(t * 9.7) * 0.08);
+    flame.scale.set(1, fl * flick, 1);
+    flame.visible = fl > 0.05;
+    fLight.intensity = fl * flick * 1.2;
+
+    /* plate orbit */
+    plateOrbit.rotation.y = prefersReduced ? 0.8 : t * 0.7;
+    plateGrp.position.set(1.25, Math.sin(t * 0.7) * 0.15, 0);
+    plateGrp.rotation.z = Math.sin(t * 0.5) * 0.12;
+
+    /* smoke: alive only near launch pad */
+    smoke.visible = sm > 0.02;
+    if (smoke.visible) {
+      smoke.position.copy(rocket.position).setY(rocket.position.y * 0.2 - (isMobile ? -0.2 : 0.9));
+      smoke.position.x = KF[0][1]; /* pad stays where launch happened */
+      smoke.position.y = KF[0][2] - 0.15;
+      puffs.forEach(p => {
+        p.material.opacity = sm * 0.95;
+        const b = p.userData.base;
+        p.position.y = b.y + Math.sin(t * 1.3 + p.userData.ph) * 0.05;
+        const s = 1 + Math.sin(t * 0.8 + p.userData.ph) * 0.06;
+        p.scale.setScalar(s);
+      });
+    }
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ================= waitlist form ================= */
+(function initForm(){
+  const form = document.getElementById("waitlistForm");
+  const msg = document.getElementById("formMsg");
+  const segBtns = form.querySelectorAll(".seg button");
+  let segment = "subscriber";
+
+  segBtns.forEach(b => b.addEventListener("click", () => {
+    segBtns.forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    segment = b.dataset.value;
+  }));
+
+  /* restaurant CTA pre-selects the restaurant segment */
+  document.querySelectorAll('[data-seg="restaurant"]').forEach(a => {
+    a.addEventListener("click", () => {
+      segBtns.forEach(x => x.classList.toggle("active", x.dataset.value === "restaurant"));
+      segment = "restaurant";
+    });
+  });
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    msg.className = "form-msg";
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const zip = form.zip.value.trim();
+    if (!name || !email || !zip || !/^\S+@\S+\.\S+$/.test(email)) {
+      msg.textContent = "Please fill in your name, a valid email, and your ZIP code.";
+      msg.classList.add("err");
+      return;
+    }
+    if (!SUPABASE.url || !SUPABASE.anonKey) {
+      msg.textContent = "Waitlist backend isn't connected yet — this build ships with the Supabase hookup ready but unwired. Add your project URL and anon key in the SUPABASE config at the top of the script.";
+      msg.classList.add("err");
+      console.warn("[RocketPlate] Set SUPABASE.url and SUPABASE.anonKey, and create the `waitlist` table (SQL in the comment above the config).");
+      return;
+    }
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    try {
+      const res = await fetch(`${SUPABASE.url}/rest/v1/waitlist`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE.anonKey,
+          "Authorization": `Bearer ${SUPABASE.anonKey}`,
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({ segment, name, email, zip })
+      });
+      if (!res.ok) throw new Error(`Supabase responded ${res.status}`);
+      msg.textContent = "You're on the list. Watch your inbox — Founding 100 invites go out in waitlist order. 🚀";
+      msg.classList.add("ok");
+      form.reset();
+    } catch (err) {
+      msg.textContent = "Something went wrong saving your spot. Please try again in a moment.";
+      msg.classList.add("err");
+      console.error("[RocketPlate] waitlist insert failed:", err);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
