@@ -9,13 +9,26 @@ capture funnel lives at gorocketplate.com. Both sites share one Supabase backend
 
 ## Copy deck (as shipped)
 
-### Hero
+### Hero (video-ready)
 - Eyebrow: `RocketPlate · Launching first in Miami-Dade`
-- H1: **The daily meal subscription built for local restaurants.**
-- Sub: "We partner with independent restaurants, batch meals during slow afternoon
-  hours, and deliver them hot in a single evening route — creating better value for
-  subscribers and predictable revenue for local kitchens."
-- CTAs: `Join the Waitlist` (primary) · `Partner With RocketPlate` (ghost, prefills restaurant)
+- H1: **Hot local meals, delivered daily.**
+  (alternate held in reserve: "Your favorite meals, delivered on a weekly rhythm.")
+- Sub: "RocketPlate partners with local kitchens to bring fresh, hot meals to your
+  door through simple weekly plans."
+- CTAs: `Join the Founding 100` (primary) · `See How RocketPlate Works` (ghost → #how)
+- Load-in sequence: rocket reveal begins → eyebrow → headline words → sub → CTAs →
+  hero note → scroll cue. Copy stays left; the right lane is reserved for the
+  rocket/robot/plate focal point.
+
+**Hero video drop-in** (Magica still → Higgsfield/Kling/Seedance motion):
+drop `assets/rocketplate-hero.mp4` + `.webm` + `rocketplate-hero-poster.png` — no
+code changes. Desktop + motion-OK gets the ambient film (muted/loop/lazy, object-fit
+cover, cream/navy readability overlays, 3D rocket hands off and fades in after ~55vh
+of scroll). Mobile and reduced-motion get the poster; if no assets exist, the
+animated placeholder runs (3D rocket + pad smoke + steam wisps + drifting meal cards).
+Approved video beats: locked back-view still with hull text "YOUR FAVORITE MEALS
+DELIVERED DAILY" → rotate to front → robot waves from porthole (left hand) holding
+serving dish (right hand) → flies off.
 
 ### Problem (`#why`)
 - H2: **Food delivery got expensive. Meal prep got boring.**
