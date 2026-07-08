@@ -52,9 +52,13 @@ code changes. Desktop + motion-OK gets the ambient film (muted/loop/lazy, object
 cover, cream/navy readability overlays, 3D rocket hands off and fades in after ~55vh
 of scroll). Mobile and reduced-motion get the poster; if no assets exist, the
 animated placeholder runs (3D rocket + pad smoke + steam wisps + drifting meal cards).
-Approved video beats: locked back-view still with hull text "YOUR FAVORITE MEALS
-DELIVERED DAILY" → rotate to front → robot waves from porthole (left hand) holding
-serving dish (right hand) → flies off.
+Approved video beats (v2, 2026-07-08): locked back-¾-view 4K still — hull slogan
+"YOUR FAVORITE MEALS DELIVERED DAILY" on the back panel, "ROCKETPLATE.IO" arcing on
+the side panel, exact logo colors (cream hull, crimson nose, light-blue fins, orange
+porthole) → rotation sweeps ROCKETPLATE.IO past camera → front porthole reveals the
+brand-colored robot (cream/navy, orange accents) waving left-handed with serving dish
+in right hand → ignition → liftoff. Master upscaled to 2K for the flagship hero;
+gorocketplate serves the lighter 720p.
 
 ### Problem (`#why`)
 - H2: **Food delivery got expensive. Meal prep got boring.**
