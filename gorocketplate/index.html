@@ -1101,9 +1101,10 @@ document.querySelectorAll("[data-role-prefill]").forEach(a => {
       dietary_preferences: form.dietary_preferences.value.trim() || null,
       feeding_count: form.feeding_count.value || null,
       subscribe_timeline: form.subscribe_timeline.value || null,
-      wants_founding_100: form.wants_founding_100.checked,
+      founding_100_interest: form.wants_founding_100.checked,
       sms_consent: form.sms_consent.checked,
       email_consent: form.email_consent.checked,
+      source_domain: location.hostname,
       referral_source: form.referral_source.value || null,
       referred_by: UTM.referred_by,
       referral_code: referralCode,
@@ -1119,24 +1120,31 @@ document.querySelectorAll("[data-role-prefill]").forEach(a => {
     const btnLabel = btn.innerHTML;
     btn.innerHTML = "Reserving your spot…";
     try {
-      const res = await fetch(`${SUPABASE.url}/rest/v1/leads`, {
+      const res = await fetch(`${SUPABASE.url}/rest/v1/rpc/upsert_lead`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "apikey": SUPABASE.anonKey,
-          "Authorization": `Bearer ${SUPABASE.anonKey}`,
-          "Prefer": "return=minimal"
+          "Authorization": `Bearer ${SUPABASE.anonKey}`
         },
-        body: JSON.stringify(lead)
+        body: JSON.stringify({ p: lead })
       });
-      if (res.status === 409) { /* duplicate email: already on the list */
-        rpTrack("lead_duplicate", { zone });
-        showSuccess(zip, zone, referralCode, true);
-        return;
+      if (!res.ok) {
+        let detail = "";
+        try { detail = (await res.json()).message || ""; } catch {}
+        if (detail.includes("rate_limited")) {
+          msg.textContent = "Easy there — too many attempts from this connection. Give it a few minutes and try again.";
+          msg.classList.add("err");
+          btn.disabled = false;
+          btn.innerHTML = btnLabel;
+          return;
+        }
+        throw new Error(`Supabase responded ${res.status} ${detail}`);
       }
-      if (!res.ok) throw new Error(`Supabase responded ${res.status}`);
-      rpTrack("lead_created", { zone, role: lead.role, plan: lead.interested_plan });
-      showSuccess(zip, zone, referralCode, false);
+      const out = await res.json();
+      const updated = out.status === "updated";
+      rpTrack(updated ? "lead_updated" : "lead_created", { zone, role: lead.role, plan: lead.interested_plan });
+      showSuccess(zip, zone, out.referral_code || referralCode, updated);
     } catch (err) {
       console.error("[RocketPlate] lead insert failed:", err);
       msg.textContent = "Something went wrong saving your spot. Please try again in a moment — your info wasn't lost.";
@@ -1150,7 +1158,10 @@ document.querySelectorAll("[data-role-prefill]").forEach(a => {
     document.getElementById("formWrap").style.display = "none";
     const s = document.getElementById("successWrap");
     s.classList.add("show");
-    if (duplicate) s.querySelector("h2").textContent = "You're already aboard.";
+    if (duplicate) {
+      s.querySelector("h2").textContent = "You're already on the launch list.";
+      s.querySelector(".lede").textContent = "We updated your preferences — same spot in line, fresher details.";
+    }
 
     /* zone status + real aggregate count */
     const zoneEl = document.getElementById("sZone");

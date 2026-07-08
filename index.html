@@ -1734,34 +1734,44 @@ if (!prefersReduced && window.gsap) {
     const btn = form.querySelector('button[type="submit"]');
     btn.disabled = true;
     try {
-      const res = await fetch(`${SUPABASE.url}/rest/v1/leads`, {
+      const res = await fetch(`${SUPABASE.url}/rest/v1/rpc/upsert_lead`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "apikey": SUPABASE.anonKey,
-          "Authorization": `Bearer ${SUPABASE.anonKey}`,
-          "Prefer": "return=minimal"
+          "Authorization": `Bearer ${SUPABASE.anonKey}`
         },
-        body: JSON.stringify({
+        body: JSON.stringify({ p: {
           first_name: first, last_name: last, email, zip_code: zip,
           role, cuisine_interests: [],
-          wants_founding_100: document.getElementById("f-founding").checked && role === "customer",
+          founding_100_interest: document.getElementById("f-founding").checked && role === "customer",
           email_consent: true,
           launch_zone_status: zone,
           referred_by: UTM.referred_by,
+          referral_code: Math.random().toString(36).slice(2, 10),
           utm_source: UTM.utm_source, utm_medium: UTM.utm_medium, utm_campaign: UTM.utm_campaign,
           user_agent: navigator.userAgent.slice(0, 400),
-          landing_page_variant: VARIANT
-        })
+          landing_page_variant: VARIANT,
+          source_domain: location.hostname
+        } })
       });
-      if (res.status === 409) {
-        msg.textContent = "You're already on the launch list — your spot is safe. 🚀";
+      if (!res.ok) {
+        let detail = "";
+        try { detail = (await res.json()).message || ""; } catch {}
+        if (detail.includes("rate_limited")) {
+          msg.textContent = "Easy there — too many attempts from this connection. Give it a few minutes and try again.";
+          msg.classList.add("err");
+          return;
+        }
+        throw new Error(`Supabase responded ${res.status} ${detail}`);
+      }
+      const out = await res.json();
+      if (out.status === "updated") {
+        msg.textContent = "You're already on the launch list. We updated your preferences. 🚀";
         msg.classList.add("ok");
-        rpTrack("lead_duplicate", { zone });
-        btn.disabled = false;
+        rpTrack("lead_updated", { zone });
         return;
       }
-      if (!res.ok) throw new Error(`Supabase responded ${res.status}`);
       rpTrack("lead_created", { zone, role });
       const zoneLine = zone === "priority" ? "Your ZIP is in the pilot zone — Founding 100 invites go out in waitlist order."
                     : zone === "nearby" ? "You're right next to the pilot zone — demand decides which ZIP opens second."
