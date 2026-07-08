@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.gorocketplate.com/sitemap.xml

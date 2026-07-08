@@ -805,8 +805,9 @@ footer{background:var(--navy);color:var(--steel);padding:52px clamp(20px,6vw,80p
       <h4>Company</h4>
       <a href="#join">Join the waitlist</a>
       <a href="#partners">For restaurants</a>
-      <a href="#" aria-disabled="true">Privacy policy</a>
-      <a href="#" aria-disabled="true">Terms of service</a>
+      <a href="https://rocketplate.netlify.app/contact/" rel="noopener">Contact</a>
+      <a href="https://rocketplate.netlify.app/privacy/" rel="noopener">Privacy policy</a>
+      <a href="https://rocketplate.netlify.app/terms/" rel="noopener">Terms of service</a>
     </div>
   </div>
   <div class="foot-bottom">
@@ -873,12 +874,16 @@ addEventListener("scroll", () => hdr.classList.toggle("scrolled", scrollY > 24),
 (function heroVideo(){
   const media = document.getElementById("heroMedia");
   const video = document.getElementById("heroVideo");
+  /* desktop + motion-ok only: phones keep the light animated fallback (no 5MB download) */
+  if (prefersReduced || matchMedia("(max-width: 960px)").matches) {
+    video.removeAttribute("autoplay"); video.pause?.();
+    return;
+  }
   fetch("assets/rocketplate-hero.mp4", { method: "HEAD" })
     .then(r => {
       if (r.ok) { media.classList.add("has-video"); video.load(); video.play().catch(()=>{}); }
     })
     .catch(() => {}); /* keep animated fallback */
-  if (prefersReduced) { video.removeAttribute("autoplay"); video.pause?.(); }
 })();
 
 /* ---------------- cuisine orbit: place satellites on the circle ---------------- */
