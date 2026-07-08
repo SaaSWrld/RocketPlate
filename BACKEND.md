@@ -59,15 +59,48 @@ Returns `{ status: 'created'|'updated', referral_code, launch_zone_status }`.
 Frontends: `created` → success/zone state; `updated` → "You're already on the
 launch list. We updated your preferences."
 
-## Admin aggregates (service-role only — power a future `/admin`)
-- `admin_leads_by_zip` — leads, founding interest, restaurant leads per ZIP
-- `admin_cuisine_demand` — picks per cuisine (unnested array)
-- `admin_zone_stats` — each zone's real lead + partner counts, priority, date
+## Dashboards (built — all three)
 
-Planned `/admin` route (build later, service-role key server-side ONLY, never
-shipped to the browser): total leads, leads by ZIP, Founding 100 interest,
-restaurant applications, cuisine demand, CSV export. No fake metrics — every
-number reads from these views.
+Three static pages in the root repo, so live at `rocketplate.netlify.app/…`
+(→ rocketplate.io/… when DNS lands). Shared styles in `dash.css`. **No
+service-role key ever reaches the browser** — access is via SECURITY DEFINER
+RPCs that self-authorize.
+
+### `/admin` — internal ops dashboard
+- Token gate → `admin_dashboard(token)`. Token is bcrypt-hashed in
+  `admin_credentials` (one row); the plaintext is held only by Andre and typed
+  in (kept in sessionStorage for the tab). `is_admin()` does the bcrypt compare.
+- Shows: totals (leads / founding interest / SMS / last 7d / partner apps),
+  leads by zone, by role, cuisine demand, by source site, leads-by-ZIP table,
+  launch-zone stats (real lead + partner counts), partner applications table,
+  recent-50 leads.
+- CSV export via `admin_export_leads(token)` / `admin_export_partners(token)`
+  (full rows, token-gated; CSV built client-side). All real data, no fake metrics.
+- **Rotate the admin token**: `update admin_credentials set token_hash =
+  extensions.crypt('NEW_TOKEN', extensions.gen_salt('bf',10));`
+
+### `/account` — subscriber launch profile
+- Opened via `?token=<access_token>` (per-lead UUID, unguessable; would be the
+  email magic-link). `get_my_lead(token)` reads, `update_my_lead(token, prefs)`
+  writes preference columns only (never email/attribution). Shows current plan,
+  ZIP zone, Founding status, editable prefs, and the referral link + count.
+- Surfaced automatically in both signup success flows (upsert_lead returns the
+  access_token). Until Resend is wired, returning access needs that emailed link —
+  the no-token state says so honestly.
+
+### `/partner` — restaurant application + status
+- No token → application form → `submit_partner_application(jsonb)` (validates
+  business/contact/email, rate-limited) → returns a private status link.
+- `?token=` → `get_my_application(token)` → 5-stage pipeline (Applied → Menu fit
+  review → Sample & tasting → Launch menu setup → Go-live), with declined/on_hold
+  states. Ops advance a partner by updating `restaurant_partner_applications.status`.
+- All partner CTAs on both sites now point here.
+
+### Admin aggregate views (service-role / definer only)
+- `admin_leads_by_zip`, `admin_cuisine_demand`, `admin_zone_stats` — consumed by
+  `admin_dashboard`. Not granted to anon/authenticated.
+
+Migrations added: `dashboards_backend`, `admin_rpcs_and_upsert_token`.
 
 ## Migrations (in order)
 `create_waitlist_table` → `create_leads_and_email_events` →

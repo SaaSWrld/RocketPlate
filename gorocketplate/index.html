@@ -553,7 +553,7 @@ footer{background:var(--navy);color:var(--steel);padding:52px clamp(20px,6vw,80p
           <h2>Own a local restaurant?<br>Turn slow hours into a new revenue lane.</h2>
           <p>RocketPlate helps independent restaurants batch-cook pre-counted meals during slower afternoon windows, then handles the delivery experience — so kitchens grow without fighting the dinner rush.</p>
         </div>
-        <a href="#join" class="btn btn-primary" data-role-prefill="restaurant_owner" data-track="partner_cta">Apply as a Restaurant Partner <span class="arrow">→</span></a>
+        <a href="https://rocketplate.netlify.app/partner/" class="btn btn-primary" data-track="partner_cta">Apply as a Restaurant Partner <span class="arrow">→</span></a>
       </div>
     </div>
   </section>
@@ -737,6 +737,7 @@ footer{background:var(--navy);color:var(--steel);padding:52px clamp(20px,6vw,80p
           <h2>Welcome aboard.</h2>
           <p class="lede" style="margin:0 auto">You're on the RocketPlate launch list.</p>
           <div class="s-zone" id="sZone"></div>
+          <a id="acctLink" class="btn btn-ghost" href="#" hidden style="margin:4px auto 0">Manage your launch profile <span class="arrow">→</span></a>
           <div class="refer-box">
             <h3>Move your ZIP up the launch map</h3>
             <p>Share RocketPlate with 3 neighbors — launch zones are ranked by demand, so every neighbor you bring literally moves your area up the list.</p>
@@ -1144,7 +1145,7 @@ document.querySelectorAll("[data-role-prefill]").forEach(a => {
       const out = await res.json();
       const updated = out.status === "updated";
       rpTrack(updated ? "lead_updated" : "lead_created", { zone, role: lead.role, plan: lead.interested_plan });
-      showSuccess(zip, zone, out.referral_code || referralCode, updated);
+      showSuccess(zip, zone, out.referral_code || referralCode, updated, out.access_token);
     } catch (err) {
       console.error("[RocketPlate] lead insert failed:", err);
       msg.textContent = "Something went wrong saving your spot. Please try again in a moment — your info wasn't lost.";
@@ -1154,13 +1155,20 @@ document.querySelectorAll("[data-role-prefill]").forEach(a => {
     }
   });
 
-  async function showSuccess(zip, zone, refCode, duplicate) {
+  async function showSuccess(zip, zone, refCode, duplicate, accessToken) {
     document.getElementById("formWrap").style.display = "none";
     const s = document.getElementById("successWrap");
     s.classList.add("show");
     if (duplicate) {
       s.querySelector("h2").textContent = "You're already on the launch list.";
       s.querySelector(".lede").textContent = "We updated your preferences — same spot in line, fresher details.";
+    }
+
+    /* private link back to their launch profile (would also arrive by email) */
+    if (accessToken) {
+      const acct = document.getElementById("acctLink");
+      acct.href = "https://rocketplate.netlify.app/account?token=" + accessToken;
+      acct.hidden = false;
     }
 
     /* zone status + real aggregate count */

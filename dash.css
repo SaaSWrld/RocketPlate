@@ -1,0 +1,73 @@
+/* RocketPlate dashboards — shared styles */
+:root{
+  --navy:#1C3A6E; --rocket-blue:#0B5E8F; --crimson:#C0182A; --orange:#F28C28;
+  --cream:#FFF8EE; --steel:#BECCD6; --ink:#16294D; --card:#FFFDF8;
+  --ok:#1a7f4b; --shadow:0 18px 50px -18px rgba(28,58,110,.28);
+  --font-display:"Fraunces",Georgia,serif; --font-body:"Outfit",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-body);background:var(--cream);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--rocket-blue)}
+h1,h2,h3{font-family:var(--font-display);color:var(--navy);line-height:1.1}
+.wrap{max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,44px)}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:700;font-size:1.3rem;color:var(--navy)}
+.brand img{height:34px}
+.eyebrow{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--crimson)}
+.muted{color:#5A6C92}
+.mono{font-family:var(--font-mono)}
+/* gate / cards */
+.gate{max-width:420px;margin:12vh auto;background:var(--card);border-radius:20px;box-shadow:var(--shadow);border:1px solid rgba(28,58,110,.1);padding:34px}
+.gate h1{font-size:1.5rem;margin-bottom:8px}
+.gate p{font-size:.92rem;color:#3A4E77;margin-bottom:18px}
+.field{margin-bottom:14px}
+.field label{display:block;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#5A6C92;margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;font-family:var(--font-body);font-size:1rem;border:1.5px solid rgba(28,58,110,.16);background:#fff;color:var(--ink);transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--rocket-blue);box-shadow:0 0 0 4px rgba(11,94,143,.12)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-body);font-weight:600;font-size:.98rem;padding:13px 22px;border-radius:999px;border:none;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s}
+.btn-primary{background:var(--crimson);color:#fff;box-shadow:0 12px 28px -10px rgba(192,24,42,.5)}
+.btn-primary:hover{transform:translateY(-2px);background:#CC1F1F}
+.btn-primary:disabled{opacity:.6;cursor:wait;transform:none}
+.btn-ghost{background:transparent;color:var(--navy);box-shadow:inset 0 0 0 2px rgba(28,58,110,.22)}
+.btn-ghost:hover{box-shadow:inset 0 0 0 2px var(--navy)}
+.btn-sm{padding:9px 16px;font-size:.86rem}
+.err{color:var(--crimson);font-size:.86rem;margin-top:10px;min-height:1.1em}
+.ok{color:var(--ok);font-size:.86rem;margin-top:10px;min-height:1.1em}
+/* stat cards */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:26px}
+.stat{background:var(--card);border-radius:16px;border:1px solid rgba(28,58,110,.09);box-shadow:0 10px 30px -16px rgba(28,58,110,.25);padding:20px 22px}
+.stat .n{font-family:var(--font-display);font-weight:700;font-size:2.2rem;color:var(--navy);line-height:1}
+.stat .l{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#5A6C92;margin-top:6px}
+.stat.hot .n{color:var(--crimson)}
+.stat.warm .n{color:var(--orange)}
+/* panels */
+.panel{background:var(--card);border-radius:18px;border:1px solid rgba(28,58,110,.09);box-shadow:0 10px 30px -16px rgba(28,58,110,.22);padding:24px;margin-bottom:22px}
+.panel h2{font-size:1.15rem;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.panel h2 .cnt{font-family:var(--font-mono);font-size:.72rem;color:#5A6C92;font-weight:400}
+/* bar rows */
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar-row{display:grid;grid-template-columns:130px 1fr 44px;align-items:center;gap:12px;font-size:.88rem}
+.bar-row .track{background:rgba(28,58,110,.08);border-radius:99px;height:12px;overflow:hidden}
+.bar-row .fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--rocket-blue),var(--orange))}
+.bar-row .v{font-family:var(--font-mono);font-size:.8rem;text-align:right;color:var(--navy)}
+.bar-row .k{color:#3A4E77;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* tables */
+.tbl{width:100%;border-collapse:collapse;font-size:.85rem}
+.tbl th{text-align:left;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:#5A6C92;padding:8px 10px;border-bottom:2px solid rgba(28,58,110,.12)}
+.tbl td{padding:9px 10px;border-bottom:1px dashed rgba(28,58,110,.12);color:#3A4E77}
+.tbl tr:hover td{background:rgba(242,140,40,.05)}
+.tag{display:inline-block;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.06em;padding:3px 9px;border-radius:99px;background:rgba(11,94,143,.1);color:var(--rocket-blue)}
+.tag.priority{background:rgba(242,140,40,.15);color:#b8641a}
+.tag.nearby{background:rgba(11,94,143,.12);color:var(--rocket-blue)}
+.tag.not_yet{background:rgba(28,58,110,.08);color:#5A6C92}
+.scroll-x{overflow-x:auto}
+.chip-group{display:flex;flex-wrap:wrap;gap:8px}
+.chip-group label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:.88rem;border:1.5px solid rgba(28,58,110,.16);border-radius:999px;padding:8px 14px;background:#fff;transition:all .18s}
+.chip-group input{position:absolute;opacity:0;width:0;height:0}
+.chip-group label:has(input:checked){background:var(--navy);color:#fff;border-color:var(--navy)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;color:#3A4E77;cursor:pointer;margin-top:6px}
+.consent input{width:18px;height:18px;margin-top:2px;accent-color:var(--crimson);flex-shrink:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.row2{grid-template-columns:1fr}.bar-row{grid-template-columns:100px 1fr 40px}}
+.loading{text-align:center;padding:40px;color:#5A6C92;font-family:var(--font-mono);font-size:.85rem}

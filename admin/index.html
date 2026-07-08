@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>RocketPlate — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../dash.css">
+</head>
+<body>
+
+<!-- gate -->
+<div id="gate" class="gate">
+  <span class="eyebrow">RocketPlate · Internal</span>
+  <h1>Admin access</h1>
+  <p>Enter your admin token to view live waitlist metrics. Nothing here is public.</p>
+  <form id="gateForm">
+    <div class="field">
+      <label for="tok">Admin token</label>
+      <input id="tok" type="password" autocomplete="off" placeholder="rp_…" required>
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:100%">Unlock dashboard</button>
+    <div class="err" id="gateErr"></div>
+  </form>
+</div>
+
+<!-- dashboard -->
+<div id="dash" class="wrap" hidden>
+  <div class="topbar">
+    <div class="brand"><img src="../logo.png" alt="">Admin</div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span class="mono muted" id="stamp" style="font-size:.74rem"></span>
+      <button class="btn btn-ghost btn-sm" id="refreshBtn">Refresh</button>
+      <button class="btn btn-ghost btn-sm" id="csvLeads">Export leads CSV</button>
+      <button class="btn btn-ghost btn-sm" id="csvPartners">Export partners CSV</button>
+      <button class="btn btn-ghost btn-sm" id="logoutBtn">Lock</button>
+    </div>
+  </div>
+
+  <div class="stat-grid" id="stats"></div>
+
+  <div class="row2">
+    <div class="panel"><h2>Leads by launch zone</h2><div class="bars" id="zoneBars"></div></div>
+    <div class="panel"><h2>Leads by role</h2><div class="bars" id="roleBars"></div></div>
+  </div>
+
+  <div class="row2">
+    <div class="panel"><h2>Cuisine demand</h2><div class="bars" id="cuisineBars"></div></div>
+    <div class="panel"><h2>By source site</h2><div class="bars" id="variantBars"></div></div>
+  </div>
+
+  <div class="panel">
+    <h2>Leads by ZIP <span class="cnt" id="zipCnt"></span></h2>
+    <div class="scroll-x"><table class="tbl" id="zipTbl"></table></div>
+  </div>
+
+  <div class="panel">
+    <h2>Launch zones <span class="cnt">seeded pilot map</span></h2>
+    <div class="scroll-x"><table class="tbl" id="zoneTbl"></table></div>
+  </div>
+
+  <div class="panel">
+    <h2>Restaurant partner applications <span class="cnt" id="partnerCnt"></span></h2>
+    <div class="scroll-x"><table class="tbl" id="partnerTbl"></table></div>
+  </div>
+
+  <div class="panel">
+    <h2>Recent leads <span class="cnt">latest 50</span></h2>
+    <div class="scroll-x"><table class="tbl" id="recentTbl"></table></div>
+  </div>
+</div>
+
+<script>
+const SB = { url:"https://uhmyjevtfrynunxfsyof.supabase.co", key:"sb_publishable_wsUbTQXWP3dYHyJDbhOmEQ_LSEPOZfO" };
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let TOKEN = sessionStorage.getItem("rp_admin") || "";
+
+async function rpc(fn, body){
+  const r = await fetch(`${SB.url}/rest/v1/rpc/${fn}`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json","apikey":SB.key,"Authorization":`Bearer ${SB.key}`},
+    body:JSON.stringify(body)
+  });
+  if(!r.ok){ let m=""; try{m=(await r.json()).message||"";}catch{} throw new Error(m||("HTTP "+r.status)); }
+  return r.json();
+}
+
+function bars(el, obj, {sortDesc=true}={}){
+  const entries = Array.isArray(obj) ? obj : Object.entries(obj).map(([k,v])=>({k,v}));
+  const norm = entries.map(e => Array.isArray(e)?{k:e[0],v:e[1]}:e);
+  if(sortDesc) norm.sort((a,b)=>b.v-a.v);
+  const max = Math.max(1,...norm.map(e=>e.v));
+  el.innerHTML = norm.length ? norm.map(e=>`
+    <div class="bar-row"><span class="k">${esc(e.k)}</span>
+    <span class="track"><span class="fill" style="width:${(e.v/max*100).toFixed(1)}%"></span></span>
+    <span class="v">${e.v}</span></div>`).join("") : `<div class="muted" style="font-size:.85rem">No data yet.</div>`;
+}
+
+function render(d){
+  const t = d.totals;
+  $("#stats").innerHTML = `
+    <div class="stat"><div class="n">${t.leads}</div><div class="l">Total leads</div></div>
+    <div class="stat warm"><div class="n">${t.founding_interest}</div><div class="l">Founding 100 interest</div></div>
+    <div class="stat"><div class="n">${t.sms_opt_in}</div><div class="l">SMS opt-in</div></div>
+    <div class="stat"><div class="n">${t.last_7d}</div><div class="l">Last 7 days</div></div>
+    <div class="stat hot"><div class="n">${d.partner_apps}</div><div class="l">Partner applications</div></div>`;
+
+  const zoneLabels = {priority:"Priority zone",nearby:"Nearby zone",not_yet:"Outside pilot",unknown:"Unknown"};
+  bars($("#zoneBars"), Object.entries(d.by_zone).map(([k,v])=>({k:zoneLabels[k]||k,v})));
+  const roleLabels = {customer:"Customers",restaurant_owner:"Restaurant owners",driver_operator:"Drivers/ops",investor_press:"Investor/press",other:"Other"};
+  bars($("#roleBars"), Object.entries(d.by_role).map(([k,v])=>({k:roleLabels[k]||k,v})));
+  bars($("#cuisineBars"), d.cuisine.map(c=>({k:c.cuisine,v:c.picks})));
+  bars($("#variantBars"), Object.entries(d.by_variant).map(([k,v])=>({k:k.replace("-v1","").replace("rocketplate-io","rocketplate.io").replace("gorocketplate","gorocketplate.com"),v})));
+
+  $("#zipCnt").textContent = d.by_zip.length + " ZIPs";
+  $("#zipTbl").innerHTML = `<tr><th>ZIP</th><th>Leads</th><th>Founding</th><th>Restaurant leads</th></tr>` +
+    (d.by_zip.length ? d.by_zip.map(r=>`<tr><td class="mono">${esc(r.zip_code)}</td><td>${r.leads}</td><td>${r.founding_interest}</td><td>${r.restaurant_leads}</td></tr>`).join("")
+      : `<tr><td colspan="4" class="muted">No leads yet.</td></tr>`);
+
+  $("#zoneTbl").innerHTML = `<tr><th>ZIP</th><th>Neighborhood</th><th>Status</th><th>Priority</th><th>Leads</th><th>Partners</th><th>Target</th></tr>` +
+    d.zones.map(z=>`<tr><td class="mono">${esc(z.zip_code)}</td><td>${esc(z.neighborhood||"—")}</td>
+      <td><span class="tag ${z.status==='priority'?'priority':z.status==='nearby'?'nearby':'not_yet'}">${esc(z.status)}</span></td>
+      <td>${z.priority_score}</td><td>${z.real_lead_count}</td><td>${z.restaurant_partner_count}</td>
+      <td class="mono">${z.target_launch_date||"—"}</td></tr>`).join("");
+
+  $("#partnerCnt").textContent = d.partner_apps + " total";
+  $("#partnerTbl").innerHTML = `<tr><th>Applied</th><th>Business</th><th>Contact</th><th>Email</th><th>Cuisine</th><th>ZIP</th><th>Locations</th><th>2–4 PM?</th><th>Status</th></tr>` +
+    (d.partners.length ? d.partners.map(p=>`<tr><td class="mono">${(p.created_at||"").slice(0,10)}</td><td>${esc(p.business_name)}</td>
+      <td>${esc(p.contact_name)}</td><td>${esc(p.email)}</td><td>${esc(p.cuisine_type||"—")}</td><td class="mono">${esc(p.zip_code||"—")}</td>
+      <td>${p.number_of_locations??"—"}</td><td>${p.can_batch_2_to_4_pm===true?"Yes":p.can_batch_2_to_4_pm===false?"No":"—"}</td>
+      <td><span class="tag">${esc(p.status)}</span></td></tr>`).join("")
+      : `<tr><td colspan="9" class="muted">No applications yet.</td></tr>`);
+
+  $("#recentTbl").innerHTML = `<tr><th>When</th><th>Name</th><th>Email</th><th>ZIP</th><th>Role</th><th>Plan</th><th>Zone</th><th>F100</th><th>Refs</th><th>Source</th></tr>` +
+    (d.recent_leads.length ? d.recent_leads.map(l=>`<tr><td class="mono">${(l.created_at||"").slice(0,16).replace("T"," ")}</td>
+      <td>${esc(l.first_name)} ${esc(l.last_name)}</td><td>${esc(l.email)}</td><td class="mono">${esc(l.zip_code)}</td>
+      <td>${esc(l.role)}</td><td>${esc(l.interested_plan||"—")}</td><td>${esc(l.launch_zone_status||"—")}</td>
+      <td>${l.founding_100_interest?"★":""}</td><td>${l.referral_count||0}</td><td>${esc((l.source_domain||"").replace("www.",""))}</td></tr>`).join("")
+      : `<tr><td colspan="10" class="muted">No leads yet.</td></tr>`);
+
+  $("#stamp").textContent = "Loaded " + new Date().toLocaleTimeString();
+}
+
+async function load(){
+  try{
+    const d = await rpc("admin_dashboard", { p_token: TOKEN });
+    $("#gate").hidden = true; $("#dash").hidden = false;
+    render(d);
+  }catch(e){
+    if(String(e.message).includes("unauthorized")){
+      sessionStorage.removeItem("rp_admin"); TOKEN="";
+      $("#dash").hidden = true; $("#gate").hidden = false;
+      $("#gateErr").textContent = "That token wasn't recognized.";
+    }else{
+      $("#gateErr").textContent = "Couldn't load: " + e.message;
+    }
+  }
+}
+
+function toCSV(rows){
+  if(!rows.length) return "";
+  const cols = Object.keys(rows[0]);
+  const cell = v => { if(v==null) return ""; const s = Array.isArray(v)?v.join("; "):String(v); return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
+  return [cols.join(","), ...rows.map(r=>cols.map(c=>cell(r[c])).join(","))].join("\n");
+}
+async function download(fn, csv, name){
+  const csvText = toCSV(await rpc(fn,{p_token:TOKEN}));
+  const blob = new Blob([csvText],{type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `rocketplate-${name}-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+$("#gateForm").addEventListener("submit", e=>{
+  e.preventDefault();
+  TOKEN = $("#tok").value.trim();
+  sessionStorage.setItem("rp_admin", TOKEN);
+  $("#gateErr").textContent = "";
+  load();
+});
+$("#refreshBtn").addEventListener("click", load);
+$("#logoutBtn").addEventListener("click", ()=>{ sessionStorage.removeItem("rp_admin"); location.reload(); });
+$("#csvLeads").addEventListener("click", ()=>download("admin_export_leads",null,"leads").catch(e=>alert(e.message)));
+$("#csvPartners").addEventListener("click", ()=>download("admin_export_partners",null,"partners").catch(e=>alert(e.message)));
+
+if(TOKEN) load();
+</script>
+</body>
+</html>

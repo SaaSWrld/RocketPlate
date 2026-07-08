@@ -644,7 +644,7 @@ footer{
       <a href="#founding">Founding 100</a>
       <a href="#faq">FAQ</a>
     </div>
-    <a href="#join" class="btn btn-ghost btn-sm" data-seg="restaurant" style="margin-right:10px">Partner</a>
+    <a href="/partner/" class="btn btn-ghost btn-sm" style="margin-right:10px">Partner</a>
     <a href="#join" class="btn btn-primary btn-sm">Join the Waitlist</a>
   </nav>
 </header>
@@ -890,7 +890,7 @@ footer{
           </div>
         </div>
         <div style="margin-top:36px" class="rv">
-          <a href="#join" class="btn btn-primary" data-seg="restaurant">Apply as a founding kitchen <span class="arrow">→</span></a>
+          <a href="/partner/" class="btn btn-primary">Apply as a founding kitchen <span class="arrow">→</span></a>
         </div>
       </div>
       <div class="deadzone-card rv">
@@ -942,7 +942,7 @@ footer{
         <div class="pstep rv"><span class="p-n">05</span><h3>Batch delivery go-live</h3><p>Counts arrive the night before. You cook. We handle everything else.</p></div>
       </div>
       <div style="margin-top:36px" class="rv">
-        <a href="#join" class="btn btn-primary" data-seg="restaurant">Apply as a Restaurant Partner <span class="arrow">→</span></a>
+        <a href="/partner/" class="btn btn-primary">Apply as a Restaurant Partner <span class="arrow">→</span></a>
       </div>
     </div>
   </section>
@@ -1066,7 +1066,7 @@ footer{
       <p class="lede rv" style="margin:0 auto 30px">Subscribers set the launch map. Restaurants set the menu. Both start here.</p>
       <div class="hero-ctas rv" style="justify-content:center">
         <a href="#join" class="btn btn-primary">Join the Founding 100 <span class="arrow">🚀</span></a>
-        <a href="#join" class="btn btn-ghost" data-seg="restaurant">Partner With RocketPlate</a>
+        <a href="/partner/" class="btn btn-ghost">Partner With RocketPlate</a>
       </div>
     </div>
   </section>
@@ -1776,7 +1776,8 @@ if (!prefersReduced && window.gsap) {
       const zoneLine = zone === "priority" ? "Your ZIP is in the pilot zone — Founding 100 invites go out in waitlist order."
                     : zone === "nearby" ? "You're right next to the pilot zone — demand decides which ZIP opens second."
                     : "Your ZIP isn't in the launch area yet, but you just put it on the map.";
-      msg.textContent = `You're on the list. ${zoneLine} 🚀`;
+      msg.innerHTML = `You're on the list. ${zoneLine} 🚀` +
+        (out.access_token ? ` <a href="https://rocketplate.netlify.app/account?token=${out.access_token}" style="color:var(--rocket-blue);white-space:nowrap">Manage your profile →</a>` : "");
       msg.classList.add("ok");
       form.reset();
       updateProg();

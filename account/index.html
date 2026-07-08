@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>RocketPlate — Your launch profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../dash.css">
+</head>
+<body>
+
+<!-- no-token state -->
+<div id="need" class="gate" hidden>
+  <span class="eyebrow">Your launch profile</span>
+  <h1>Open your profile from your link</h1>
+  <p>Your launch profile opens from the private link in your RocketPlate emails. Once launch invites go out, every confirmation includes a one-tap link back here to update your preferences.</p>
+  <a class="btn btn-primary" href="https://rocketplate.netlify.app/#join" style="width:100%">Join the waitlist</a>
+</div>
+
+<!-- loading -->
+<div id="loading" class="loading">Opening your launch profile…</div>
+
+<!-- profile -->
+<div id="profile" class="wrap" hidden>
+  <div class="topbar">
+    <div class="brand"><img src="../logo.png" alt="">Launch profile</div>
+    <a class="btn btn-ghost btn-sm" href="https://rocketplate.netlify.app/">Back to RocketPlate</a>
+  </div>
+
+  <div class="panel">
+    <h2 id="hello">Welcome back</h2>
+    <p class="muted" style="font-size:.9rem;margin-top:-6px">You're on the launch list. Keep your preferences fresh so we plan your zone right.</p>
+    <div class="stat-grid" id="profStats" style="margin-top:18px;margin-bottom:0"></div>
+  </div>
+
+  <form id="prefForm" class="panel">
+    <h2>Your preferences</h2>
+    <div class="row2">
+      <div class="field"><label for="p-plan">Weekly plan</label>
+        <select id="p-plan"><option value="5_meals">5 meals / week</option><option value="7_meals">7 meals / week</option><option value="not_sure">Not sure yet</option></select></div>
+      <div class="field"><label for="p-household">Household</label>
+        <select id="p-household"><option value="individual">Individual</option><option value="couple">Couple</option><option value="family">Family</option><option value="office">Office</option><option value="student">Student</option><option value="senior">Senior</option><option value="other">Other</option></select></div>
+      <div class="field"><label for="p-zip">ZIP code</label><input id="p-zip" inputmode="numeric" maxlength="10"></div>
+      <div class="field"><label for="p-phone">Mobile phone</label><input id="p-phone" type="tel"></div>
+      <div class="field"><label for="p-neighborhood">Neighborhood</label><input id="p-neighborhood"></div>
+      <div class="field"><label for="p-feeding">Feeding how many?</label>
+        <select id="p-feeding"><option value="">—</option><option value="1">Just me</option><option value="2">2</option><option value="3-4">3–4</option><option value="5+">5 or more</option></select></div>
+    </div>
+    <div class="field"><label>Cuisine interests</label>
+      <div class="chip-group" id="p-cuisine">
+        <label><input type="checkbox" value="cuban_latin"> 🥟 Cuban / Latin</label>
+        <label><input type="checkbox" value="bbq"> 🔥 BBQ</label>
+        <label><input type="checkbox" value="italian"> 🍝 Italian</label>
+        <label><input type="checkbox" value="mexican"> 🌮 Mexican</label>
+        <label><input type="checkbox" value="asian_fusion"> 🥡 Asian fusion</label>
+        <label><input type="checkbox" value="burgers"> 🍔 Burgers</label>
+        <label><input type="checkbox" value="seafood"> 🦐 Seafood</label>
+        <label><input type="checkbox" value="healthy_light"> 🥗 Healthy / light</label>
+        <label><input type="checkbox" value="surprise_me"> 🎁 Surprise me</label>
+      </div>
+    </div>
+    <div class="field"><label for="p-dietary">Dietary preferences</label><input id="p-dietary" placeholder="e.g. no pork, gluten-free"></div>
+    <div class="field"><label for="p-timeline">If your area launches, you'd subscribe…</label>
+      <select id="p-timeline"><option value="">—</option><option value="immediately">Immediately</option><option value="within_month">Within a month</option><option value="within_3_months">Within 3 months</option><option value="just_curious">Just curious for now</option></select></div>
+    <label class="consent"><input type="checkbox" id="p-founding"> <span>I want <b>Founding 100 access</b> when my zone launches.</span></label>
+    <label class="consent"><input type="checkbox" id="p-sms"> <span>Text me time-sensitive launch news (optional).</span></label>
+    <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <button type="submit" class="btn btn-primary" id="saveBtn">Save my preferences</button>
+      <span class="ok" id="saveMsg" style="margin-top:0"></span>
+    </div>
+  </form>
+
+  <div class="panel" id="refPanel">
+    <h2>Move your ZIP up the launch map</h2>
+    <p class="muted" style="font-size:.9rem;margin-top:-6px;margin-bottom:14px">Launch order is set by demand. Share your link — every neighbor who joins with it moves your area up.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <input id="refLink" readonly style="flex:1;min-width:220px;font-family:var(--font-mono);font-size:.82rem">
+      <button class="btn btn-ghost btn-sm" id="copyRef" type="button">Copy link</button>
+      <span class="stat" style="padding:10px 16px"><span class="n" id="refCount" style="font-size:1.4rem">0</span><span class="l">neighbors joined</span></span>
+    </div>
+    <div class="ok" id="copyMsg"></div>
+  </div>
+</div>
+
+<script>
+const SB = { url:"https://uhmyjevtfrynunxfsyof.supabase.co", key:"sb_publishable_wsUbTQXWP3dYHyJDbhOmEQ_LSEPOZfO" };
+const SITE = "https://rocketplate.netlify.app/"; /* swap to https://www.rocketplate.io/ when DNS is live */
+const $ = s => document.querySelector(s);
+const token = new URLSearchParams(location.search).get("token");
+const planLabel = {"5_meals":"5 meals/week","7_meals":"7 meals/week","not_sure":"Undecided"};
+const zoneLabel = {priority:"Priority launch zone",nearby:"Nearby future zone",not_yet:"Not in pilot yet"};
+
+async function rpc(fn, body){
+  const r = await fetch(`${SB.url}/rest/v1/rpc/${fn}`,{
+    method:"POST", headers:{"Content-Type":"application/json","apikey":SB.key,"Authorization":`Bearer ${SB.key}`},
+    body:JSON.stringify(body)
+  });
+  if(!r.ok){ let m=""; try{m=(await r.json()).message||"";}catch{} throw new Error(m||("HTTP "+r.status)); }
+  return r.json();
+}
+
+function fill(l){
+  $("#hello").textContent = `Welcome back, ${l.first_name}`;
+  $("#profStats").innerHTML = `
+    <div class="stat"><div class="n" style="font-size:1.5rem">${planLabel[l.interested_plan]||"—"}</div><div class="l">Current plan</div></div>
+    <div class="stat"><div class="n" style="font-size:1.5rem">${l.zip_code}</div><div class="l">ZIP · ${zoneLabel[l.launch_zone_status]||"on the map"}</div></div>
+    <div class="stat ${l.founding_100_interest?'warm':''}"><div class="n" style="font-size:1.5rem">${l.founding_100_interest?"Yes ★":"No"}</div><div class="l">Founding 100</div></div>`;
+  $("#p-plan").value = l.interested_plan||"not_sure";
+  $("#p-household").value = l.household_type||"other";
+  $("#p-zip").value = l.zip_code||"";
+  $("#p-phone").value = l.phone||"";
+  $("#p-neighborhood").value = l.neighborhood||"";
+  $("#p-feeding").value = l.feeding_count||"";
+  $("#p-dietary").value = l.dietary_preferences||"";
+  $("#p-timeline").value = l.subscribe_timeline||"";
+  $("#p-founding").checked = !!l.founding_100_interest;
+  $("#p-sms").checked = !!l.sms_consent;
+  (l.cuisine_interests||[]).forEach(c=>{ const b=document.querySelector(`#p-cuisine input[value="${c}"]`); if(b) b.checked=true; });
+  const link = SITE + "?ref=" + (l.referral_code||"");
+  $("#refLink").value = link;
+  $("#refCount").textContent = l.referral_count||0;
+  if(!l.referral_code) $("#refPanel").hidden = true;
+}
+
+async function boot(){
+  if(!token){ $("#loading").hidden=true; $("#need").hidden=false; return; }
+  try{
+    const l = await rpc("get_my_lead", { p_token: token });
+    fill(l);
+    $("#loading").hidden=true; $("#profile").hidden=false;
+  }catch(e){
+    $("#loading").hidden=true; $("#need").hidden=false;
+    if(String(e.message).includes("not_found")) $("#need").querySelector("h1").textContent = "That link didn't match a profile";
+  }
+}
+
+$("#prefForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const btn = $("#saveBtn"), msg = $("#saveMsg");
+  btn.disabled = true; msg.className="ok"; msg.textContent="";
+  const prefs = {
+    interested_plan: $("#p-plan").value,
+    household_type: $("#p-household").value,
+    zip_code: $("#p-zip").value.trim(),
+    phone: $("#p-phone").value.trim(),
+    neighborhood: $("#p-neighborhood").value.trim(),
+    feeding_count: $("#p-feeding").value,
+    dietary_preferences: $("#p-dietary").value.trim(),
+    subscribe_timeline: $("#p-timeline").value,
+    founding_100_interest: $("#p-founding").checked,
+    sms_consent: $("#p-sms").checked,
+    cuisine_interests: [...document.querySelectorAll('#p-cuisine input:checked')].map(i=>i.value)
+  };
+  try{
+    await rpc("update_my_lead", { p_token: token, p: prefs });
+    const l = await rpc("get_my_lead", { p_token: token });
+    fill(l);
+    msg.textContent = "Saved. 🚀";
+  }catch(err){
+    msg.className="err"; msg.textContent = "Couldn't save — try again in a moment.";
+  }finally{ btn.disabled=false; }
+});
+
+$("#copyRef").addEventListener("click", async ()=>{
+  try{ await navigator.clipboard.writeText($("#refLink").value); }
+  catch{ $("#refLink").select(); document.execCommand("copy"); }
+  $("#copyMsg").textContent = "Copied — go recruit those neighbors. 🛰️";
+});
+
+boot();
+</script>
+</body>
+</html>
