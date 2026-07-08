@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RocketPlate for Restaurants — Turn slow hours into predictable batch revenue</title>
+<meta name="description" content="RocketPlate partners with independent restaurants to batch-cook pre-counted subscriber meals during slower afternoon windows, then handles the delivery experience. A controlled batch production channel — not a delivery marketplace.">
+<link rel="canonical" href="https://www.rocketplate.io/partners/">
+<meta property="og:title" content="RocketPlate for Restaurants — Your slowest hours could become your next revenue lane">
+<meta property="og:description" content="A controlled batch production channel for independent kitchens. Pre-counted demand, one pickup, no dining-room disruption.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.rocketplate.io/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1C3A6E; --navy-deep:#14294f; --rocket-blue:#0B5E8F; --crimson:#C0182A; --crimson-hot:#CC1F1F;
+  --orange:#F28C28; --cream:#FFF8EE; --steel:#BECCD6; --ink:#16294D; --card:#FFFDF8;
+  --line:rgba(28,58,110,.12); --shadow:0 18px 50px -18px rgba(28,58,110,.28); --radius:18px;
+  --font-display:"Fraunces",Georgia,serif; --font-body:"Outfit",system-ui,sans-serif; --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease-ui:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--orange);color:#fff}
+main{position:relative;z-index:1}
+section{position:relative;padding:clamp(64px,9vh,110px) clamp(20px,6vw,80px)}
+.wrap{max-width:1120px;margin:0 auto;position:relative}
+h1,h2,h3{font-family:var(--font-display);color:var(--navy);line-height:1.1;letter-spacing:-.01em}
+h1{font-size:clamp(2.3rem,5vw,3.9rem);font-weight:600}
+h2{font-size:clamp(1.8rem,3.6vw,2.7rem);font-weight:600;margin-bottom:16px}
+h3{font-size:1.12rem;font-weight:600}
+.lede{font-size:clamp(1.02rem,1.5vw,1.2rem);color:#3A4E77;max-width:60ch}
+.accent{color:var(--crimson)} .accent-o{color:var(--orange)}
+.eyebrow{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rocket-blue);display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+.eyebrow::before{content:"";width:24px;height:2px;background:var(--orange)}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease-ui),transform .7s var(--ease-ui)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important;transition:none}html{scroll-behavior:auto}}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--font-body);font-weight:600;font-size:1rem;padding:15px 28px;border-radius:12px;border:none;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s}
+.btn-primary{background:var(--crimson);color:#fff;box-shadow:0 12px 28px -12px rgba(192,24,42,.5)}
+.btn-primary:hover{transform:translateY(-2px);background:var(--crimson-hot);box-shadow:0 18px 34px -12px rgba(192,24,42,.55)}
+.btn-primary:disabled{opacity:.65;cursor:wait;transform:none}
+.btn-ghost{background:transparent;color:var(--navy);box-shadow:inset 0 0 0 1.5px rgba(28,58,110,.28)}
+.btn-ghost:hover{box-shadow:inset 0 0 0 1.5px var(--navy)}
+.btn-light{background:rgba(255,248,238,.14);color:var(--cream);box-shadow:inset 0 0 0 1.5px rgba(255,248,238,.35)}
+.btn-light:hover{background:rgba(255,248,238,.22)}
+.btn .arrow{transition:transform .2s}.btn:hover .arrow{transform:translateX(4px)}
+.btn-sm{padding:10px 18px;font-size:.9rem}
+/* header */
+header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:12px clamp(18px,4vw,48px);background:rgba(255,248,238,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:box-shadow .3s}
+header.scrolled{box-shadow:0 8px 30px -14px rgba(28,58,110,.25)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy);font-family:var(--font-display);font-weight:700;font-size:1.05rem}
+.logo img{height:36px}
+.logo .sub{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;color:var(--rocket-blue);text-transform:uppercase;border-left:1px solid var(--line);padding-left:10px}
+/* hero */
+#hero{min-height:92vh;display:flex;align-items:center;padding-top:120px;background:radial-gradient(1000px 620px at 82% 8%,rgba(11,94,143,.1),transparent 60%),radial-gradient(760px 520px at 0% 90%,rgba(242,140,40,.1),transparent 60%)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:50px;align-items:center;width:100%}
+.hero-copy{max-width:640px}
+.hero-copy .lede{margin:22px 0 30px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.hero-metrics{margin-top:34px;display:flex;gap:26px;flex-wrap:wrap;font-family:var(--font-mono)}
+.hmetric b{display:block;font-family:var(--font-display);font-size:1.5rem;color:var(--navy);font-weight:700;line-height:1}
+.hmetric span{font-size:.72rem;letter-spacing:.08em;color:#5A6C92;text-transform:uppercase}
+/* hero panel: operational "control card" */
+.control-card{background:var(--navy);border-radius:22px;box-shadow:var(--shadow);padding:26px;color:var(--cream);position:relative;overflow:hidden}
+.control-card::after{content:"";position:absolute;right:-50px;top:-50px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(242,140,40,.3),transparent 70%)}
+.cc-head{display:flex;align-items:center;gap:12px;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;color:var(--steel);border-bottom:1px solid rgba(190,204,214,.18);padding-bottom:14px;margin-bottom:14px}
+.cc-lights{display:inline-flex;gap:6px}.cc-lights i{width:9px;height:9px;border-radius:50%;background:var(--crimson)}.cc-lights i:nth-child(2){background:var(--orange)}.cc-lights i:nth-child(3){background:#3fae6b}
+.cc-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px dashed rgba(190,204,214,.2);font-size:.92rem}
+.cc-row:last-child{border-bottom:none}
+.cc-row .t{font-family:var(--font-mono);font-size:.78rem;color:var(--orange)}
+.cc-row .l{color:var(--cream)}
+/* generic grids */
+.card-grid{display:grid;gap:18px;margin-top:44px}
+.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+.op-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;box-shadow:0 10px 30px -18px rgba(28,58,110,.25);transition:transform .25s,box-shadow .25s,border-color .25s}
+.op-card:hover{transform:translateY(-4px);border-color:rgba(11,94,143,.35);box-shadow:0 20px 44px -20px rgba(28,58,110,.32)}
+.op-card .num{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;color:var(--rocket-blue)}
+.op-card h3{margin:8px 0 6px;font-size:1.05rem}
+.op-card p{font-size:.92rem;color:#3A4E77}
+/* split: dead-zone */
+#deadzone .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:52px;align-items:center}
+.dz-chart{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+.dz-bars{display:flex;align-items:flex-end;gap:8px;height:170px;margin:8px 0 12px}
+.dz-bar{flex:1;border-radius:6px 6px 3px 3px;background:rgba(190,204,214,.4);position:relative;transition:height .8s var(--ease-ui)}
+.dz-bar.hot{background:linear-gradient(180deg,var(--orange),var(--crimson))}
+.dz-labels{display:flex;gap:8px;font-family:var(--font-mono);font-size:.62rem;color:#7285A8}
+.dz-labels span{flex:1;text-align:center}
+.dz-legend{font-size:.86rem;color:#3A4E77;margin-top:14px;display:flex;align-items:center;gap:8px}
+.dz-legend .sw{width:14px;height:14px;border-radius:4px;background:linear-gradient(180deg,var(--orange),var(--crimson));flex-shrink:0}
+/* dark band: what we handle vs what you provide */
+#split{background:var(--navy);color:var(--cream)}
+#split h2{color:var(--cream)}
+#split .lede{color:var(--steel)}
+.split-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:44px}
+.split-col{background:rgba(255,248,238,.05);border:1px solid rgba(190,204,214,.18);border-radius:var(--radius);padding:28px}
+.split-col h3{color:var(--cream);font-size:1.15rem;margin-bottom:4px}
+.split-col .sc-eyebrow{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:14px;display:block}
+.split-col ul{list-style:none}
+.split-col li{padding:11px 0;border-bottom:1px dashed rgba(190,204,214,.18);font-size:.96rem;color:var(--cream);display:flex;gap:11px;align-items:flex-start}
+.split-col li:last-child{border-bottom:none}
+.split-col li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--orange);margin-top:8px;flex-shrink:0}
+.split-col.provide li::before{background:var(--rocket-blue)}
+/* timeline */
+.rhythm{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:48px;position:relative}
+.rhythm::before{content:"";position:absolute;top:14px;left:8%;right:8%;height:2px;background:linear-gradient(90deg,var(--rocket-blue),var(--orange),var(--crimson));opacity:.55}
+.r-stop{padding:0 14px;text-align:center;position:relative}
+.r-dot{width:16px;height:16px;border-radius:50%;background:var(--orange);margin:6px auto 16px;box-shadow:0 0 0 5px rgba(242,140,40,.18)}
+.r-stop:first-child .r-dot{background:var(--rocket-blue);box-shadow:0 0 0 5px rgba(11,94,143,.16)}
+.r-stop:last-child .r-dot{background:var(--crimson);box-shadow:0 0 0 5px rgba(192,24,42,.16)}
+.r-stop .rt{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.08em;color:var(--rocket-blue);display:block;margin-bottom:12px;min-height:1.5em}
+.r-stop h3{font-size:.98rem;margin-bottom:5px}
+.r-stop p{font-size:.85rem;color:#3A4E77}
+/* best-fit */
+.fit-list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:40px}
+.fit{display:flex;gap:13px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.fit .ck{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--rocket-blue),var(--navy));color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem}
+.fit p{font-size:.94rem;color:#3A4E77}
+.fit b{color:var(--navy)}
+/* application form */
+#apply{scroll-margin-top:80px}
+.apply-card{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);max-width:820px;margin:36px auto 0;padding:clamp(28px,4vw,46px)}
+.apply-card h2{text-align:center}
+.apply-card > .lede{text-align:center;margin:10px auto 26px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field.full{grid-column:1/-1}
+.field label{display:block;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#5A6C92;margin-bottom:6px}
+.field .req{color:var(--crimson)}
+.field input,.field select,.field textarea{width:100%;padding:13px 15px;border-radius:12px;font-family:var(--font-body);font-size:1rem;border:1.5px solid rgba(28,58,110,.16);background:#fff;color:var(--ink);transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--rocket-blue);box-shadow:0 0 0 4px rgba(11,94,143,.12)}
+.field input[aria-invalid="true"]{border-color:var(--crimson);box-shadow:0 0 0 4px rgba(192,24,42,.1)}
+.field:focus-within label{color:var(--rocket-blue)}
+.batch-toggle{display:flex;gap:11px;align-items:flex-start;font-size:.92rem;color:#3A4E77;cursor:pointer;background:rgba(11,94,143,.05);border:1.5px solid rgba(11,94,143,.2);border-radius:12px;padding:14px 16px}
+.batch-toggle input{width:19px;height:19px;margin-top:1px;accent-color:var(--crimson);flex-shrink:0}
+#apply .btn-primary{width:100%;margin-top:22px;padding:17px;font-size:1.06rem}
+.form-msg{margin-top:14px;font-size:.9rem;text-align:center;display:none;padding:12px 16px;border-radius:12px}
+.form-msg.err{display:block;background:rgba(192,24,42,.08);color:var(--crimson);border:1px solid rgba(192,24,42,.25)}
+.fineprint{margin-top:14px;text-align:center;font-size:.78rem;color:#7285A8}
+/* success + status */
+.gate{max-width:560px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:clamp(28px,4vw,44px);text-align:center}
+.gate .s-emoji{font-size:2.6rem;display:block;margin-bottom:10px}
+.ref-row{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.ref-row input{flex:1;min-width:200px;padding:12px 14px;border-radius:12px;border:1.5px solid rgba(28,58,110,.16);font-family:var(--font-mono);font-size:.82rem;color:var(--navy);background:#fff}
+.pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:10px}
+.pstage{position:relative;text-align:center;padding-top:34px}
+.pstage::before{content:"";position:absolute;top:12px;left:50%;width:100%;height:2px;background:rgba(28,58,110,.14)}
+.pstage:last-child::before{display:none}
+.pstage .dot{position:absolute;top:4px;left:50%;transform:translateX(-50%);width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid rgba(28,58,110,.2);z-index:1}
+.pstage.done .dot{background:var(--rocket-blue);border-color:var(--rocket-blue)}
+.pstage.current .dot{background:var(--orange);border-color:var(--orange);box-shadow:0 0 0 5px rgba(242,140,40,.25)}
+.pstage.done::before,.pstage.current::before{background:var(--rocket-blue)}
+.pstage h4{font-size:.8rem;color:var(--navy);font-family:var(--font-body);font-weight:600}
+.pstage.current h4{color:var(--orange)}.pstage.pending h4{color:#9aa8bf}
+.status-banner{padding:15px 18px;border-radius:12px;font-size:.94rem;margin:16px 0}
+.status-banner.declined{background:rgba(192,24,42,.08);border:1px solid rgba(192,24,42,.3);color:var(--crimson)}
+.status-banner.on_hold{background:rgba(242,140,40,.1);border:1px solid rgba(242,140,40,.35)}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:18px}
+.detail{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+.detail .n{font-family:var(--font-display);font-weight:600;font-size:1.05rem;color:var(--navy)}
+.detail .l{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:#7285A8;margin-top:4px}
+/* final cta */
+#final{text-align:center;background:linear-gradient(180deg,rgba(28,58,110,0),rgba(11,94,143,.06))}
+/* footer */
+footer{background:var(--navy);color:var(--steel);padding:44px clamp(20px,6vw,80px)}
+.foot{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center;font-size:.88rem}
+.foot a{color:var(--steel);text-decoration:none}.foot a:hover{color:var(--orange)}
+.foot .mono{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em}
+.loading{text-align:center;padding:60px;color:#5A6C92;font-family:var(--font-mono);font-size:.85rem}
+@media(max-width:920px){
+  .hero-grid{grid-template-columns:1fr;gap:38px}
+  .g3{grid-template-columns:1fr 1fr}
+  #deadzone .wrap{grid-template-columns:1fr;gap:36px}
+  .split-grid{grid-template-columns:1fr}
+  .rhythm{grid-template-columns:1fr 1fr;gap:24px}.rhythm::before{display:none}
+}
+@media(max-width:600px){
+  .g3,.g2,.fields,.fit-list,.rhythm{grid-template-columns:1fr}
+  .pipeline{grid-template-columns:1fr;gap:0}
+  .pstage{text-align:left;padding:8px 0 8px 30px}.pstage::before{top:0;left:9px;width:2px;height:100%}.pstage .dot{top:8px;left:0;transform:none}
+  header .logo .sub{display:none}
+}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <a class="logo" href="https://rocketplate.netlify.app/"><img src="../assets/logo.png" alt="RocketPlate"><span class="sub">For Restaurants</span></a>
+  <a href="#apply" class="btn btn-primary btn-sm" data-scroll>Apply as a Partner</a>
+</header>
+
+<!-- STATUS VIEW (shown only with ?token=) -->
+<div id="statusView" class="wrap" style="padding:120px 20px 60px;display:none">
+  <div class="gate" style="text-align:left">
+    <h2 id="s-biz" style="text-align:left">Your application</h2>
+    <p class="lede" id="s-sub" style="font-size:.92rem;margin-top:-4px"></p>
+    <div id="s-banner"></div>
+    <div class="pipeline" id="pipeline"></div>
+    <div class="detail-grid" id="s-details"></div>
+    <p class="fineprint" style="text-align:left;margin-top:20px">Questions about your application? Reply to any RocketPlate email and our partnerships team will pick it up.</p>
+    <a class="btn btn-ghost btn-sm" href="./" style="margin-top:16px">← Partner program overview</a>
+  </div>
+</div>
+
+<div id="loading" class="loading" style="display:none">Loading your application…</div>
+
+<!-- MARKETING + APPLY (default) -->
+<main id="marketing">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow rv">RocketPlate · Restaurant Partners</span>
+        <h1 class="rv">Your slowest hours could become your next <span class="accent">revenue lane</span>.</h1>
+        <p class="lede rv">RocketPlate partners with independent restaurants to batch-cook pre-counted subscriber meals during slower afternoon windows, then handles the delivery experience.</p>
+        <div class="hero-ctas rv">
+          <a href="#apply" class="btn btn-primary" data-scroll>Apply as a Restaurant Partner <span class="arrow">→</span></a>
+          <a href="#how" class="btn btn-ghost" data-scroll>See How It Works</a>
+        </div>
+        <div class="hero-metrics rv">
+          <span class="hmetric"><b>Prepaid</b><span>Batch orders</span></span>
+          <span class="hmetric"><b>Night-before</b><span>Locked counts</span></span>
+          <span class="hmetric"><b>One pickup</b><span>Per service day</span></span>
+        </div>
+      </div>
+      <div class="control-card rv" aria-hidden="true">
+        <div class="cc-head"><span class="cc-lights"><i></i><i></i><i></i></span> KITCHEN CHANNEL · CONTROLLED BATCH</div>
+        <div class="cc-row"><span class="l">Counts locked</span><span class="t">10:00 PM prior</span></div>
+        <div class="cc-row"><span class="l">Batch prep window</span><span class="t">2:00–4:00 PM</span></div>
+        <div class="cc-row"><span class="l">RocketPlate pickup</span><span class="t">One run</span></div>
+        <div class="cc-row"><span class="l">Dining-room impact</span><span class="t">None</span></div>
+        <div class="cc-row"><span class="l">Marketplace exposure</span><span class="t">None</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. DEAD-ZONE OPPORTUNITY -->
+  <section id="deadzone">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow rv">The dead-zone opportunity</span>
+        <h2 class="rv">You already have the kitchen. <span class="accent-o">Use the quiet hours.</span></h2>
+        <p class="lede rv">Most independent kitchens run hot at lunch and dinner and idle in between. That afternoon valley is staffed, equipped, and paid for — but producing little. RocketPlate turns that window into planned, pre-counted production: a controlled batch channel, not another marketplace fighting for your dinner rush.</p>
+        <p class="lede rv" style="margin-top:14px">You cook a known quantity, on your own schedule, in the hours you're already open.</p>
+      </div>
+      <div class="dz-chart rv">
+        <div class="eyebrow" style="color:#7285A8">A typical kitchen's day</div>
+        <div class="dz-bars" aria-hidden="true">
+          <div class="dz-bar" style="height:55%"></div>
+          <div class="dz-bar" style="height:82%"></div>
+          <div class="dz-bar" style="height:60%"></div>
+          <div class="dz-bar hot" style="height:24%"></div>
+          <div class="dz-bar hot" style="height:20%"></div>
+          <div class="dz-bar" style="height:66%"></div>
+          <div class="dz-bar" style="height:96%"></div>
+          <div class="dz-bar" style="height:74%"></div>
+        </div>
+        <div class="dz-labels"><span>11A</span><span>12P</span><span>1P</span><span>2P</span><span>3P</span><span>5P</span><span>7P</span><span>9P</span></div>
+        <div class="dz-legend"><span class="sw"></span> The 2–4 PM window RocketPlate turns into batch revenue.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. WHY BATCH BEATS CHAOS -->
+  <section id="how">
+    <div class="wrap">
+      <span class="eyebrow rv">Why batch beats chaos</span>
+      <h2 class="rv">A production channel, not a scramble.</h2>
+      <p class="lede rv">Marketplace delivery is unpredictable by design. Batch production is the opposite — everything is known before you turn on the burners.</p>
+      <div class="card-grid g3">
+        <div class="op-card rv"><div class="num">01</div><h3>Pre-counted demand</h3><p>You know exactly how many meals to make before service — no guessing, no waste from over-prep.</p></div>
+        <div class="op-card rv"><div class="num">02</div><h3>Limited menu complexity</h3><p>A curated, batch-ready menu you choose. Fewer SKUs, tighter execution, consistent quality.</p></div>
+        <div class="op-card rv"><div class="num">03</div><h3>No surprise driver rush</h3><p>No tablets pinging through service, no drivers crowding your counter at peak. One scheduled pickup.</p></div>
+        <div class="op-card rv"><div class="num">04</div><h3>No dining-room disruption</h3><p>Batch prep happens in your quiet window. Your front of house never feels it.</p></div>
+        <div class="op-card rv"><div class="num">05</div><h3>Predictable prep window</h3><p>The same rhythm every day: counts the night before, cook in the afternoon, one handoff.</p></div>
+        <div class="op-card rv"><div class="num">06</div><h3>Brand-safe experience</h3><p>Your food, packaged to a standard, delivered hot by a dedicated route — not lost in a marketplace.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. DAILY RHYTHM -->
+  <section id="rhythm">
+    <div class="wrap">
+      <span class="eyebrow rv">The daily rhythm</span>
+      <h2 class="rv">Every service day runs on the same clock.</h2>
+      <div class="rhythm">
+        <div class="r-stop rv"><span class="rt">9:00 PM prior</span><div class="r-dot"></div><h3>Selections close</h3><p>Subscribers lock tomorrow's meals the night before.</p></div>
+        <div class="r-stop rv"><span class="rt">10:00 PM prior</span><div class="r-dot"></div><h3>Counts confirmed</h3><p>You receive exact quantities before you close.</p></div>
+        <div class="r-stop rv"><span class="rt">2:00–4:00 PM</span><div class="r-dot"></div><h3>You batch cook</h3><p>Produce the known count in your slow window.</p></div>
+        <div class="r-stop rv"><span class="rt">Late afternoon</span><div class="r-dot"></div><h3>RocketPlate picks up</h3><p>One scheduled pickup — no marketplace runners.</p></div>
+        <div class="r-stop rv"><span class="rt">4:15–6:30 PM</span><div class="r-dot"></div><h3>Delivered hot</h3><p>We run the evening route to subscribers.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 & 5. SPLIT: WHAT WE HANDLE / WHAT YOU PROVIDE -->
+  <section id="split">
+    <div class="wrap">
+      <span class="eyebrow rv" style="color:var(--orange)">A clean division of labor</span>
+      <h2 class="rv">You run the kitchen. We run everything around it.</h2>
+      <p class="lede rv">The line is deliberately simple: you make great food to a known count; RocketPlate owns the customer and the logistics.</p>
+      <div class="split-grid">
+        <div class="split-col rv">
+          <span class="sc-eyebrow">RocketPlate handles</span>
+          <h3>The whole customer &amp; delivery layer</h3>
+          <ul>
+            <li>Customer acquisition and the subscriber base</li>
+            <li>The full subscriber experience and account management</li>
+            <li>The nightly delivery route and logistics</li>
+            <li>All customer communication and support</li>
+            <li>Launch marketing in each zone</li>
+            <li>The feedback loop back to your kitchen</li>
+          </ul>
+        </div>
+        <div class="split-col provide rv">
+          <span class="sc-eyebrow" style="color:#7FB8DC">Restaurants provide</span>
+          <h3>Consistent, batch-ready production</h3>
+          <ul>
+            <li>A curated menu suited to batch service</li>
+            <li>Consistent portions and plating standards</li>
+            <li>Batch-ready prep in the afternoon window</li>
+            <li>Reliable pickup timing, one handoff a day</li>
+            <li>Packaging handoff to RocketPlate standards</li>
+            <li>The signature dishes your neighborhood loves</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. BEST-FIT -->
+  <section id="fit">
+    <div class="wrap">
+      <span class="eyebrow rv">Best-fit kitchens</span>
+      <h2 class="rv">Built for independents with a signature.</h2>
+      <p class="lede rv">RocketPlate works best with kitchens that already do a few things exceptionally well and want predictable incremental volume.</p>
+      <div class="fit-list">
+        <div class="fit rv"><span class="ck">✓</span><p><b>Independent local restaurants</b> — the neighborhood spots people already drive to.</p></div>
+        <div class="fit rv"><span class="ck">✓</span><p><b>Strong signature dishes</b> — food that travels well and defines your name.</p></div>
+        <div class="fit rv"><span class="ck">✓</span><p><b>Consistent kitchen operations</b> — you hit the same quality every service.</p></div>
+        <div class="fit rv"><span class="ck">✓</span><p><b>Interested in predictable incremental revenue</b> — not marketplace lottery tickets.</p></div>
+        <div class="fit rv"><span class="ck">✓</span><p><b>Willing to start with a curated menu</b> — a focused batch lineup, refined over time.</p></div>
+        <div class="fit rv"><span class="ck">✓</span><p><b>Ready for a controlled channel</b> — you value owning the experience, not renting exposure.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. APPLICATION FORM -->
+  <section id="apply">
+    <div class="wrap">
+      <div class="apply-card">
+        <span class="eyebrow rv" style="display:flex;justify-content:center">Founding kitchens</span>
+        <h2 class="rv">Apply as a Restaurant Partner</h2>
+        <p class="lede rv">Two minutes. You'll get a private link to track your application through menu fit, tasting, setup, and go-live.</p>
+        <form id="applyForm" novalidate>
+          <div class="fields">
+            <div class="field"><label for="a-biz">Business name <span class="req">*</span></label><input id="a-biz" autocomplete="organization" required></div>
+            <div class="field"><label for="a-contact">Contact name <span class="req">*</span></label><input id="a-contact" autocomplete="name" required></div>
+            <div class="field"><label for="a-email">Email <span class="req">*</span></label><input id="a-email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="a-phone">Phone <span class="req">*</span></label><input id="a-phone" type="tel" autocomplete="tel" required></div>
+            <div class="field full"><label for="a-address">Restaurant address <span class="req">*</span></label><input id="a-address" autocomplete="street-address" required></div>
+            <div class="field"><label for="a-cuisine">Cuisine type <span class="req">*</span></label><input id="a-cuisine" placeholder="e.g. Cuban, BBQ, Italian" required></div>
+            <div class="field"><label for="a-zip">ZIP code</label><input id="a-zip" inputmode="numeric" maxlength="10" placeholder="33186"></div>
+            <div class="field"><label for="a-web">Website</label><input id="a-web" placeholder="https://"></div>
+            <div class="field"><label for="a-ig">Social links / Instagram</label><input id="a-ig" placeholder="@handle"></div>
+            <div class="field"><label for="a-pos">POS system <span class="req">*</span></label><input id="a-pos" placeholder="e.g. Toast, Square, Clover" required></div>
+            <div class="field"><label for="a-loc">Number of locations <span class="req">*</span></label><input id="a-loc" type="number" min="1" max="500" value="1" required></div>
+            <div class="field"><label for="a-cap">Est. meals/day capacity <span class="req">*</span></label><input id="a-cap" placeholder="e.g. 40 meals/day" required></div>
+            <div class="field"><label for="a-contacttime">Best time to contact <span class="req">*</span></label>
+              <select id="a-contacttime" required>
+                <option value="">Select…</option>
+                <option value="morning">Morning (before 11 AM)</option>
+                <option value="afternoon">Afternoon (2–4 PM)</option>
+                <option value="evening">Evening (after 8 PM)</option>
+                <option value="anytime">Anytime</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label class="batch-toggle"><input type="checkbox" id="a-batch"> <span>We can batch-cook during a <b>2–4 PM</b> window. <span class="req">*</span></span></label>
+            </div>
+            <div class="field full"><label for="a-notes">Anything else about your kitchen?</label><textarea id="a-notes" rows="3" placeholder="Signature dishes, current volume, what you're looking for."></textarea></div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="applyBtn">Submit application <span class="arrow">→</span></button>
+          <div class="form-msg" id="applyMsg" role="alert"></div>
+          <p class="fineprint">No cost to apply. RocketPlate handles subscriptions, payments, packaging standards, routing, delivery, and customer care.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FINAL CTA -->
+  <section id="final">
+    <div class="wrap">
+      <span class="eyebrow rv" style="justify-content:center">Founding cohort</span>
+      <h2 class="rv">Become one of RocketPlate's first launch kitchens.</h2>
+      <p class="lede rv" style="margin:0 auto 28px">Founding partners help shape the menu, the packaging, and the rhythm — and launch with us in the first zones.</p>
+      <a href="#apply" class="btn btn-primary rv" data-scroll>Apply Now <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+</main>
+
+<!-- success (after apply) -->
+<div id="done" class="wrap" style="padding:120px 20px 60px;display:none">
+  <div class="gate">
+    <span class="s-emoji">🍳</span>
+    <h2>You're in the pipeline.</h2>
+    <p class="lede" style="margin:8px auto 0">Our partnerships team will review your kitchen and reach out. Bookmark your private status link:</p>
+    <div class="ref-row">
+      <input id="doneLink" readonly aria-label="Your application status link">
+      <button class="btn btn-ghost btn-sm" id="doneCopy" type="button">Copy</button>
+    </div>
+    <a class="btn btn-primary" id="doneGo" href="#" style="width:100%">View my status</a>
+  </div>
+</div>
+
+<footer>
+  <div class="foot">
+    <a class="logo" href="https://rocketplate.netlify.app/" style="color:var(--cream)"><img src="../assets/logo.png" alt="RocketPlate" style="filter:brightness(0) invert(1);height:32px">RocketPlate</a>
+    <span class="mono">CONTROLLED BATCH CHANNEL · MIAMI-DADE</span>
+    <a href="https://rocketplate.netlify.app/">rocketplate.io →</a>
+  </div>
+</footer>
+
+<script>
+const SB = { url:"https://uhmyjevtfrynunxfsyof.supabase.co", key:"sb_publishable_wsUbTQXWP3dYHyJDbhOmEQ_LSEPOZfO" };
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const prefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const token = new URLSearchParams(location.search).get("token");
+const STAGES = [
+  {key:"new",label:"Applied"},{key:"reviewing",label:"Menu fit review"},
+  {key:"tasting",label:"Sample & tasting"},{key:"menu_setup",label:"Launch menu setup"},
+  {key:"live",label:"Batch delivery go-live"}
+];
+
+async function rpc(fn, body){
+  const r = await fetch(`${SB.url}/rest/v1/rpc/${fn}`,{
+    method:"POST", headers:{"Content-Type":"application/json","apikey":SB.key,"Authorization":`Bearer ${SB.key}`},
+    body:JSON.stringify(body)
+  });
+  if(!r.ok){ let m=""; try{m=(await r.json()).message||"";}catch{} throw new Error(m||("HTTP "+r.status)); }
+  return r.json();
+}
+
+/* header shadow + reveals + smooth anchor */
+addEventListener("scroll", ()=>$("#hdr").classList.toggle("scrolled", scrollY>24), {passive:true});
+if(!prefersReduced){
+  const io = new IntersectionObserver((es)=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }),{threshold:.12});
+  document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+}else document.querySelectorAll(".rv").forEach(el=>el.classList.add("in"));
+document.querySelectorAll("[data-scroll]").forEach(a=>a.addEventListener("click",e=>{
+  const t=document.querySelector(a.getAttribute("href")); if(t){ e.preventDefault(); t.scrollIntoView({behavior:prefersReduced?"auto":"smooth"}); }
+}));
+
+/* ===== status view (token) ===== */
+function renderStatus(a){
+  $("#s-biz").textContent = a.business_name;
+  $("#s-sub").textContent = `Applied ${(a.created_at||"").slice(0,10)} · ${a.contact_name}`;
+  const banner = $("#s-banner");
+  banner.innerHTML = a.status==="declined"
+    ? `<div class="status-banner declined">This application isn't moving forward right now. Reply to your confirmation email and our team can share more.</div>`
+    : a.status==="on_hold"
+    ? `<div class="status-banner on_hold">Your application is on hold — we'll be back in touch as your zone opens up.</div>` : "";
+  const activeIdx = Math.max(0, STAGES.findIndex(s=>s.key===a.status));
+  $("#pipeline").innerHTML = STAGES.map((s,i)=>{
+    const cls = i<activeIdx ? "done" : i===activeIdx ? (a.status==="live"?"done":"current") : "pending";
+    return `<div class="pstage ${cls}"><span class="dot"></span><h4>${s.label}</h4></div>`;
+  }).join("");
+  if(a.status==="declined"||a.status==="on_hold")
+    document.querySelectorAll("#pipeline .pstage").forEach((el,i)=>{ if(i>0){el.className="pstage pending"; el.querySelector(".dot").className="dot";} });
+  $("#s-details").innerHTML = [
+    ["Cuisine",a.cuisine_type||"—"],["ZIP",a.zip_code||"—"],["Locations",a.number_of_locations??"—"],
+    ["2–4 PM batch",a.can_batch_2_to_4_pm===true?"Yes":a.can_batch_2_to_4_pm===false?"No":"—"],
+    ["Est. capacity",a.estimated_capacity||"—"]
+  ].map(([l,v])=>`<div class="detail"><div class="n">${esc(v)}</div><div class="l">${l}</div></div>`).join("");
+}
+
+async function boot(){
+  if(token){
+    $("#marketing").style.display="none"; $("#loading").style.display="block";
+    try{
+      const a = await rpc("get_my_application",{p_token:token});
+      renderStatus(a);
+      $("#loading").style.display="none"; $("#statusView").style.display="block";
+    }catch(e){
+      $("#loading").style.display="none"; $("#marketing").style.display="block";
+    }
+  }
+}
+
+/* ===== application submit ===== */
+$("#applyForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const btn=$("#applyBtn"), msg=$("#applyMsg");
+  msg.className="form-msg"; msg.textContent="";
+  const req = { "a-biz":"business name","a-contact":"your name","a-email":"a valid email","a-phone":"phone","a-address":"address","a-cuisine":"cuisine","a-pos":"POS system","a-loc":"locations","a-cap":"capacity","a-contacttime":"best time to contact" };
+  const biz=$("#a-biz").value.trim(), contact=$("#a-contact").value.trim(), email=$("#a-email").value.trim();
+  let bad = null;
+  for(const id of Object.keys(req)){ const el=$("#"+id); if(!el.value.trim()){ bad=el; break; } }
+  if(!/^\S+@\S+\.\S+$/.test(email)) bad = bad || $("#a-email");
+  if(!$("#a-batch").checked) { msg.textContent="Batch production during a 2–4 PM window is required to partner."; msg.classList.add("err"); $("#a-batch").focus(); return; }
+  if(bad){ msg.textContent="Please complete the required fields."; msg.classList.add("err"); bad.setAttribute("aria-invalid","true"); bad.focus(); return; }
+
+  btn.disabled=true; const label=btn.innerHTML; btn.innerHTML="Submitting…";
+  const app = {
+    business_name:biz, contact_name:contact, email,
+    phone:$("#a-phone").value.trim(), cuisine_type:$("#a-cuisine").value.trim(),
+    address:$("#a-address").value.trim(), zip_code:$("#a-zip").value.trim(),
+    website:$("#a-web").value.trim(), instagram:$("#a-ig").value.trim(),
+    pos_system:$("#a-pos").value.trim(), number_of_locations:$("#a-loc").value||null,
+    can_batch_2_to_4_pm:$("#a-batch").checked, estimated_capacity:$("#a-cap").value.trim(),
+    best_time_to_contact:$("#a-contacttime").value, notes:$("#a-notes").value.trim()
+  };
+  try{
+    const out = await rpc("submit_partner_application",{p:app});
+    const link = location.origin + location.pathname + "?token=" + out.access_token;
+    $("#doneLink").value = link; $("#doneGo").href = link;
+    $("#marketing").style.display="none"; $("#done").style.display="block";
+    scrollTo({top:0,behavior:prefersReduced?"auto":"smooth"});
+  }catch(ex){
+    msg.textContent = String(ex.message).includes("rate_limited")
+      ? "Too many attempts from this connection — give it a few minutes." : "Couldn't submit — please try again.";
+    msg.classList.add("err"); btn.disabled=false; btn.innerHTML=label;
+  }
+});
+$("#doneCopy").addEventListener("click", async ()=>{ try{ await navigator.clipboard.writeText($("#doneLink").value); }catch{ $("#doneLink").select(); document.execCommand("copy"); } });
+
+boot();
+</script>
+</body>
+</html>

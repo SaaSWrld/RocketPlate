@@ -102,6 +102,29 @@ RPCs that self-authorize.
 
 Migrations added: `dashboards_backend`, `admin_rpcs_and_upsert_token`.
 
+## Email worker (Resend) — Edge Function `send-emails`
+
+Deployed and ACTIVE, currently **dormant** (no Resend key yet, so it never
+fake-sends). Drains `email_events` where `status='queued'`, renders an HTML
+template per `event_type`, sends via Resend, marks `sent`/`failed` +
+`provider_message_id` + `sent_at`. Templates exist for all 7 event types.
+
+- **Auth**: caller must present the service-role key as `Bearer`. Unauthenticated
+  `GET ?selftest=1` returns only `{ ok, hasResendKey, from }` for health checks.
+  Verified: selftest ok, unauthorized POST → 401.
+- **Dry-run**: runs automatically while `RESEND_API_KEY` is unset (leaves events
+  queued, marks nothing); or force with `?dryRun=1`. So it's safe as-is.
+
+**Activation (Andre must do — external account required):**
+1. Verify a sending domain in Resend (e.g. rocketplate.io) — SPF/DKIM records.
+2. Set Edge Function secrets: `RESEND_API_KEY`, `FROM_EMAIL`
+   (e.g. `RocketPlate <launch@rocketplate.io>`), optional `SITE_URL`.
+   (`supabase secrets set …`, or Dashboard → Edge Functions → Secrets.)
+3. Schedule it. Options: Supabase Dashboard cron; an external cron (cron-job.org,
+   GitHub Action) POSTing to `…/functions/v1/send-emails` with the service-role
+   key; or pg_cron + pg_net from Postgres. Every 2–5 min is plenty.
+   Preview before going live: POST with `?dryRun=1` to see rendered recipients/subjects.
+
 ## Migrations (in order)
 `create_waitlist_table` → `create_leads_and_email_events` →
 `relax_leads_for_light_capture` → `lead_platform_upgrade`.
