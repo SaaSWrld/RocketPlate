@@ -19,6 +19,18 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+GTM_ID;f.parent
 <meta property="og:url" content="https://www.rocketplate.io/">
 <meta property="og:image" content="https://www.rocketplate.io/assets/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "RocketPlate",
+  "url": "https://www.rocketplate.io/",
+  "logo": "https://www.rocketplate.io/logo.png",
+  "description": "The daily meal subscription built for local restaurants. Launching first in Miami-Dade.",
+  "areaServed": "Miami-Dade County, FL",
+  "sameAs": ["https://www.gorocketplate.com/"]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -100,6 +112,27 @@ nav a:hover::after{width:100%}
 .nav-links{display:flex;gap:clamp(10px,1.6vw,26px)}
 @media (max-width:1180px){nav .btn-ghost.btn-sm{display:none}}
 @media (max-width:1060px){.nav-links a:nth-child(5){display:none}}
+.nav-burger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:44px;height:44px;padding:10px;margin-left:6px;
+  background:transparent;border:1.5px solid rgba(28,58,110,.22);border-radius:12px;cursor:pointer;
+}
+.nav-burger span{display:block;height:2px;border-radius:2px;background:var(--navy);transition:transform .25s,opacity .25s}
+.nav-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{
+  position:fixed;top:64px;left:12px;right:12px;z-index:49;
+  background:var(--card);border:1px solid rgba(28,58,110,.12);border-radius:18px;
+  box-shadow:0 30px 70px -24px rgba(28,58,110,.5);padding:10px;
+}
+.mobile-menu a{
+  display:block;padding:13px 16px;border-radius:12px;text-decoration:none;
+  color:var(--navy);font-weight:600;font-size:1rem;
+}
+.mobile-menu a:hover{background:rgba(242,140,40,.1)}
+.mobile-menu a:last-child{color:var(--crimson)}
+@media (max-width:960px){.nav-burger{display:flex}}
 .btn{
   display:inline-flex;align-items:center;gap:10px;
   font-family:var(--font-body);font-weight:600;font-size:1rem;
@@ -133,7 +166,12 @@ nav a:hover::after{width:100%}
 
 /* ---------- layout primitives ---------- */
 main{position:relative;z-index:10}
-section{position:relative;padding:clamp(90px,12vh,150px) clamp(20px,6vw,80px)}
+section{position:relative;padding:clamp(72px,10vh,120px) clamp(20px,6vw,80px)}
+.skip-link{
+  position:fixed;left:14px;top:-60px;z-index:100;background:var(--navy);color:#fff;
+  padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:600;transition:top .2s;
+}
+.skip-link:focus{top:14px}
 .wrap{max-width:1200px;margin:0 auto;position:relative}
 .eyebrow{
   font-family:var(--font-mono);font-size:.78rem;letter-spacing:.14em;
@@ -170,6 +208,12 @@ h3{font-size:1.3rem;font-weight:600}
 .hero-media.has-video video{display:block}
 .hero-media.has-poster{
   background:url("assets/rocketplate-hero-poster.jpg") center/cover no-repeat;
+}
+@media (max-width:960px){
+  .hero-media.has-poster{background-position:center bottom}
+  .hero-media.has-poster .hero-overlay{
+    background:linear-gradient(180deg, rgba(255,248,238,.92) 0%, rgba(255,248,238,.82) 55%, rgba(255,248,238,.45) 100%);
+  }
 }
 .hero-overlay{
   position:absolute;inset:0;opacity:0;transition:opacity .8s;
@@ -295,17 +339,30 @@ h3{font-size:1.3rem;font-weight:600}
 
 /* ---------- kitchens ---------- */
 #kitchens .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:60px;align-items:center}
-.cuisine-wall{display:flex;flex-wrap:wrap;gap:14px}
+.cuisine-photos{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.cphoto{
+  position:relative;border-radius:18px;overflow:hidden;margin:0;
+  box-shadow:0 18px 44px -18px rgba(28,58,110,.4);
+  transition:transform .3s cubic-bezier(.34,1.2,.64,1),box-shadow .3s;
+}
+.cphoto:hover{transform:translateY(-5px);box-shadow:0 26px 60px -20px rgba(28,58,110,.5)}
+.cphoto img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.cphoto:hover img{transform:scale(1.04)}
+.cphoto figcaption{
+  position:absolute;left:0;right:0;bottom:0;padding:26px 16px 12px;
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cream);
+  background:linear-gradient(180deg,transparent,rgba(20,41,94,.78));
+}
+.cuisine-wall{display:flex;flex-wrap:wrap;gap:10px}
 .cuisine{
-  font-weight:600;font-size:1.02rem;color:var(--navy);
+  font-weight:600;font-size:.9rem;color:var(--navy);
   background:var(--card);border:1.5px solid rgba(28,58,110,.14);
-  padding:14px 22px;border-radius:16px;box-shadow:0 8px 22px -12px rgba(28,58,110,.25);
-  display:inline-flex;align-items:center;gap:10px;
+  padding:10px 16px;border-radius:12px;box-shadow:0 8px 22px -12px rgba(28,58,110,.25);
+  display:inline-flex;align-items:center;
   transition:transform .25s cubic-bezier(.34,1.56,.64,1), border-color .25s, background .25s;
   cursor:default;
 }
-.cuisine:hover{transform:translateY(-4px) rotate(-1deg);border-color:var(--orange);background:#FFF3E2}
-.cuisine .em{font-size:1.2rem}
+.cuisine:hover{transform:translateY(-3px);border-color:var(--orange);background:#FFF3E2}
 .mystery{
   margin-top:26px;font-size:.95rem;color:#5A6C92;
   border-left:3px solid var(--orange);padding-left:16px;
@@ -366,7 +423,8 @@ h3{font-size:1.3rem;font-weight:600}
 .rpoint .ic{
   width:44px;height:44px;border-radius:14px;flex-shrink:0;
   background:linear-gradient(135deg,var(--orange),var(--crimson));
-  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.8rem;letter-spacing:.06em;color:#fff;
   box-shadow:0 10px 22px -10px rgba(192,24,42,.5);
 }
 .rpoint h3{font-size:1.08rem;margin-bottom:3px}
@@ -418,7 +476,7 @@ h3{font-size:1.3rem;font-weight:600}
 .form-msg{margin-top:16px;font-size:.9rem;text-align:center;display:none;padding:12px 16px;border-radius:12px}
 .form-msg.err{display:block;background:rgba(192,24,42,.08);color:var(--crimson);border:1px solid rgba(192,24,42,.25)}
 .form-msg.ok{display:block;background:rgba(11,94,143,.08);color:var(--rocket-blue);border:1px solid rgba(11,94,143,.25)}
-.fineprint{margin-top:18px;text-align:center;font-size:.78rem;color:#7285A8}
+.fineprint{margin-top:18px;text-align:center;font-size:.78rem;color:#5A6C92}
 
 /* ---------- footer ---------- */
 footer{
@@ -470,8 +528,13 @@ footer{
 .pain-points{display:flex;flex-direction:column;gap:10px;margin:22px 0 6px}
 .ppoint{
   font-size:.95rem;color:#3A4E77;background:var(--card);
-  border:1px solid rgba(28,58,110,.1);border-radius:12px;padding:11px 16px;
-  box-shadow:0 6px 18px -10px rgba(28,58,110,.18);
+  border:1px solid rgba(28,58,110,.1);border-radius:12px;padding:11px 16px 11px 38px;
+  box-shadow:0 6px 18px -10px rgba(28,58,110,.18);position:relative;
+}
+.ppoint::before{
+  content:"";position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  width:8px;height:8px;border-radius:50%;
+  background:linear-gradient(135deg,var(--orange),var(--crimson));
 }
 
 /* ---------- subscriber benefits ---------- */
@@ -482,7 +545,7 @@ footer{
   transition:transform .3s cubic-bezier(.34,1.2,.64,1),box-shadow .3s,border-color .3s;
 }
 .benefit:hover{transform:translateY(-5px);border-color:rgba(242,140,40,.35);box-shadow:0 20px 44px -16px rgba(28,58,110,.3)}
-.benefit .b-ic{font-size:1.5rem;display:block;margin-bottom:10px}
+.benefit .b-num{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;color:var(--rocket-blue);display:block;margin-bottom:10px}
 .benefit h3{font-size:1.05rem;margin-bottom:6px}
 .benefit p{font-size:.92rem;color:#3A4E77}
 
@@ -636,6 +699,8 @@ footer{
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+
 <div class="bg-wash"></div>
 <div class="grain"></div>
 <canvas id="stage" aria-hidden="true"></canvas>
@@ -653,10 +718,22 @@ footer{
     </div>
     <a href="/partners/" class="btn btn-ghost btn-sm" style="margin-right:10px">Partner</a>
     <a href="#join" class="btn btn-primary btn-sm">Join the Waitlist</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 </header>
+<div class="mobile-menu" id="mobileMenu" hidden>
+  <a href="#how">How It Works</a>
+  <a href="#subscribers">For Subscribers</a>
+  <a href="#restaurants">For Restaurants</a>
+  <a href="#launch">Launch Cities</a>
+  <a href="#founding">Founding 100</a>
+  <a href="#faq">FAQ</a>
+  <a href="/partners/">Partner With RocketPlate</a>
+</div>
 
-<main>
+<main id="main">
 
   <!-- HERO -->
   <section id="hero">
@@ -717,10 +794,10 @@ footer{
         <h2>Dinner got too <span class="accent">complicated</span>.</h2>
         <p class="lede rv">Delivery apps turned a simple meal into a checkout shock. Meal prep made dinner predictable in the wrong way. RocketPlate brings the rhythm back — hot local meals, planned weekly, delivered with purpose.</p>
         <div class="pain-points rv">
-          <span class="ppoint">🎲 Delivery apps are unpredictable and fee-heavy</span>
-          <span class="ppoint">🍱 Planning ahead made dinner repetitive instead of reliable</span>
-          <span class="ppoint">🍳 Local restaurants sit on idle afternoon kitchen capacity</span>
-          <span class="ppoint">📆 Families and professionals need a dinner rhythm they can trust</span>
+          <span class="ppoint">Delivery apps are unpredictable and fee-heavy</span>
+          <span class="ppoint">Planning ahead made dinner repetitive, not reliable</span>
+          <span class="ppoint">Local kitchens sit on idle afternoon capacity</span>
+          <span class="ppoint">Households need a dinner rhythm they can trust</span>
         </div>
         <span class="flat-chip rv">ROCKETPLATE: <b>≈&nbsp;$17&nbsp;A&nbsp;PLATE</b> · EVERYTHING&nbsp;INCLUDED</span>
       </div>
@@ -778,12 +855,12 @@ footer{
       <h2>Dinner, <span class="accent">handled</span>.</h2>
       <p class="lede rv">A subscription that gives you back the best hour of your evening.</p>
       <div class="benefit-grid">
-        <div class="benefit"><span class="b-ic">🔥</span><h3>Hot restaurant meals</h3><p>Real kitchens, real cooking — never rewarmed, never a sad plastic tray.</p></div>
-        <div class="benefit"><span class="b-ic">🗓️</span><h3>Weekly simplicity</h3><p>One decision a week covers every dinner. Swap tomorrow's meal until 9 PM tonight.</p></div>
-        <div class="benefit"><span class="b-ic">💸</span><h3>No delivery-fee chaos</h3><p>One flat weekly price. No fees, no tips, no surge — ever.</p></div>
-        <div class="benefit"><span class="b-ic">🌎</span><h3>Local kitchen variety</h3><p>A rotating lineup of independent neighborhood restaurants, a different craving every night.</p></div>
-        <div class="benefit"><span class="b-ic">🎚️</span><h3>Easy plan selection</h3><p>5 or 7 dinners a week. Skip weeks, pause, or cancel anytime.</p></div>
-        <div class="benefit"><span class="b-ic">🚀</span><h3>Founding 100 access</h3><p>Early subscribers get the launch perks — free first week, rate lock, first taste.</p></div>
+        <div class="benefit"><span class="b-num">01</span><h3>Hot restaurant meals</h3><p>Real kitchens, real cooking — never rewarmed, never a sad plastic tray.</p></div>
+        <div class="benefit"><span class="b-num">02</span><h3>Weekly simplicity</h3><p>One decision covers every dinner. Swap tomorrow's meal until 9 PM tonight.</p></div>
+        <div class="benefit"><span class="b-num">03</span><h3>No delivery-fee chaos</h3><p>One flat weekly price. No fees, no tips, no surge — ever.</p></div>
+        <div class="benefit"><span class="b-num">04</span><h3>Local kitchen variety</h3><p>A rotating lineup of independent restaurants — a different craving every night.</p></div>
+        <div class="benefit"><span class="b-num">05</span><h3>Easy plan selection</h3><p>5 or 7 dinners a week. Skip, pause, or cancel anytime.</p></div>
+        <div class="benefit"><span class="b-num">06</span><h3>Founding 100 access</h3><p>Early subscribers lock the launch perks — free first week, rate lock, first taste.</p></div>
       </div>
       <div style="margin-top:36px" class="rv">
         <a href="#join" class="btn btn-primary">Save my seat at the table <span class="arrow">→</span></a>
@@ -797,18 +874,22 @@ footer{
       <div>
         <span class="eyebrow rv">Kitchens you already love</span>
         <h2 class="rv">Real restaurants.<br><span class="accent">Real</span> dinner.</h2>
-        <p class="lede rv">No meal kits. No anonymous app kitchens. Your rotation is cooked by independent, neighborhood restaurants — a different craving covered every night of the week.</p>
-        <p class="mystery rv">Partner kitchens are revealed at launch. Founding 100 members taste them first.</p>
+        <p class="lede rv">No meal kits. No anonymous app kitchens. Independent neighborhood restaurants cook your rotation — a different craving every night.</p>
+        <p class="mystery rv">Dishes shown are representative. Partner kitchens are revealed at launch — Founding 100 members taste them first.</p>
       </div>
-      <div class="cuisine-wall rv">
-        <span class="cuisine"><span class="em">🥡</span> Peruvian-Chinese fusion</span>
-        <span class="cuisine"><span class="em">🔥</span> Wood-smoked BBQ</span>
-        <span class="cuisine"><span class="em">🍔</span> Smash burgers</span>
-        <span class="cuisine"><span class="em">🍝</span> Italian</span>
-        <span class="cuisine"><span class="em">🌮</span> Mexican</span>
-        <span class="cuisine"><span class="em">🥪</span> Cuban &amp; Latin</span>
-        <span class="cuisine"><span class="em">🦐</span> Fresh seafood</span>
-        <span class="cuisine"><span class="em">🥗</span> Fresh &amp; light</span>
+      <div>
+        <div class="cuisine-photos rv">
+          <figure class="cphoto"><img src="assets/food/cuban.jpg" alt="Cuban lechón asado with rice, black beans, and sweet plantains" width="900" height="672" loading="lazy"><figcaption>Cuban &amp; Latin</figcaption></figure>
+          <figure class="cphoto"><img src="assets/food/bbq.jpg" alt="Sliced wood-smoked BBQ brisket with grilled corn" width="900" height="672" loading="lazy"><figcaption>Wood-smoked BBQ</figcaption></figure>
+          <figure class="cphoto"><img src="assets/food/seafood.jpg" alt="Seared shrimp and blackened snapper with citrus greens" width="900" height="672" loading="lazy"><figcaption>Fresh seafood</figcaption></figure>
+          <figure class="cphoto"><img src="assets/food/italian.jpg" alt="Rigatoni alla vodka with basil and shaved parmesan" width="900" height="672" loading="lazy"><figcaption>Italian</figcaption></figure>
+        </div>
+        <div class="cuisine-wall rv">
+          <span class="cuisine">Peruvian-Chinese fusion</span>
+          <span class="cuisine">Smash burgers</span>
+          <span class="cuisine">Mexican</span>
+          <span class="cuisine">Fresh &amp; light</span>
+        </div>
       </div>
     </div>
   </section>
@@ -884,16 +965,16 @@ footer{
         </div>
         <div class="resto-points">
           <div class="rpoint rv">
-            <span class="ic">📋</span>
+            <span class="ic">01</span>
             <div><h3>Counts locked by 10 PM the night before</h3><p>You know exactly what you're cooking before you close. Final adjustments arrive by 1 PM day-of.</p></div>
           </div>
           <div class="rpoint rv">
-            <span class="ic">👨‍🍳</span>
-            <div><h3>Zero front-of-house disruption</h3><p>One batch, one pickup window. No tablets chirping through dinner service, no drivers crowding your counter.</p></div>
+            <span class="ic">02</span>
+            <div><h3>Zero front-of-house disruption</h3><p>One batch, one pickup window. No tablets chirping through dinner service, no drivers at your counter.</p></div>
           </div>
           <div class="rpoint rv">
-            <span class="ic">🤝</span>
-            <div><h3>You cook. We do everything else.</h3><p>Subscriptions, payments, packaging standards, routing, delivery, and customer care are all on us.</p></div>
+            <span class="ic">03</span>
+            <div><h3>You cook. We do everything else.</h3><p>Subscriptions, payments, packaging, routing, delivery, and customer care are all on us.</p></div>
           </div>
         </div>
         <div style="margin-top:36px" class="rv">
@@ -902,7 +983,7 @@ footer{
       </div>
       <div class="deadzone-card rv">
         <h3>The dead-zone window</h3>
-        <p style="color:var(--steel);font-size:.94rem">A typical independent restaurant's day has a valley right where RocketPlate's batch window sits.</p>
+        <p style="color:var(--steel);font-size:.94rem">A typical independent restaurant's day has a valley right where RocketPlate's batch window sits. (Illustrative day-shape, not live data.)</p>
         <div class="dz-bars" aria-hidden="true">
           <div class="dz-bar" style="height:55%"></div>
           <div class="dz-bar" style="height:80%"></div>
@@ -960,7 +1041,7 @@ footer{
       <div>
         <span class="eyebrow rv">Launch cities</span>
         <h2>First stop: <span class="accent">Miami-Dade</span>.</h2>
-        <p class="lede rv">RocketPlate launches neighborhood by neighborhood, not city by city — density keeps food hot and prices flat. The pilot begins around Kendall / Pinecrest, ZIP 33186, and expands by waitlist demand.</p>
+        <p class="lede rv">We launch neighborhood by neighborhood — density keeps food hot and prices flat. The pilot starts in Kendall / Pinecrest, ZIP 33186, and expands by waitlist demand.</p>
         <p class="mystery rv">Not in the pilot zone? Join anyway — launch order is decided by signups, and your ZIP counts.</p>
         <div style="margin-top:30px" class="rv">
           <a href="#join" class="btn btn-primary" id="requestZipBtn">Request My ZIP <span class="arrow">→</span></a>
@@ -1072,7 +1153,7 @@ footer{
       <h2>Help launch RocketPlate in <span class="accent-o">your neighborhood</span>.</h2>
       <p class="lede rv" style="margin:0 auto 30px">Subscribers set the launch map. Restaurants set the menu. Both start here.</p>
       <div class="hero-ctas rv" style="justify-content:center">
-        <a href="#join" class="btn btn-primary">Join the Founding 100 <span class="arrow">🚀</span></a>
+        <a href="#join" class="btn btn-primary">Join the Founding 100 <span class="arrow">→</span></a>
         <a href="/partners/" class="btn btn-ghost">Partner With RocketPlate</a>
       </div>
     </div>
@@ -1080,7 +1161,7 @@ footer{
 
 </main>
 
-<a href="#join" class="m-cta">Join the Waitlist 🚀</a>
+<a href="#join" class="m-cta">Join the Waitlist</a>
 
 <footer>
   <div class="foot-grid">
@@ -1099,9 +1180,9 @@ footer{
     <div class="foot-col">
       <h4>Company</h4>
       <a href="#join">Join the waitlist</a>
+      <a href="/partners/">Restaurant partners</a>
+      <a href="#join" data-seg="investor_press">Investors &amp; press</a>
       <a href="https://gorocketplate.netlify.app" rel="noopener">Launch profile (gorocketplate.com)</a>
-      <a href="#" aria-disabled="true">Privacy policy</a>
-      <a href="#" aria-disabled="true">Terms of service</a>
     </div>
   </div>
   <div class="foot-bottom">
@@ -1157,6 +1238,20 @@ const rpTrack = (event, props = {}) => window.dataLayer.push({ event: "rp_" + ev
 const hdr = document.getElementById("hdr");
 addEventListener("scroll", () => hdr.classList.toggle("scrolled", scrollY > 24), { passive: true });
 
+/* mobile menu */
+(function mobileMenu(){
+  const burger = document.getElementById("navBurger");
+  const menu = document.getElementById("mobileMenu");
+  const close = () => { menu.hidden = true; burger.setAttribute("aria-expanded", "false"); };
+  burger.addEventListener("click", () => {
+    const open = menu.hidden;
+    menu.hidden = !open;
+    burger.setAttribute("aria-expanded", String(open));
+  });
+  menu.querySelectorAll("a").forEach(a => a.addEventListener("click", close));
+  addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+})();
+
 /* ================= hero media =================
    Desktop + motion-ok: activate the ambient hero film if the asset exists
    (lazy — preload=none until the HEAD check passes). Mobile / reduced motion:
@@ -1180,7 +1275,9 @@ addEventListener("scroll", () => hdr.classList.toggle("scrolled", scrollY > 24),
       addEventListener("scroll", handoff, { passive: true });
       handoff();
     });
-  } else {
+  } else if (prefersReduced) {
+    /* reduced motion: static poster stand-in; regular mobile keeps the
+       art-directed pad scene (steam + rocket below the copy) */
     exists("assets/rocketplate-hero-poster.jpg").then(ok => {
       if (ok) media.classList.add("has-poster");
     });
@@ -1271,7 +1368,7 @@ if (!prefersReduced && window.gsap) {
   }
 
   /* ---- tier 2: card groups enter as one choreographed beat ---- */
-  [".steps-grid", ".cuisine-wall", ".plans", ".resto-points", ".founding-perks",
+  [".steps-grid", ".cuisine-photos", ".cuisine-wall", ".plans", ".resto-points", ".founding-perks",
    ".benefit-grid", ".path-grid", ".timeline", ".pain-points", ".resto-chips"].forEach(sel => {
     const grp = document.querySelector(sel);
     if (!grp) return;
@@ -1524,7 +1621,7 @@ if (!prefersReduced && window.gsap) {
     [0.11,  2.2,  0.15, 0.35,  0.30, 0.80, 0.85, 0.0],  // problem: right of receipt copy
     [0.19, -2.1,  0.30, 0.70, -0.45, 0.95, 0.90, 0.0],  // model: bank left
     [0.27,  2.3,  0.20, 1.05,  0.35, 0.82, 0.85, 0.0],  // subscribers: right
-    [0.35, -2.35, 0.10, 1.40, -0.38, 0.88, 0.85, 0.0],  // kitchens: far left of chips
+    [0.35, -2.95, 0.15, 1.40, -0.30, 0.70, 0.85, 0.0],  // kitchens: hugs far left, small — photos own this beat
     [0.44,  2.3,  0.45, 1.75,  0.20, 0.68, 0.70, 0.0],  // pricing/founding: small, upper right
     [0.53, -2.2, -0.05, 2.10, -0.28, 0.80, 0.80, 0.0],  // restaurants: left
     [0.61,  2.6,  0.85, 2.40,  0.25, 0.55, 0.75, 0.0],  // rhythm: small, tucked upper right
@@ -1651,9 +1748,11 @@ if (!prefersReduced && window.gsap) {
   const segBtns = form.querySelectorAll(".seg button");
   let segment = "subscriber";
 
+  segBtns.forEach(b => b.setAttribute("aria-pressed", b.classList.contains("active") ? "true" : "false"));
   segBtns.forEach(b => b.addEventListener("click", () => {
-    segBtns.forEach(x => x.classList.remove("active"));
+    segBtns.forEach(x => { x.classList.remove("active"); x.setAttribute("aria-pressed", "false"); });
     b.classList.add("active");
+    b.setAttribute("aria-pressed", "true");
     segment = b.dataset.value;
   }));
 
@@ -1672,11 +1771,16 @@ if (!prefersReduced && window.gsap) {
   };
   form.addEventListener("input", updateProg);
 
-  /* restaurant CTA pre-selects the restaurant segment */
-  document.querySelectorAll('[data-seg="restaurant"]').forEach(a => {
+  /* CTAs can pre-select a segment via data-seg="<value>" */
+  document.querySelectorAll("[data-seg]").forEach(a => {
     a.addEventListener("click", () => {
-      segBtns.forEach(x => x.classList.toggle("active", x.dataset.value === "restaurant"));
-      segment = "restaurant";
+      const v = a.dataset.seg;
+      segBtns.forEach(x => {
+        const on = x.dataset.value === v;
+        x.classList.toggle("active", on);
+        x.setAttribute("aria-pressed", String(on));
+      });
+      segment = v;
     });
   });
 
