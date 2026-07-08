@@ -84,6 +84,13 @@ Full detail: BACKEND.md.
 | Registrar | nameservers/records | DNS-AND-ANALYTICS.md |
 
 ## Known issues (honest list)
+0. **DEPLOY BLOCKER (temporary):** Netlify free-tier credits exhausted mid-review —
+   the final QA batch (legal routes, partner-email trigger frontends, go mobile
+   video gate, go robots/sitemap) is committed (`dfe47b5`) but NOT yet live; both
+   sites still serve the previous (v2-film) deploy and are fully functional.
+   Resolve: upgrade the Netlify plan or wait for the monthly credit reset, then
+   redeploy both sites. Backend pieces of this batch (partner email trigger,
+   worker v2) ARE live — they're on Supabase, not Netlify.
 1. three.js loads on mobile (~600KB) for a small mascot — candidate: desktop-only lazy-load.
 2. Hero film has no webm encode (mp4 only; slot exists) — needs ffmpeg pass.
 3. AI film: minor text softness mid-rotation frames; liftoff lands in the final ~1.5s of the loop.
