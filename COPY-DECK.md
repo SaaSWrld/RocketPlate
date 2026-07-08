@@ -109,7 +109,10 @@ Duplicates (409) are told their spot is safe. Email events queue automatically.
 - [x] Rocket flight retimed for 13 sections; no text collisions at checked breakpoints
 - [x] Reduced motion: reveals instant, Lenis off, rocket static, map pulse hidden
 - [x] Mobile: single-column grids, sticky CTA, rocket below hero copy
-- [ ] Replace `assets/og.png` with real 1200×630 OG art
+- [x] OG image: real 1200×630 art from the hero still (`assets/og.jpg`)
+- [x] Hero film + poster live (`assets/rocketplate-hero.mp4` / `-poster.jpg`,
+      Higgsfield still `f1a7b4d0` → Kling video `068493b4`; regenerate at higher
+      res by re-running the video job from the same still)
 - [ ] Point www.rocketplate.io DNS at Netlify site `rocketplate` + HTTPS
 - [ ] Add GTM/GA4 snippet (dataLayer events already firing)
 - [ ] Privacy/terms pages before paid traffic

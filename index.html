@@ -10,7 +10,7 @@
 <meta property="og:description" content="Hot local meals on a weekly rhythm. Better value for subscribers, predictable revenue for independent kitchens. Launching first in Miami-Dade.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.rocketplate.io/">
-<meta property="og:image" content="https://www.rocketplate.io/assets/og.png">
+<meta property="og:image" content="https://www.rocketplate.io/assets/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -162,7 +162,7 @@ h3{font-size:1.3rem;font-weight:600}
 }
 .hero-media.has-video video{display:block}
 .hero-media.has-poster{
-  background:url("assets/rocketplate-hero-poster.png") center/cover no-repeat;
+  background:url("assets/rocketplate-hero-poster.jpg") center/cover no-repeat;
 }
 .hero-overlay{
   position:absolute;inset:0;opacity:0;transition:opacity .8s;
@@ -516,14 +516,45 @@ footer{
 .pstep h3{font-size:.98rem;margin-bottom:6px}
 .pstep p{font-size:.85rem;color:#3A4E77}
 
-/* ---------- launch map ---------- */
+/* ---------- launch console (mission control, contained in a card) ---------- */
 .launch-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:60px;align-items:center}
-.map-card{
-  background:var(--card);border-radius:var(--radius);padding:26px;
-  box-shadow:var(--shadow);border:1px solid rgba(28,58,110,.08);
+.console{
+  background:var(--navy);border-radius:var(--radius);padding:0 0 22px;overflow:hidden;
+  box-shadow:var(--shadow);color:var(--cream);
 }
-.map-card svg{width:100%;height:auto;display:block}
-@media (prefers-reduced-motion:reduce){.map-card animate{display:none}}
+.console-head{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 20px;border-bottom:1px solid rgba(190,204,214,.18);
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:.18em;color:var(--steel);
+}
+.c-lights{display:inline-flex;gap:6px}
+.c-lights i{width:9px;height:9px;border-radius:50%;background:var(--crimson)}
+.c-lights i:nth-child(2){background:var(--orange)}
+.c-lights i:nth-child(3){background:var(--rocket-blue)}
+.console svg{width:100%;height:auto;display:block;padding:16px 20px 0}
+.c-zip{padding:14px 20px 0}
+.c-zip label{
+  display:block;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.16em;
+  color:var(--steel);margin-bottom:8px;
+}
+.c-zip-row{display:flex;gap:10px}
+.c-zip-row input{
+  flex:1;min-width:0;padding:12px 16px;border-radius:12px;
+  font-family:var(--font-mono);font-size:1.05rem;letter-spacing:.12em;
+  border:1.5px solid rgba(190,204,214,.3);background:rgba(255,248,238,.08);color:var(--cream);
+  transition:border-color .2s,box-shadow .2s;
+}
+.c-zip-row input::placeholder{color:rgba(190,204,214,.5)}
+.c-zip-row input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 4px rgba(242,140,40,.18)}
+.c-zip-result{
+  display:none;margin-top:12px;padding:12px 14px;border-radius:12px;
+  font-size:.88rem;color:var(--cream);background:rgba(255,248,238,.08);
+  border:1px solid rgba(190,204,214,.25);
+}
+.c-zip-result.show{display:block}
+.c-zip-result b{color:var(--orange)}
+.c-zip-result .zr-count{display:block;margin-top:6px;font-family:var(--font-mono);font-size:.74rem;color:var(--steel)}
+@media (prefers-reduced-motion:reduce){.console animate{display:none}}
 
 /* ---------- faq ---------- */
 .faq-wrap{max-width:820px}
@@ -626,7 +657,7 @@ footer{
          Sequence: locked Magica still (rocket back view, hull text "YOUR FAVORITE MEALS DELIVERED DAILY")
          → rotates to front, robot waves from porthole holding serving dish → flies off. -->
     <div class="hero-media" id="heroMedia" aria-hidden="true">
-      <video id="heroVideo" muted loop playsinline preload="none" poster="assets/rocketplate-hero-poster.png">
+      <video id="heroVideo" muted loop playsinline preload="none" poster="assets/rocketplate-hero-poster.jpg">
         <source src="assets/rocketplate-hero.webm" type="video/webm">
         <source src="assets/rocketplate-hero.mp4" type="video/mp4">
       </video>
@@ -748,7 +779,7 @@ footer{
         <div class="benefit"><span class="b-ic">🚀</span><h3>Founding 100 access</h3><p>Early subscribers get the launch perks — free first week, rate lock, first taste.</p></div>
       </div>
       <div style="margin-top:36px" class="rv">
-        <a href="#join" class="btn btn-primary">Join the Waitlist <span class="arrow">→</span></a>
+        <a href="#join" class="btn btn-primary">Save my seat at the table <span class="arrow">→</span></a>
       </div>
     </div>
   </section>
@@ -928,26 +959,38 @@ footer{
           <a href="#join" class="btn btn-primary" id="requestZipBtn">Request Your ZIP <span class="arrow">→</span></a>
         </div>
       </div>
-      <div class="map-card rv" aria-label="Stylized map of the Miami-Dade pilot area">
-        <svg viewBox="0 0 420 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+      <div class="console rv" aria-label="RocketPlate launch zone console">
+        <div class="console-head">
+          <span class="c-lights"><i></i><i></i><i></i></span>
+          <span>MISSION CONTROL · LAUNCH ZONES</span>
+        </div>
+        <svg viewBox="0 0 420 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
           <!-- abstract coastline -->
-          <path d="M300 10 C320 60 330 110 326 160 C322 210 306 260 282 300 C270 320 252 338 230 348 L60 348 C42 330 34 300 38 268 C42 240 54 220 52 190 C50 158 38 140 42 108 C46 74 66 46 96 30 C140 8 220 2 300 10 Z"
-                fill="rgba(11,94,143,.08)" stroke="rgba(28,58,110,.25)" stroke-width="2"/>
+          <path d="M300 10 C320 60 330 110 326 160 C322 210 306 260 282 300 C274 312 262 322 248 328 L60 328 C42 312 34 286 38 258 C42 232 54 214 52 186 C50 156 38 138 42 106 C46 72 66 44 96 28 C140 6 220 2 300 10 Z"
+                fill="rgba(255,248,238,.06)" stroke="rgba(190,204,214,.45)" stroke-width="2"/>
           <!-- water hint -->
-          <path d="M326 160 C322 210 306 260 282 300 C270 320 252 338 230 348 L420 348 L420 40 C380 60 340 100 326 160 Z" fill="rgba(11,94,143,.12)"/>
+          <path d="M326 160 C322 210 306 260 282 300 C274 312 262 322 248 328 L420 328 L420 40 C380 60 340 100 326 160 Z" fill="rgba(11,94,143,.35)"/>
           <!-- pilot beacon: Kendall/Pinecrest -->
-          <circle cx="150" cy="248" r="46" fill="rgba(242,140,40,.15)">
+          <circle cx="150" cy="232" r="46" fill="rgba(242,140,40,.18)">
             <animate attributeName="r" values="38;52;38" dur="3s" repeatCount="indefinite"/>
             <animate attributeName="opacity" values=".9;.35;.9" dur="3s" repeatCount="indefinite"/>
           </circle>
-          <circle cx="150" cy="248" r="22" fill="rgba(242,140,40,.35)"/>
-          <circle cx="150" cy="248" r="9" fill="#C0182A"/>
-          <text x="150" y="298" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#1C3A6E" letter-spacing="1">KENDALL / PINECREST</text>
-          <text x="150" y="316" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#C0182A" letter-spacing="2">ZIP 33186 · PILOT</text>
+          <circle cx="150" cy="232" r="22" fill="rgba(242,140,40,.4)"/>
+          <circle cx="150" cy="232" r="9" fill="#F28C28"/>
+          <text x="150" y="282" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#FFF8EE" letter-spacing="1">KENDALL / PINECREST</text>
+          <text x="150" y="300" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#F28C28" letter-spacing="2">ZIP 33186 · PILOT</text>
           <!-- future ring -->
-          <circle cx="150" cy="248" r="86" fill="none" stroke="rgba(28,58,110,.25)" stroke-width="1.5" stroke-dasharray="5 7"/>
-          <text x="150" y="146" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5A6C92" letter-spacing="1.5">NEXT ZONES · BY DEMAND</text>
+          <circle cx="150" cy="232" r="86" fill="none" stroke="rgba(190,204,214,.4)" stroke-width="1.5" stroke-dasharray="5 7"/>
+          <text x="150" y="130" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#BECCD6" letter-spacing="1.5">NEXT ZONES · BY DEMAND</text>
         </svg>
+        <form class="c-zip" id="zipConsole" novalidate>
+          <label for="cz-input">CHECK YOUR ZIP</label>
+          <div class="c-zip-row">
+            <input id="cz-input" type="text" inputmode="numeric" maxlength="10" placeholder="33186" aria-label="Enter your ZIP code">
+            <button type="submit" class="btn btn-primary btn-sm">Check</button>
+          </div>
+          <div class="c-zip-result" id="czResult" role="status" aria-live="polite"></div>
+        </form>
       </div>
     </div>
   </section>
@@ -1131,7 +1174,7 @@ addEventListener("scroll", () => hdr.classList.toggle("scrolled", scrollY > 24),
       handoff();
     });
   } else {
-    exists("assets/rocketplate-hero-poster.png").then(ok => {
+    exists("assets/rocketplate-hero-poster.jpg").then(ok => {
       if (ok) media.classList.add("has-poster");
     });
   }
@@ -1633,6 +1676,40 @@ if (!prefersReduced && window.gsap) {
   /* launch section: Request Your ZIP focuses the ZIP field */
   document.getElementById("requestZipBtn")?.addEventListener("click", () => {
     setTimeout(() => form.zip.focus({ preventScroll: true }), prefersReduced ? 0 : 900);
+  });
+
+  /* mission-control ZIP console (real aggregate counts only, via RPC) */
+  const zipConsole = document.getElementById("zipConsole");
+  zipConsole?.addEventListener("submit", async e => {
+    e.preventDefault();
+    const zip = document.getElementById("cz-input").value.trim();
+    const out = document.getElementById("czResult");
+    out.classList.add("show");
+    if (!/^\d{3,10}$/.test(zip)) {
+      out.innerHTML = "Enter a valid ZIP to check the launch map.";
+      return;
+    }
+    const zone = zoneFor(zip);
+    rpTrack("zip_console", { zip, zone });
+    out.innerHTML = zone === "priority"
+      ? "🚀 <b>LAUNCH PRIORITY AREA.</b> This ZIP is in the pilot wave — Founding 100 spots here go fastest."
+      : zone === "nearby"
+      ? "🛰️ <b>NEARBY FUTURE ZONE.</b> Right next to the pilot — demand decides which ZIP opens second."
+      : "📡 <b>NOT IN THE LAUNCH AREA YET.</b> Join anyway — signups put your ZIP on the map.";
+    try {
+      const res = await fetch(`${SUPABASE.url}/rest/v1/rpc/zip_wait_count`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "apikey": SUPABASE.anonKey, "Authorization": `Bearer ${SUPABASE.anonKey}` },
+        body: JSON.stringify({ p_zip: zip })
+      });
+      if (res.ok) {
+        const n = await res.json();
+        if (typeof n === "number" && n > 0) {
+          out.innerHTML += `<span class="zr-count">${n} ${n === 1 ? "NEIGHBOR" : "NEIGHBORS"} WAITING IN ${zip}</span>`;
+        }
+      }
+    } catch {}
+    if (!form.zip.value) form.zip.value = zip;
   });
 
   form.addEventListener("submit", async e => {
