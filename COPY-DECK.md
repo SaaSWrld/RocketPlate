@@ -1,5 +1,31 @@
 # rocketplate.io — Copy Deck & QA Checklist
 
+## Voice (applies to both sites)
+Confident, warm, clear, energetic, slightly playful. Premium but not corporate;
+Miami-local without sounding small; food-forward without reading like a menu;
+direct enough to convert.
+**Never use:** "cheap food", "meal prep" (as a description of RocketPlate),
+"ghost kitchen", "like DoorDash" (or naming competitors), "rate for life",
+fake restaurant names, fake testimonials, fake launch claims, fake numbers.
+
+## Copy bank assignments (applied 2026-07-07)
+| Slot | rocketplate.io (brand) | gorocketplate.com (conversion) |
+|---|---|---|
+| H1 | "Dinner, cleared for launch." | "Hot local meals. One weekly subscription. Zero delivery chaos." |
+| Sub | "We batch orders, partner with neighborhood restaurants…" (bank #3) | "No delivery-fee roulette. No tip pressure…" (bank #2) |
+| Problem | "Dinner got too complicated." + bank body | same |
+| How it works | 3-part system (restaurants cook / we batch / subscribers eat) | bank 3 steps (choose plan / pick menus / evening route) |
+| Restaurants | "Turn slow hours into a new revenue lane." + bank body | same |
+| Founding 100 | "Be first on the launchpad." + bank body | same |
+| Form submit | "Save My Spot 🚀" | same |
+| ZIP CTA | "Request My ZIP" | "Check my ZIP" |
+| Final CTA | "Join the Founding 100" + "Partner With RocketPlate" | "Bring RocketPlate to My Area" |
+| Quick capture | — | "Get Launch Access" |
+| FAQ lead | "Is this just another delivery app?" (no competitor names) | same |
+Reserve headlines (unused, on deck): "Your favorite local meals, delivered hot
+daily." / "A smarter dinner routine from restaurants you already love." /
+"Restaurant meals, weekly simplicity."
+
 Company landing site. Brand authority over conversion pressure; the aggressive
 capture funnel lives at gorocketplate.com. Both sites share one Supabase backend
 (`leads` table, segmented by `role` + `landing_page_variant`).
