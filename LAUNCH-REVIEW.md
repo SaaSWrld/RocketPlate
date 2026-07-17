@@ -1,5 +1,25 @@
 # RocketPlate — Final Demo Review (2026-07-08)
 
+> ## ⚠️ STATUS UPDATE 2026-07-16 (audit session)
+>
+> 1. **CRITICAL — Supabase project is paused.** `uhmyjevtfrynunxfsyof.supabase.co`
+>    no longer resolves in DNS (verified against 8.8.8.8 too) — the free-tier
+>    project auto-paused after ~7 days of inactivity (last activity 2026-07-08).
+>    **Both live sites' forms fail for every visitor** (graceful error message
+>    shows, but every lead is lost). Restore: supabase.com dashboard → project
+>    RocketPlate → Restore. Prevent recurrence: upgrade to Pro OR schedule any
+>    weekly request against the project (even the `zip_wait_count` RPC).
+> 2. Netlify still serves the 2026-07-08 pre-`dfe47b5` deploy (`/privacy/` 404s
+>    live). Credit state unknown — no CLI/MCP auth available in this session;
+>    check app.netlify.com and redeploy both sites when credits allow.
+> 3. Known issue #1 (three.js on mobile) is **FIXED** in commit `883fc29`:
+>    three.js is now desktop-only, fetched on idle; mobile uses the poster.
+>    Tradeoff: mobile loses the 3D pad mascot. Not yet deployed (see #2).
+> 4. Known issue #2 (webm encode) addressed this session — see assets.
+> 5. This repo has **no git remote** — the only copy of the business lives on
+>    this laptop. Create a private GitHub repo and push (also enables a free
+>    scheduled-workflow keep-alive for Supabase).
+
 Reviewed against **real Netlify deployments** (not preview panes).
 
 ## Demo URLs
