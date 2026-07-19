@@ -1225,14 +1225,14 @@ document.querySelectorAll("[data-role-prefill]").forEach(a => {
     const out = document.getElementById("restoMsg");
     if (!name) { out.textContent = "Type the restaurant's name first."; return; }
     try {
-      const res = await fetch(`${SUPABASE.url}/rest/v1/restaurant_referrals`, {
+      const res = await fetch(`${SUPABASE.url}/rest/v1/rpc/refer_restaurant`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "apikey": SUPABASE.anonKey, "Authorization": `Bearer ${SUPABASE.anonKey}`, "Prefer": "return=minimal" },
-        body: JSON.stringify({
+        headers: { "Content-Type": "application/json", "apikey": SUPABASE.anonKey, "Authorization": `Bearer ${SUPABASE.anonKey}` },
+        body: JSON.stringify({ p: {
           restaurant_name: name,
           zip: document.getElementById("f-zip").value.trim() || null,
           referrer_email: document.getElementById("f-email").value.trim().toLowerCase() || null
-        })
+        }})
       });
       if (!res.ok) throw new Error(res.status);
       nameEl.value = "";
