@@ -1,0 +1,21 @@
+name: Production smoke test
+
+# Daily uptime + regression monitor for both live sites and the backend.
+# Fails loudly in the Actions tab (and email notification) if anything breaks.
+on:
+  schedule:
+    - cron: "41 13 * * *" # daily 13:41 UTC
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths: ["scripts/smoke.mjs", ".github/workflows/smoke.yml"]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/smoke.mjs
