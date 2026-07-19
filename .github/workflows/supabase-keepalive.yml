@@ -1,0 +1,23 @@
+name: Supabase keep-alive
+
+# Free-tier Supabase pauses after ~7 days without API activity. This ping
+# keeps the RocketPlate project awake so live lead capture never dies again
+# (it silently died 2026-07-15 → restored 2026-07-18).
+on:
+  schedule:
+    - cron: "23 9 * * 1,4" # Mon + Thu 09:23 UTC
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping zip_wait_count RPC
+        run: |
+          # sb_publishable key is already public in the site HTML; not a secret.
+          curl -sf -X POST \
+            "https://uhmyjevtfrynunxfsyof.supabase.co/rest/v1/rpc/zip_wait_count" \
+            -H "apikey: sb_publishable_wsUbTQXWP3dYHyJDbhOmEQ_LSEPOZfO" \
+            -H "Authorization: Bearer sb_publishable_wsUbTQXWP3dYHyJDbhOmEQ_LSEPOZfO" \
+            -H "Content-Type: application/json" \
+            -d '{"p_zip":"33186"}'

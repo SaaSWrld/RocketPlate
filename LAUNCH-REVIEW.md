@@ -103,21 +103,32 @@ Full detail: BACKEND.md.
 | Operator only | admin token | /admin access; **rotate** (SQL in BACKEND.md) |
 | Registrar | nameservers/records | DNS-AND-ANALYTICS.md |
 
-## Known issues (honest list)
-0. **DEPLOY BLOCKER (temporary):** Netlify free-tier credits exhausted mid-review —
-   the final QA batch (legal routes, partner-email trigger frontends, go mobile
-   video gate, go robots/sitemap) is committed (`dfe47b5`) but NOT yet live; both
-   sites still serve the previous (v2-film) deploy and are fully functional.
-   Resolve: upgrade the Netlify plan or wait for the monthly credit reset, then
-   redeploy both sites. Backend pieces of this batch (partner email trigger,
-   worker v2) ARE live — they're on Supabase, not Netlify.
-1. three.js loads on mobile (~600KB) for a small mascot — candidate: desktop-only lazy-load.
-2. Hero film has no webm encode (mp4 only; slot exists) — needs ffmpeg pass.
-3. AI film: minor text softness mid-rotation frames; liftoff lands in the final ~1.5s of the loop.
-4. Legal pages are honest placeholders — formal versions + TCPA review required before paid traffic/SMS.
-5. Receipt figures ($13.50→$26.92) are realistic but constructed — replace with a real screenshot day-of-launch.
-6. Cross-site links use *.netlify.app until DNS cutover (swap script ready in DNS-AND-ANALYTICS.md).
-7. Local python preview can't serve Range requests (video seek rewinds locally only) — use the Netlify URLs to review.
+## Known issues (honest list — updated 2026-07-18)
+0. **DEPLOY BLOCKER (still open):** Netlify free-tier credits exhausted 2026-07-08 —
+   everything from `dfe47b5` onward (legal routes, go mobile video gate, go
+   robots/sitemap, three.js diet, webm encodes) is committed but NOT live; both
+   sites serve the v2-film deploy. Andre upgrading plan 2026-07-18. After upgrade:
+   link both Netlify sites to github.com/SaaSWrld/RocketPlate for CI deploys
+   (publish dir `/` for flagship, `gorocketplate` for go) — kills the CLI/MCP
+   dependency permanently.
+1. ~~three.js on mobile~~ **FIXED** `883fc29` — desktop-only, loaded on idle.
+2. ~~No webm encode~~ **FIXED** `e13ca4f` — VP9: flagship 16.6MB→1.5MB, go 5.7MB→0.4MB.
+3. **Supabase auto-paused 2026-07-15 → restored + re-verified live 2026-07-18**
+   (upsert_lead 200, email queued, zip_wait_count 200). Forms were dead ~3 days;
+   0 real leads lost (tables were empty). Keep-alive GitHub Action added
+   (`.github/workflows/supabase-keepalive.yml`) — active once repo is pushed.
+4. **Pending Andre approval:** `harden_public_write_paths` migration (drop unused
+   anon raw-INSERT policies, validated `refer_restaurant` RPC + frontend switch,
+   pin `set_updated_at` search_path) — blocked by permission classifier this
+   session. Also: one e2e test lead (`e2e-test-20260718@rocketplate.io`) needs
+   deleting (delete was likewise blocked).
+5. GitHub backup blocked: stored git credential (Dreone6) is stale — re-auth
+   GitHub Desktop or run `git push -u origin master` once interactively.
+6. AI film: minor text softness mid-rotation frames; liftoff lands in the final ~1.5s of the loop.
+7. Legal pages are honest placeholders — formal versions + TCPA review required before paid traffic/SMS.
+8. Receipt figures ($13.50→$26.92) are realistic but constructed — replace with a real screenshot day-of-launch.
+9. Cross-site links use *.netlify.app until DNS cutover (swap script ready in DNS-AND-ANALYTICS.md).
+10. Local python preview can't serve Range requests (video seek rewinds locally only) — use the Netlify URLs to review.
 
 ## Launch checklist (final)
 1. ☐ DNS both domains (DNS-AND-ANALYTICS.md §1) → HTTPS green
