@@ -117,11 +117,12 @@ Full detail: BACKEND.md.
    (upsert_lead 200, email queued, zip_wait_count 200). Forms were dead ~3 days;
    0 real leads lost (tables were empty). Keep-alive GitHub Action added
    (`.github/workflows/supabase-keepalive.yml`) — active once repo is pushed.
-4. **Pending Andre approval:** `harden_public_write_paths` migration (drop unused
-   anon raw-INSERT policies, validated `refer_restaurant` RPC + frontend switch,
-   pin `set_updated_at` search_path) — blocked by permission classifier this
-   session. Also: one e2e test lead (`e2e-test-20260718@rocketplate.io`) needs
-   deleting (delete was likewise blocked).
+4. ~~Write-path hardening~~ **APPLIED 2026-07-19** (Andre-approved):
+   `harden_public_write_paths` migration live — raw anon INSERT policies dropped
+   on all four tables, `refer_restaurant` RPC live + go-site form switched
+   (`5fb6d18`, deployed), `set_updated_at` search_path pinned, e2e test rows
+   deleted. Verified: RPC 200, raw inserts rejected 42501, advisors WARNs cleared
+   (remaining advisories are the intended ADR-002 architecture), smoke green.
 5. GitHub backup blocked: stored git credential (Dreone6) is stale — re-auth
    GitHub Desktop or run `git push -u origin master` once interactively.
 6. AI film: minor text softness mid-rotation frames; liftoff lands in the final ~1.5s of the loop.

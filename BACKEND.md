@@ -24,7 +24,9 @@ service-role admin views so private totals aren't exposed.
 Full partner intake: business_name, contact_name, email, phone, cuisine_type,
 address, zip_code, website, instagram, pos_system, number_of_locations,
 can_batch_2_to_4_pm, estimated_capacity, `status` (new→reviewing→tasting→
-menu_setup→live / declined / on_hold), notes. RLS: anon INSERT only.
+menu_setup→live / declined / on_hold), notes. RLS: no public policies —
+writes only via `submit_partner_application()` RPC (since
+`harden_public_write_paths`, 2026-07-19).
 
 ### `email_events`
 Resend-ready queue: `lead_id`, `event_type`, `status`, `sent_at`,
@@ -37,8 +39,11 @@ on lead insert (see mapping in gorocketplate/BUILD-NOTES.md). Preference
 Rate-limit ledger (ip, tbl, created_at). Service-role only.
 
 ## Security model
-- **RLS on every table.** Public can only: INSERT partner apps + referrals,
-  SELECT launch_zones, EXECUTE `upsert_lead` and `zip_wait_count`.
+- **RLS on every table, RPC-only public writes** (ADR-002; hardened 2026-07-19
+  via `harden_public_write_paths`): zero anon INSERT/UPDATE/DELETE policies
+  anywhere. Public can only SELECT launch_zones and EXECUTE the validated
+  RPCs: `upsert_lead`, `submit_partner_application`, `refer_restaurant`,
+  `zip_wait_count`, plus the token-gated read RPCs.
 - **No public read of leads.** Private counts are never exposed raw; only the
   intentional `zip_wait_count(zip)` aggregate (returns an integer, shown only
   when > 0) and the service-role admin views.

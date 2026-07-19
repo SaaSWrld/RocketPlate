@@ -21,7 +21,7 @@ Evidence classes: **[V]** verified this session (live request, SQL, or code read
 ### §0.2 Reported deployments — CORRECTED
 - ~~"Live sites serve a prior deploy; `dfe47b5` not deployed"~~ → **STALE.** Both sites redeployed 2026-07-18 from `a7b48a5` (includes `dfe47b5` + 5 later commits). [V] Routes /privacy /terms /contact /partners, robots, sitemap, webm all return 200 on both sites.
 - "Six tables, ten RPCs, nine migrations" → close: **7 tables** (incl. `restaurant_referrals`, absent from older docs), **14+ RPCs**, **9 migrations** + this session's pending one. [V via SQL]
-- `BUILD-NOTES.md` (V2 §0.1) → **does not exist**; actual docs are DEPLOY-NOTES, BACKEND, LAUNCH-REVIEW, COPY-DECK, DESIGN-DIRECTIONS, INTERACTION-DIRECTION, DNS-AND-ANALYTICS. [V]
+- `BUILD-NOTES.md` (V2 §0.1) → exists at `gorocketplate/BUILD-NOTES.md` (go-site build notes), not repo root; other docs: DEPLOY-NOTES, BACKEND, LAUNCH-REVIEW, COPY-DECK, DESIGN-DIRECTIONS, INTERACTION-DIRECTION, DNS-AND-ANALYTICS. [V]
 
 ### §0.5-A Deployment drift — RESOLVED 2026-07-18 [V]
 Netlify Personal plan active; both sites deployed & browser-verified. Rollback = Netlify deploy history (previous deploy retained). MCP deploy gotcha documented in LAUNCH-REVIEW (`//proxy/` URL must be normalized).
@@ -79,7 +79,7 @@ Delivered now: this delta report, ROCKETPLATE_FOUNDER_ACTIONS.md, LAUNCH-REVIEW 
 
 1. **Founder:** DNS cutover (both domains) → then Claude runs link-swap + redeploy + full re-verify.
 2. **Founder:** Resend key + verified sending domain + 3 secrets → then Claude runs V2 §F delivery test battery.
-3. **Andre approval:** `harden_public_write_paths` migration + referral-RPC frontend switch + test-lead deletion.
+3. ~~Hardening batch~~ **DONE 2026-07-19** — migration applied, referral form on RPC (deployed), test rows deleted, advisors clean, smoke green.
 4. **Founder:** GitHub re-auth → Claude pushes backup + keep-alive activates.
 5. **Founder:** rotate admin token (2-min SQL).
 6. **Founder (optional for Gate B):** GTM container ID.
