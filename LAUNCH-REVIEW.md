@@ -104,13 +104,13 @@ Full detail: BACKEND.md.
 | Registrar | nameservers/records | DNS-AND-ANALYTICS.md |
 
 ## Known issues (honest list — updated 2026-07-18)
-0. **DEPLOY BLOCKER (still open):** Netlify free-tier credits exhausted 2026-07-08 —
-   everything from `dfe47b5` onward (legal routes, go mobile video gate, go
-   robots/sitemap, three.js diet, webm encodes) is committed but NOT live; both
-   sites serve the v2-film deploy. Andre upgrading plan 2026-07-18. After upgrade:
-   link both Netlify sites to github.com/SaaSWrld/RocketPlate for CI deploys
-   (publish dir `/` for flagship, `gorocketplate` for go) — kills the CLI/MCP
-   dependency permanently.
+0. ~~Deploy blocker~~ **RESOLVED 2026-07-18** — Netlify Personal ($9) activated;
+   both sites deployed via MCP tokenized upload and verified live (legal routes,
+   robots/sitemap, three.js diet, webm encodes all serving). Gotcha for future
+   deploys: the deploy-site MCP op returns a proxy URL containing `//proxy/` —
+   normalize to a single slash or the upload 400/404s. Still recommended: link
+   both Netlify sites to github.com/SaaSWrld/RocketPlate for CI deploys
+   (publish dir `/` for flagship, `gorocketplate` for go).
 1. ~~three.js on mobile~~ **FIXED** `883fc29` — desktop-only, loaded on idle.
 2. ~~No webm encode~~ **FIXED** `e13ca4f` — VP9: flagship 16.6MB→1.5MB, go 5.7MB→0.4MB.
 3. **Supabase auto-paused 2026-07-15 → restored + re-verified live 2026-07-18**
