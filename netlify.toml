@@ -16,6 +16,11 @@
     X-Frame-Options = "DENY"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    # CSP: inline script/style are required by the single-file page architecture
+    # (ADR-001); the value of this policy is the script-src/connect-src allow-list
+    # + frame-ancestors. Tighten to nonces if the pages ever get a build step.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://www.googletagmanager.com; media-src 'self'; connect-src 'self' https://uhmyjevtfrynunxfsyof.supabase.co https://www.google-analytics.com https://*.google-analytics.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
 
 # Fingerprint-free static assets: safe to cache hard because filenames change
 # when content meaningfully changes (hero v1→v2 shipped as new files).

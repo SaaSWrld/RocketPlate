@@ -64,6 +64,7 @@ await check("flagship /admin/", `${FLAG}/admin/`);
 await check("flagship robots.txt", `${FLAG}/robots.txt`);
 await check("flagship sitemap.xml", `${FLAG}/sitemap.xml`);
 await check("flagship hero webm", `${FLAG}/assets/rocketplate-hero.webm`);
+await check("flagship assets/logo.png (favicon/partner-page logo)", `${FLAG}/assets/logo.png`);
 await check("/partner 301 → /partners", `${FLAG}/partner/x`, { status: 301 });
 
 console.log("Routes — go");
@@ -74,6 +75,9 @@ await check("go hero webm", `${GO}/assets/rocketplate-hero.webm`);
 console.log("Security headers");
 await check("flagship nosniff", `${FLAG}/`, { header: "x-content-type-options", headerValue: "nosniff" });
 await check("go nosniff", `${GO}/`, { header: "x-content-type-options", headerValue: "nosniff" });
+await check("flagship CSP", `${FLAG}/`, { header: "content-security-policy", headerValue: "frame-ancestors 'none'" });
+await check("go CSP", `${GO}/`, { header: "content-security-policy", headerValue: "frame-ancestors 'none'" });
+await check("flagship HSTS", `${FLAG}/`, { header: "strict-transport-security", headerValue: "max-age" });
 await check("assets immutable cache", `${FLAG}/assets/rocketplate-hero-poster.jpg`, { header: "cache-control", headerValue: "immutable" });
 
 console.log("Backend");

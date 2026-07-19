@@ -164,7 +164,12 @@ async function load(){
 function toCSV(rows){
   if(!rows.length) return "";
   const cols = Object.keys(rows[0]);
-  const cell = v => { if(v==null) return ""; const s = Array.isArray(v)?v.join("; "):String(v); return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
+  const cell = v => {
+    if(v==null) return "";
+    let s = Array.isArray(v)?v.join("; "):String(v);
+    if(/^[=+\-@\t\r]/.test(s)) s = "'" + s; /* neutralize spreadsheet formula/DDE injection */
+    return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;
+  };
   return [cols.join(","), ...rows.map(r=>cols.map(c=>cell(r[c])).join(","))].join("\n");
 }
 async function download(fn, csv, name){

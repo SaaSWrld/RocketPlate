@@ -26,6 +26,18 @@ Reserve headlines (unused, on deck): "Your favorite local meals, delivered hot
 daily." / "A smarter dinner routine from restaurants you already love." /
 "Restaurant meals, weekly simplicity."
 
+Reserve lines harvested from the archived daily-delights repo (audit D3, all
+on-voice — see docs/audit/03 + ADR-005):
+- "We own the kitchen relationships, the delivery experience, and the food
+  temperature at your door."
+- "The Founding 100 are the neighbors who unlock RocketPlate in their zone."
+- "Waitlist signals drive the schedule."
+- "Fresh during their slow afternoon window — never reheated leftovers."
+- Honest-status FAQ pattern: "Is RocketPlate live today? Not yet." (+ what
+  decides the schedule)
+- Step-title alternates (concrete/benefit-forward): "Pick your plan" /
+  "Kitchens batch-cook" / "One hot evening drop"
+
 Company landing site. Brand authority over conversion pressure; the aggressive
 capture funnel lives at gorocketplate.com. Both sites share one Supabase backend
 (`leads` table, segmented by `role` + `landing_page_variant`).

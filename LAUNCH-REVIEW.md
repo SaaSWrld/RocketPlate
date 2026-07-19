@@ -123,8 +123,11 @@ Full detail: BACKEND.md.
    (`5fb6d18`, deployed), `set_updated_at` search_path pinned, e2e test rows
    deleted. Verified: RPC 200, raw inserts rejected 42501, advisors WARNs cleared
    (remaining advisories are the intended ADR-002 architecture), smoke green.
-5. GitHub backup blocked: stored git credential (Dreone6) is stale — re-auth
-   GitHub Desktop or run `git push -u origin master` once interactively.
+5. ~~GitHub backup blocked~~ **RESOLVED 2026-07-19**: repo pushed and tracking
+   `origin/master` at github.com/SaaSWrld/RocketPlate; smoke + keepalive
+   workflows active. (Sister repo rocketplate-daily-delights: see docs/audit/
+   + ADR-005 — archived, its Lovable Supabase project is already unreachable
+   (connection refused 2026-07-19), so no stray page can write to it.)
 6. AI film: minor text softness mid-rotation frames; liftoff lands in the final ~1.5s of the loop.
 7. Legal pages are honest placeholders — formal versions + TCPA review required before paid traffic/SMS.
 8. Receipt figures ($13.50→$26.92) are realistic but constructed — replace with a real screenshot day-of-launch.

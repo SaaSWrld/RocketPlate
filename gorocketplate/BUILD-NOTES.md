@@ -33,25 +33,32 @@ A `HEAD` request for the mp4 gates activation; until it exists, the animated
 fallback runs (atmospheric gradients, rising steam wisps, bobbing SVG brand
 rocket with pulsing flame). Reduced motion pauses autoplay + animations.
 
-## Database (Supabase project `uhmyjevtfrynunxfsyof`, migration `create_leads_and_email_events`)
+## Database (Supabase project `uhmyjevtfrynunxfsyof`) — see BACKEND.md for the full model
 
-- **`leads`** — full spec columns (`first_name`…`landing_page_variant`), plus
-  `feeding_count`, `subscribe_timeline`, `wants_founding_100`, `referral_code`.
-  RLS: anon INSERT only. Unique on `lower(email)` → duplicate submit returns 409,
-  handled client-side as "You're already aboard."
-- **`email_events`** — Resend-ready queue. RLS with no policies = service-role
-  only (for the future sender worker).
-- **`restaurant_referrals`** — success-state suggestions. Anon INSERT only.
-- **`zip_wait_count(p_zip)`** — SECURITY DEFINER RPC, anon-executable, returns the
-  real aggregate count for a ZIP. This is the ONLY read path exposed to the
-  browser: no fake counters, counts shown only when > 0.
+Post-hardening (2026-07-19) this page has **zero direct table access**. Its three
+backend touchpoints, all `/rest/v1/rpc/*`:
+
+- **`upsert_lead(p)`** — the lead form. Server-side validation + rate limiting;
+  duplicate email → `status:"updated"` ("You're already on the launch list — we
+  updated your preferences"), first-touch attribution preserved; returns
+  `referral_code` + `access_token` (powers the success-state referral link and
+  the /account magic link). Column note: `founding_100_interest` (renamed from
+  `wants_founding_100` in `lead_platform_upgrade`).
+- **`refer_restaurant(p)`** — success-state restaurant suggestion → validated
+  insert into `restaurant_referrals` (replaced the raw table insert in
+  `harden_public_write_paths`).
+- **`zip_wait_count(p_zip)`** — the ONLY public read: real aggregate count for a
+  ZIP, shown only when > 0. No fake counters.
+
+Schema source of truth: `../supabase/migrations/` (9 files, byte-verified against
+the live migration history). RLS: no anon INSERT/UPDATE/DELETE policies anywhere.
 
 ## Email event mapping (Resend)
 
 | # | Event | `event_type` | Queued by |
 |---|---|---|---|
 | 1 | Waitlist confirmation | `waitlist_confirmation` | DB trigger, every signup |
-| 2 | Founding 100 nurture | `founding100_nurture` | DB trigger, role=customer & wants_founding_100 |
+| 2 | Founding 100 nurture | `founding100_nurture` | DB trigger, role=customer & founding_100_interest |
 | 3 | Restaurant partner confirmation | `restaurant_partner_confirmation` | DB trigger, role=restaurant_owner |
 | 4 | ZIP launch announcement | `zip_launch_announcement` | campaign (insert rows for a ZIP when it goes live) |
 | 5 | Area-not-launched nurture | `area_nurture` | DB trigger, launch_zone_status=not_yet |
@@ -65,7 +72,7 @@ Sender worker (to build when Resend key exists): Supabase Edge Function on a cro
 ## Segmentation fields for campaigns
 
 `role`, `interested_plan`, `household_type`, `cuisine_interests[]`,
-`launch_zone_status`, `wants_founding_100`, `subscribe_timeline`, `sms_consent`,
+`launch_zone_status`, `founding_100_interest`, `subscribe_timeline`, `sms_consent`,
 `utm_*`, `referred_by`/`referral_code` (referral graph), `landing_page_variant` (A/B).
 
 ## Analytics hooks

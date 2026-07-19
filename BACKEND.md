@@ -130,9 +130,15 @@ template per `event_type`, sends via Resend, marks `sent`/`failed` +
    key; or pg_cron + pg_net from Postgres. Every 2–5 min is plenty.
    Preview before going live: POST with `?dryRun=1` to see rendered recipients/subjects.
 
-## Migrations (in order)
+## Migrations (in order) — versioned in `supabase/migrations/` (md5-verified vs live)
 `create_waitlist_table` → `create_leads_and_email_events` →
-`relax_leads_for_light_capture` → `lead_platform_upgrade`.
+`relax_leads_for_light_capture` → `lead_platform_upgrade` →
+`dashboards_backend` → `admin_rpcs_and_upsert_token` →
+`partner_best_time_to_contact` → `partner_application_email_events` →
+`harden_public_write_paths` (2026-07-19).
+Nine total; the repo copies are byte-identical to the live
+`supabase_migrations.schema_migrations` history (audit fix P0-4 — see
+supabase/migrations/README.md). Every future DDL change adds a file there.
 
 ## Verified (2026-07-07, then cleaned to zero)
 Create; duplicate-updates-preferences (case-insensitive); first-touch

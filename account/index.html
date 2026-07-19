@@ -89,6 +89,7 @@
 const SB = { url:"https://uhmyjevtfrynunxfsyof.supabase.co", key:"sb_publishable_wsUbTQXWP3dYHyJDbhOmEQ_LSEPOZfO" };
 const SITE = "https://rocketplate.netlify.app/"; /* swap to https://www.rocketplate.io/ when DNS is live */
 const $ = s => document.querySelector(s);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const token = new URLSearchParams(location.search).get("token");
 const planLabel = {"5_meals":"5 meals/week","7_meals":"7 meals/week","not_sure":"Undecided"};
 const zoneLabel = {priority:"Priority launch zone",nearby:"Nearby future zone",not_yet:"Not in pilot yet"};
@@ -106,7 +107,7 @@ function fill(l){
   $("#hello").textContent = `Welcome back, ${l.first_name}`;
   $("#profStats").innerHTML = `
     <div class="stat"><div class="n" style="font-size:1.5rem">${planLabel[l.interested_plan]||"—"}</div><div class="l">Current plan</div></div>
-    <div class="stat"><div class="n" style="font-size:1.5rem">${l.zip_code}</div><div class="l">ZIP · ${zoneLabel[l.launch_zone_status]||"on the map"}</div></div>
+    <div class="stat"><div class="n" style="font-size:1.5rem">${esc(l.zip_code)}</div><div class="l">ZIP · ${zoneLabel[l.launch_zone_status]||"on the map"}</div></div>
     <div class="stat ${l.founding_100_interest?'warm':''}"><div class="n" style="font-size:1.5rem">${l.founding_100_interest?"Yes ★":"No"}</div><div class="l">Founding 100</div></div>`;
   $("#p-plan").value = l.interested_plan||"not_sure";
   $("#p-household").value = l.household_type||"other";
@@ -131,6 +132,8 @@ async function boot(){
     const l = await rpc("get_my_lead", { p_token: token });
     fill(l);
     $("#loading").hidden=true; $("#profile").hidden=false;
+    /* keep the token in memory only — scrub it from the address bar/history */
+    history.replaceState(null, "", location.pathname);
   }catch(e){
     $("#loading").hidden=true; $("#need").hidden=false;
     if(String(e.message).includes("not_found")) $("#need").querySelector("h1").textContent = "That link didn't match a profile";

@@ -496,6 +496,8 @@ async function boot(){
       const a = await rpc("get_my_application",{p_token:token});
       renderStatus(a);
       $("#loading").style.display="none"; $("#statusView").style.display="block";
+      /* keep the token in memory only — scrub it from the address bar/history */
+      history.replaceState(null, "", location.pathname);
     }catch(e){
       $("#loading").style.display="none"; $("#marketing").style.display="block";
     }
