@@ -18,13 +18,16 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+GTM_ID;f.parent
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://www.rocketplate.io/assets/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="../assets/logo.png">
+<link rel="icon" href="../assets/favicon-64.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy:#1C3A6E; --navy-deep:#14294f; --rocket-blue:#0B5E8F; --crimson:#C0182A; --crimson-hot:#CC1F1F;
+  --navy:#1C3A6E; --navy-deep:#14294f; --rocket-blue:#0B5E8F;
+  --launch:#F1502F; --launch-deep:#C43A1B; /* brand-era tokens, context/01 */
+  --crimson:var(--launch); --crimson-hot:var(--launch-deep);
   --orange:#F28C28; --cream:#FFF8EE; --steel:#BECCD6; --ink:#16294D; --card:#FFFDF8;
   --line:rgba(28,58,110,.12); --shadow:0 18px 50px -18px rgba(28,58,110,.28); --radius:18px;
   --font-display:"Fraunces",Georgia,serif; --font-body:"Outfit",system-ui,sans-serif; --font-mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -50,8 +53,12 @@ h3{font-size:1.12rem;font-weight:600}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important;transition:none}html{scroll-behavior:auto}}
 /* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--font-body);font-weight:600;font-size:1rem;padding:15px 28px;border-radius:12px;border:none;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s}
-.btn-primary{background:var(--crimson);color:#fff;box-shadow:0 12px 28px -12px rgba(192,24,42,.5)}
-.btn-primary:hover{transform:translateY(-2px);background:var(--crimson-hot);box-shadow:0 18px 34px -12px rgba(192,24,42,.55)}
+.btn-primary{
+  background:var(--launch);color:#fff;
+  font-weight:700;font-size:1.17rem; /* AA-large law (context/01) */
+  box-shadow:0 12px 28px -12px rgba(196,58,27,.5);
+}
+.btn-primary:hover{transform:translateY(-2px);background:var(--launch-deep);box-shadow:0 18px 34px -12px rgba(196,58,27,.55)}
 .btn-primary:disabled{opacity:.65;cursor:wait;transform:none}
 .btn-ghost{background:transparent;color:var(--navy);box-shadow:inset 0 0 0 1.5px rgba(28,58,110,.28)}
 .btn-ghost:hover{box-shadow:inset 0 0 0 1.5px var(--navy)}
@@ -138,7 +145,7 @@ header.scrolled{box-shadow:0 8px 30px -14px rgba(28,58,110,.25)}
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .field.full{grid-column:1/-1}
 .field label{display:block;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#5A6C92;margin-bottom:6px}
-.field .req{color:var(--crimson)}
+.field .req{color:var(--launch-deep)}
 .field input,.field select,.field textarea{width:100%;padding:13px 15px;border-radius:12px;font-family:var(--font-body);font-size:1rem;border:1.5px solid rgba(28,58,110,.16);background:#fff;color:var(--ink);transition:border-color .2s,box-shadow .2s}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--rocket-blue);box-shadow:0 0 0 4px rgba(11,94,143,.12)}
 .field input[aria-invalid="true"]{border-color:var(--crimson);box-shadow:0 0 0 4px rgba(192,24,42,.1)}
@@ -147,7 +154,7 @@ header.scrolled{box-shadow:0 8px 30px -14px rgba(28,58,110,.25)}
 .batch-toggle input{width:19px;height:19px;margin-top:1px;accent-color:var(--crimson);flex-shrink:0}
 #apply .btn-primary{width:100%;margin-top:22px;padding:17px;font-size:1.06rem}
 .form-msg{margin-top:14px;font-size:.9rem;text-align:center;display:none;padding:12px 16px;border-radius:12px}
-.form-msg.err{display:block;background:rgba(192,24,42,.08);color:var(--crimson);border:1px solid rgba(192,24,42,.25)}
+.form-msg.err{display:block;background:rgba(241,80,47,.08);color:var(--launch-deep);border:1px solid rgba(241,80,47,.25)}
 .fineprint{margin-top:14px;text-align:center;font-size:.78rem;color:#7285A8}
 /* success + status */
 .gate{max-width:560px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:clamp(28px,4vw,44px);text-align:center}
@@ -165,7 +172,7 @@ header.scrolled{box-shadow:0 8px 30px -14px rgba(28,58,110,.25)}
 .pstage h4{font-size:.8rem;color:var(--navy);font-family:var(--font-body);font-weight:600}
 .pstage.current h4{color:var(--orange)}.pstage.pending h4{color:#9aa8bf}
 .status-banner{padding:15px 18px;border-radius:12px;font-size:.94rem;margin:16px 0}
-.status-banner.declined{background:rgba(192,24,42,.08);border:1px solid rgba(192,24,42,.3);color:var(--crimson)}
+.status-banner.declined{background:rgba(241,80,47,.08);border:1px solid rgba(241,80,47,.3);color:var(--launch-deep)}
 .status-banner.on_hold{background:rgba(242,140,40,.1);border:1px solid rgba(242,140,40,.35)}
 .detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:18px}
 .detail{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
@@ -197,7 +204,7 @@ footer{background:var(--navy);color:var(--steel);padding:44px clamp(20px,6vw,80p
 <body>
 
 <header id="hdr">
-  <a class="logo" href="https://rocketplate.netlify.app/"><img src="../assets/logo.png" alt="RocketPlate"><span class="sub">For Restaurants</span></a>
+  <a class="logo" href="https://rocketplate.netlify.app/"><img src="../assets/brand-logo.png" alt="RocketPlate" style="height:44px;width:auto"><span class="sub">For Restaurants</span></a>
   <a href="#apply" class="btn btn-primary btn-sm" data-scroll>Apply as a Partner</a>
 </header>
 
@@ -429,7 +436,7 @@ footer{background:var(--navy);color:var(--steel);padding:44px clamp(20px,6vw,80p
 
 <footer>
   <div class="foot">
-    <a class="logo" href="https://rocketplate.netlify.app/" style="color:var(--cream)"><img src="../assets/logo.png" alt="RocketPlate" style="filter:brightness(0) invert(1);height:32px">RocketPlate</a>
+    <a class="logo" href="https://rocketplate.netlify.app/" style="color:var(--cream)"><img src="../assets/brand-logo.png" alt="RocketPlate" style="height:36px;width:auto;background:#FFFDF8;padding:5px 8px;border-radius:10px">RocketPlate</a>
     <span class="mono">CONTROLLED BATCH CHANNEL · MIAMI-DADE</span>
     <a href="https://rocketplate.netlify.app/">rocketplate.io →</a>
   </div>

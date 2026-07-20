@@ -64,7 +64,10 @@ await check("flagship /admin/", `${FLAG}/admin/`);
 await check("flagship robots.txt", `${FLAG}/robots.txt`);
 await check("flagship sitemap.xml", `${FLAG}/sitemap.xml`);
 await check("flagship hero webm", `${FLAG}/assets/rocketplate-hero.webm`);
-await check("flagship assets/logo.png (favicon/partner-page logo)", `${FLAG}/assets/logo.png`);
+await check("flagship assets/logo.png (legacy)", `${FLAG}/assets/logo.png`);
+await check("flagship brand logo", `${FLAG}/assets/brand-logo.png`);
+await check("flagship favicon-64", `${FLAG}/assets/favicon-64.png`);
+await check("go brand logo", `${GO}/assets/brand-logo.png`);
 await check("/partner 301 → /partners", `${FLAG}/partner/x`, { status: 301 });
 
 console.log("Routes — go");

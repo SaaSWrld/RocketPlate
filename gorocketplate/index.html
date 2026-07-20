@@ -19,15 +19,19 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+GTM_ID;f.parent
 <meta property="og:url" content="https://www.gorocketplate.com/">
 <meta property="og:image" content="https://www.gorocketplate.com/assets/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/logo.png">
+<link rel="icon" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 /* ============ tokens (shared with rocketplate.io) ============ */
 :root{
-  --navy:#1C3A6E; --rocket-blue:#0B5E8F; --crimson:#C0182A; --crimson-hot:#CC1F1F;
-  --orange:#F28C28; --cream:#FFF8EE; --steel:#BECCD6; --ink:#16294D; --card:#FFFDF8;
+  /* Brand-era tokens (context/01_BRAND_GUIDE.md) */
+  --navy:#1C3A6E; --navy-deep:#0B3468; --rocket-blue:#0B5E8F;
+  --launch:#F1502F; --launch-deep:#C43A1B; --flame:#F28C28;
+  --crimson:var(--launch); --crimson-hot:var(--launch-deep); --orange:var(--flame);
+  --cream:#FFF8EE; --steel:#BECCD6; --ink:#16294D; --card:#FFFDF8;
   --shadow:0 18px 50px -18px rgba(28,58,110,.28);
   --radius:22px;
   --font-display:"Fraunces",Georgia,serif;
@@ -52,7 +56,7 @@ h3{font-size:1.25rem;font-weight:600}
 .lede{font-size:clamp(1.02rem,1.5vw,1.2rem);color:#3A4E77;max-width:58ch}
 .accent{color:var(--crimson)} .accent-o{color:var(--orange)}
 .eyebrow{
-  font-family:var(--font-mono);font-size:.78rem;letter-spacing:.14em;color:var(--crimson);
+  font-family:var(--font-mono);font-size:.78rem;letter-spacing:.14em;color:var(--launch-deep);
   text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;
 }
 .eyebrow::before{content:"";width:26px;height:2px;background:var(--orange);border-radius:2px}
@@ -71,7 +75,11 @@ h3{font-size:1.25rem;font-weight:600}
   padding:15px 28px;border-radius:999px;border:none;cursor:pointer;text-decoration:none;
   transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s,background .22s;
 }
-.btn-primary{background:var(--crimson);color:#fff;box-shadow:0 12px 28px -10px rgba(192,24,42,.55);position:relative;overflow:hidden}
+.btn-primary{
+  background:var(--launch);color:#fff;
+  font-weight:700;font-size:1.17rem; /* AA-large law: white on Rocket Orange ≥18.66px bold (context/01) */
+  box-shadow:0 12px 28px -10px rgba(196,58,27,.55);position:relative;overflow:hidden;
+}
 .btn-primary:hover{transform:translateY(-3px) scale(1.02);background:var(--crimson-hot);box-shadow:0 18px 34px -10px rgba(192,24,42,.6)}
 .btn-primary:active{transform:translateY(-1px) scale(.99)}
 .btn-primary:disabled{opacity:.7;cursor:wait;transform:none}
@@ -168,7 +176,7 @@ header .btn{padding:11px 22px;font-size:.92rem}
   transition:transform .3s cubic-bezier(.34,1.2,.64,1),box-shadow .3s,border-color .3s;
 }
 .pain-card:hover{transform:translateY(-5px);border-color:rgba(192,24,42,.3);box-shadow:0 20px 44px -16px rgba(28,58,110,.3)}
-.pain-card .ic{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;color:var(--crimson);display:block;margin-bottom:10px}
+.pain-card .ic{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;color:var(--launch-deep);display:block;margin-bottom:10px}
 .pain-card h3{font-size:1.05rem;margin-bottom:6px}
 .pain-card p{font-size:.92rem;color:#3A4E77}
 
@@ -185,7 +193,7 @@ header .btn{padding:11px 22px;font-size:.92rem}
   background:var(--rocket-blue);display:inline-block;padding:5px 13px;border-radius:999px;margin-bottom:16px;
 }
 .step:nth-child(2) .n{background:var(--orange)}
-.step:nth-child(3) .n{background:var(--crimson)}
+.step:nth-child(3) .n{background:var(--launch-deep)}
 .step:nth-child(4) .n{background:var(--navy)}
 .step h3{font-size:1.1rem;margin-bottom:8px}
 .step p{font-size:.93rem;color:#3A4E77}
@@ -305,7 +313,7 @@ header .btn{padding:11px 22px;font-size:.92rem}
 }
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--rocket-blue);box-shadow:0 0 0 4px rgba(11,94,143,.12)}
 .field input[aria-invalid="true"]{border-color:var(--crimson);box-shadow:0 0 0 4px rgba(192,24,42,.1)}
-.field .ferr{display:none;font-size:.78rem;color:var(--crimson);margin-top:5px}
+.field .ferr{display:none;font-size:.78rem;color:var(--launch-deep);margin-top:5px}
 .field .ferr.show{display:block}
 fieldset{border:none;padding:0}
 .chip-group{display:flex;flex-wrap:wrap;gap:9px}
@@ -330,9 +338,9 @@ details.optional summary::-webkit-details-marker{display:none}
 details.optional summary::after{content:"+";color:var(--orange);font-size:1.2rem}
 details.optional[open] summary::after{content:"–"}
 details.optional .fields{padding:4px 18px 18px}
-#join .btn-primary{width:100%;margin-top:22px;padding:18px;font-size:1.08rem}
+#join .btn-primary{width:100%;margin-top:22px;padding:18px}
 .form-msg{margin-top:16px;font-size:.9rem;text-align:center;display:none;padding:12px 16px;border-radius:12px}
-.form-msg.err{display:block;background:rgba(192,24,42,.08);color:var(--crimson);border:1px solid rgba(192,24,42,.25)}
+.form-msg.err{display:block;background:rgba(241,80,47,.08);color:var(--launch-deep);border:1px solid rgba(241,80,47,.25)}
 .fineprint{margin-top:16px;text-align:center;font-size:.76rem;color:#7285A8}
 
 /* ============ success state ============ */
@@ -374,7 +382,11 @@ details.optional .fields{padding:4px 18px 18px}
 /* ============ footer ============ */
 footer{background:var(--navy);color:var(--steel);padding:52px clamp(20px,6vw,80px) 36px}
 .foot-grid{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;gap:36px;flex-wrap:wrap}
-.foot-brand img{height:38px;filter:brightness(0) invert(1);opacity:.92;margin-bottom:12px}
+.foot-brand img{
+  height:44px;margin-bottom:12px;display:block;
+  background:var(--card);padding:8px 12px;border-radius:12px;
+  box-shadow:0 8px 22px -10px rgba(0,0,0,.35);
+}
 .foot-brand p{font-size:.88rem;max-width:34ch}
 .foot-col h4{color:var(--cream);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
 .foot-col a{display:block;color:var(--steel);text-decoration:none;font-size:.92rem;padding:4px 0;transition:color .2s}
@@ -384,7 +396,7 @@ footer{background:var(--navy);color:var(--steel);padding:52px clamp(20px,6vw,80p
 /* ============ sticky mobile cta ============ */
 .m-cta{
   position:fixed;left:16px;right:16px;bottom:14px;z-index:60;display:none;align-items:center;justify-content:center;gap:8px;
-  padding:16px;border-radius:999px;background:var(--crimson);color:#fff;font-weight:600;font-size:1rem;text-decoration:none;
+  padding:16px;border-radius:999px;background:var(--launch);color:#fff;font-weight:700;font-size:1.17rem;text-decoration:none;
   box-shadow:0 14px 34px -10px rgba(192,24,42,.6);transform:translateY(140%);transition:transform .45s var(--ease-ui);
 }
 .m-cta.show{transform:none}
@@ -407,7 +419,7 @@ footer{background:var(--navy);color:var(--steel);padding:52px clamp(20px,6vw,80p
 <body>
 
 <header id="hdr">
-  <a class="logo" href="#hero" aria-label="RocketPlate home"><img src="assets/logo.png" alt="RocketPlate"></a>
+  <a class="logo" href="#hero" aria-label="RocketPlate home"><img src="assets/brand-logo.png" alt="RocketPlate" width="150" height="44" style="height:44px;width:auto"></a>
   <a href="#join" class="btn btn-primary" data-track="header_cta">Join the Founding 100</a>
 </header>
 
@@ -791,7 +803,7 @@ footer{background:var(--navy);color:var(--steel);padding:52px clamp(20px,6vw,80p
 <footer>
   <div class="foot-grid">
     <div class="foot-brand">
-      <img src="assets/logo.png" alt="RocketPlate">
+      <img src="assets/brand-logo.png" alt="RocketPlate">
       <p>Hot local dinners on one nightly route. Built in Miami-Dade, starting in Kendall / Pinecrest.</p>
     </div>
     <div class="foot-col">
