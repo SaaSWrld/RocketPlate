@@ -83,7 +83,7 @@ await check("/partner 301 → /partners", `${FLAG}/partner/x`, { status: 301 });
 
 // Content guard: the unified home must render its real content, not a blank
 // shell (regression guard for the reveal/blank-render class of bug).
-await checkBody("flagship home content", `${FLAG}/`, ["upsert_lead", "Join the waitlist", "cleared", "for launch"]);
+await checkBody("flagship home content", `${FLAG}/`, ["upsert_lead", "Join the waitlist", "Dinner,", "Miami-Dade"]);
 
 console.log("Routes — go (retiring; still live until domain cutover)");
 await check("go /", `${GO}/`);
