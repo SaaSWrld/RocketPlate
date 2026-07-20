@@ -39,6 +39,7 @@ Supabase project: `uhmyjevtfrynunxfsyof` (us-east-1) · Netlify: sites `rocketpl
 
 **Brand & character law (ABSOLUTE for all visual/narrative work):**
 `brand/canon/MO_CHARACTER_BIBLE.md` + `brand/canon/ROCKETPLATE_EXPERIENCE_LAWS.md`
-— load these before producing any RocketPlate design, animation, copy, or
-AI-generated asset. Violations are rejected regardless of technical quality.
++ `brand/canon/ROCKY_HULL_MARKINGS.md` — load these before producing any
+RocketPlate design, animation, copy, or AI-generated asset. Violations are
+rejected regardless of technical quality.
 Design context stack: `context/00–07`.
