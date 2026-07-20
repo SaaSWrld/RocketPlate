@@ -414,6 +414,23 @@ footer{background:var(--navy);color:var(--steel);padding:52px clamp(20px,6vw,80p
   .pain-grid,.steps-grid,.offer-grid,.fields{grid-template-columns:1fr}
   .quick input#q-zip{flex:1}
 }
+/* MO's chest speech window — celebration chip (brand/canon/MO_CHARACTER_BIBLE.md v1.2:
+   words live in MO's display, never floating copy) */
+.mo-chip{
+  position:fixed;left:50%;bottom:12vh;transform:translate(-50%,12px) scale(.96);opacity:0;z-index:150;
+  transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1);
+  background:linear-gradient(160deg,#0E2C55,#0B3468 60%,#0A2440);
+  border:2px solid rgba(255,248,238,.16);border-radius:18px;padding:14px 36px 16px;
+  box-shadow:0 10px 44px rgba(3,13,31,.65), inset 0 0 22px rgba(28,58,110,.9);
+}
+.mo-chip.on{opacity:1;transform:translate(-50%,0) scale(1)}
+.mo-chip .mo-word{
+  display:block;text-align:center;font-weight:700;font-size:clamp(1.2rem,2vw,1.7rem);
+  letter-spacing:.3em;color:#FFF6E8;text-shadow:0 0 16px rgba(255,236,200,.5);
+  transition:opacity .4s ease,filter .4s ease;
+}
+.mo-chip .mo-word.swap{opacity:0;filter:blur(6px)}
+.mo-chip .mo-id{position:absolute;right:12px;bottom:5px;font-size:.5rem;letter-spacing:.18em;color:rgba(255,248,238,.4)}
 </style>
 </head>
 <body>
@@ -428,9 +445,8 @@ footer{background:var(--navy);color:var(--steel);padding:52px clamp(20px,6vw,80p
   <!-- ============ 1. HERO ============ -->
   <section id="hero">
     <div class="hero-media" id="heroMedia" aria-hidden="true">
-      <video muted loop playsinline autoplay poster="assets/rocketplate-hero-poster.jpg" id="heroVideo">
-        <source src="assets/rocketplate-hero.webm" type="video/webm">
-        <source src="assets/rocketplate-hero.mp4" type="video/mp4">
+      <video muted playsinline autoplay poster="assets/film/ring.webp" id="heroVideo">
+        <source src="assets/film/v4-hello.mp4" type="video/mp4">
       </video>
       <div class="hero-fallback">
         <div class="atmo"></div>
@@ -892,8 +908,9 @@ addEventListener("scroll", () => hdr.classList.toggle("scrolled", scrollY > 24),
     video.removeAttribute("autoplay"); video.pause?.();
     return;
   }
-  fetch("assets/rocketplate-hero.mp4", { method: "HEAD" })
+  fetch("assets/film/v4-hello.mp4", { method: "HEAD" })
     .then(r => {
+      /* one-style hello shot plays once, then settles on MO's close-up */
       if (r.ok) { media.classList.add("has-video"); video.load(); video.play().catch(()=>{}); }
     })
     .catch(() => {}); /* keep animated fallback */
@@ -1180,10 +1197,27 @@ document.querySelectorAll("[data-role-prefill]").forEach(a => {
     }
   });
 
+  /* MO celebrates from his chest speech window (canon word list) */
+  function moCelebrate(word) {
+    const chip = document.createElement("div");
+    chip.className = "mo-chip";
+    chip.setAttribute("aria-live", "polite");
+    chip.innerHTML = '<span class="mo-word">...</span><span class="mo-id">MØ 3.3</span>';
+    document.body.appendChild(chip);
+    requestAnimationFrame(() => chip.classList.add("on"));
+    const w = chip.querySelector(".mo-word");
+    setTimeout(() => {
+      w.classList.add("swap");
+      setTimeout(() => { w.textContent = word; w.classList.remove("swap"); }, 380);
+    }, 700);
+    setTimeout(() => { chip.classList.remove("on"); setTimeout(() => chip.remove(), 800); }, 3600);
+  }
+
   async function showSuccess(zip, zone, refCode, duplicate, accessToken) {
     document.getElementById("formWrap").style.display = "none";
     const s = document.getElementById("successWrap");
     s.classList.add("show");
+    moCelebrate(duplicate ? "THANK YOU" : "WELCOME");
     if (duplicate) {
       s.querySelector("h2").textContent = "You're already on the launch list.";
       s.querySelector(".lede").textContent = "We updated your preferences — same spot in line, fresher details.";

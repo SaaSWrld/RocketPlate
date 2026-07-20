@@ -1772,10 +1772,10 @@ function initRocket(){
   collar.position.y = 1.045;
   rocket.add(collar);
 
-  /* ---- porthole: navy rim + orange ring + navy glass + MO inside ---- */
+  /* ---- porthole: navy outer ring framing the orange logo ring + MO inside ---- */
   const port = new THREE.Group();
-  const rimNavy = new THREE.Mesh(new THREE.TorusGeometry(0.295, 0.035, 16, 48), mat(C.navy, 0.3));
-  rimNavy.position.z = -0.02;
+  const rimNavy = new THREE.Mesh(new THREE.TorusGeometry(0.325, 0.055, 16, 48), mat(C.navy, 0.3));
+  rimNavy.position.z = -0.015;
   port.add(rimNavy);
   const ring = new THREE.Mesh(new THREE.TorusGeometry(0.26, 0.06, 16, 48), mat(C.orange, 0.28));
   port.add(ring);
