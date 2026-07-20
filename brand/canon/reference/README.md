@@ -23,6 +23,14 @@ Conflict order unchanged: `brand/canon/` is ABSOLUTE.
 renders shown in founder chat 2026-07-20 (rocket over glowing route-map
 board). Drop the exports into this folder when available.
 
+## Generated canon stills (2026-07-20, from `mo-hero-porthole.png` ref media `6c351b8b-bbb8-4329-a94f-6960be374d0e`)
+
+| File | Job | QC |
+|---|---|---|
+| `mission-ring.webp` | `e8d42a30-7ab4-44ca-a73b-dcefdc5ab26a` (stamp `20260720_071929`) | **PASS** — GOROCKETPLATE.COM engraved tone-on-tone around the ring, spelled exactly; luxury-lens feel per ROCKY_HULL_MARKINGS.md |
+| `mo-ready-portrait.webp` | `aca6ad4d-d5e9-49b4-928d-59d14d10eb99` (stamp `20260720_072555`) | **PASS** — face keeps eyes+smile; chest window shows READY; black MØ 3.3 badge beside it. First full bible-v1.1 render |
+| — (rejected) | `0dff068b-b9e7-49e3-acdd-6fdd93d7e11c` | REJECT — rendered READY across the FACE display (violates v1.1 two-displays law); badge was correct |
+
 ## The Reveal — plate roster (generated 2026-07-20)
 
 Seven 2K masters (2752×1536, model `nano_banana_pro` → `nano_banana_2`,
