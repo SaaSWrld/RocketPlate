@@ -12,6 +12,25 @@ Founder-directed 2026-07-20.
 
 ---
 
+# Livery (LOCKED — founder ruling 2026-07-20)
+
+The rocket's overall design and colors are **identical to the logo scheme**,
+everywhere it appears:
+
+- **Body:** Rocket Orange `#F1502F` (launch)
+- **Nose cone:** warm white `#FFF6E8`, rounded
+- **Fins:** warm white with a **navy outline** (`#1C3A6E`)
+- **Porthole:** orange ring on a navy rim, deep-navy glass, **MO visible
+  inside** (the latest MO 3.3 design — face = eyes + smile)
+- **Accents** (collar, buttons, nozzle): navy · **Cloche:** polished chrome
+- Flame gradient: `#F28C28 → #FFD34D` (the only sanctioned flame hues)
+
+The flagship's 3D rocket implements this law in code (index.html livery
+block). Reconciliation: the Phase-2 porthole close-ups (canonical MO renders)
+sit against the white upper hull and stand; the full-vehicle flight shot
+(seq-rocky-flight, cream-bodied) is flagged for a livery-corrected re-render
+at the next paid-generation opportunity — no credits burned before then.
+
 # The Two Layers
 
 ## Consumer layer — visible immediately
