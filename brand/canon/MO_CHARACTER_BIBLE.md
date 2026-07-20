@@ -11,6 +11,11 @@ badge respecified as black lettering on the glossy left chest · speech moved
 to the chest speech window (face = emotion, chest = words) · The Reveal plate
 roster added. Details inline; provenance in Appendix C.
 
+v1.2 amendments (2026-07-20, founder-approved): **sequence style lock** — all
+animation renders in the one canonical MO style · **Rocky's interior is a
+command center, never a dining room** (no dinner table aboard). Details in
+"Sequence style lock" and "Rocket Relationship → Interior".
+
 > This document is immutable design law for every designer, animator, developer,
 > and AI agent that touches RocketPlate. Work that violates it is rejected
 > regardless of technical quality. It supersedes every prior character
@@ -121,6 +126,16 @@ Never:
 MO always remains: soft · rounded · approachable · premium · minimal · friendly.
 
 No sharp edges. No aggressive poses. No military styling. No villain energy.
+
+## Sequence style lock (v1.2)
+
+Every animation/film sequence renders in **one style only**: the canonical
+MO render style (`reference/mo-hero-porthole.png` / `mo-ready-portrait.webp`)
+— glossy premium-toy 3D, rounded forms, cream warm-white + rocket orange +
+deep navy, soft cinematic light. No photoreal Earth or aerial inserts, no
+decal/sticker-style Rocky, no style mixing inside a sequence. One sanctioned
+exception: **the food itself is photoreal** (on plates, under cloches) —
+appetite is always real.
 
 ## Colorway (LOCKED, v1.1)
 
@@ -246,6 +261,15 @@ photos of partner dishes; real partner photography replaces them at launch.
 
 The rocket (Rocky) is MO's **home**. Not a vehicle.
 The cockpit is his kitchen. His mission control. His workspace.
+
+## Interior — the Command Center (v1.2, founder ruling 2026-07-20)
+
+Inside, Rocky is a **command center that MO navigates** — and everything
+aboard exists to deliver every meal fresh and hot: abstract glowing route
+displays, thermal hot-hold bays, racked chrome cloches, mission consoles,
+gentle steam. **Never a dining room. No dinner table aboard.** Dinner
+happens at the customer's door; the rocket is the kitchen pass and mission
+control that gets it there.
 
 ---
 

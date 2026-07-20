@@ -19,16 +19,24 @@ Reference media: `mo-hero-porthole.png` uploaded as `6c351b8b-bbb8-4329-a94f-696
 
 Web copies: `brand/canon/reference/mission-ring.webp` + `mo-ready-portrait.webp`.
 
-## Motion shots (5s, 16:9, sound off; masters in Higgsfield)
+## Motion shots — v2, one-style re-render (5s, 16:9, sound off; masters in Higgsfield)
+
+Founder rulings 2026-07-20 (bible v1.2): ONE style for the whole sequence
+(the canonical MO render style) + interior = command center, never a dining
+room. New sequence stills in `brand/canon/reference/seq-*.webp`.
 
 | # | Shot | Model | Start → End | Job | QC |
 |---|---|---|---|---|---|
-| 1 | Signal (orbit → South Florida) | kling3_0 std | f1 `bdb6e85e…` → f2 `ade50409…` | `2c66a309-12a2-4501-ab41-408891d656e9` · `20260720_072433` (720p) | Completed; plays in sequence; full-motion eyeball = founder review |
-| 2 | Descent (coast → Kendall map world) | kling3_0 std | f2 → f3 `f7b7ffde…` | `560c264a-f6f0-49cc-8d76-fb3af7a5ccdc` · `20260720_072355` (720p) | **Frame-checked live: beautiful** — beacons ignite, aerial holds warmth |
-| 3 | Flight (Rocky banks over map) | kling3_0_turbo 1080p | f4b `10961a8e…` | `0cd5b8b2-b259-4c49-94a1-885821c90bd9` · `20260720_072358` | Completed; plays in sequence; eyeball = founder review |
-| 4 | Hello (MO at the Mission Ring porthole) | kling3_0_turbo 1080p | Mission Ring still `e8d42a30…` | `e8aef471-0f3f-48d7-afde-eb7cc09ab67d` · `20260720_072633` | **Frame-checked live: the money shot.** Push-in to MO waving; engraved ring arcs overhead. Note: kling surfaced a faint chest marking — verify legibility on the 1080p master in close-up |
-| 5 | Cockpit (dolly through porthole) | kling3_0_turbo 1080p | f6b `db5736e4…` | `184d8523-2c6d-4560-ac4f-8e1db03c9dcc` · `20260720_072436` | **Frame-checked live: gorgeous** — steam, domes, warm cabin |
-| 6 | The Reveal (cloche lifts off ribs) | kling3_0_turbo 1080p | f7 `191187d0…` | `3d5663bb-bafb-4e19-8836-3894f54f0641` · `20260720_072404` | **Frame-checked live** (endcard bg) — glaze, steam, chrome sparkle |
+| 1 | Signal (toy Earth → toy coastline) | kling3_0 std | S1 `73b1578e…` → S2 `44cfe0c6…` | `37d3de19-7edb-4ac9-a0a0-36049936a63f` · `20260720_075904` (720p) | Completed; founder review on preview |
+| 2 | Descent (toy coastline → Kendall map world) | kling3_0 std | S2 → f3 `f7b7ffde…` | `8ebfeec8-a6fc-4087-b391-0c620c1cbcea` · `20260720_075910` (720p) | Completed; founder review on preview |
+| 3 | Flight (canonical Rocky over map world) | kling3_0_turbo 1080p | S3 `8afcf428…` | `7ee08089-7bdf-4c85-88b3-1d1f159c5f71` · `20260720_121936` | Completed; founder review on preview |
+| 4 | Hello (MO at the Mission Ring porthole) | kling3_0_turbo 1080p | Mission Ring still `e8d42a30…` | `e8aef471-0f3f-48d7-afde-eb7cc09ab67d` · `20260720_072633` | **KEPT (already one-style). Frame-checked live: the money shot.** Verify faint chest marking on master in close-up |
+| 5 | Command Center (MO navigates; hot-hold bays) | kling3_0_turbo 1080p | S4 `d17c5c43…` | `870b6026-f334-48b6-a0f7-52bf5b52c9b9` · `20260720_122047` | Replaces the dining-table cockpit shot per v1.2 ruling |
+| 6 | The Reveal (cloche lifts off ribs) | kling3_0_turbo 1080p | f7 `191187d0…` | `3d5663bb-bafb-4e19-8836-3894f54f0641` · `20260720_072404` | **KEPT (photoreal-food exception). Frame-checked live** |
+
+Superseded v1 shots (style-mixed; jobs retained in Higgsfield history only):
+signal `2c66a309…`, descent `560c264a…`, flight `0cd5b8b2…`, dining-cockpit
+`184d8523…` — retired by the v1.2 style lock / command-center ruling.
 
 Master URLs: `https://d8j0ntlcm91z4.cloudfront.net/user_3G8cbmmifcWVqzSC8KibofcyHUT/hf_<stamp>_<jobid>.mp4`.
 Local copies for the preview: `phase2/media/` (gitignored, deploy-only; ~34 MB).

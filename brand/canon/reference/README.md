@@ -31,6 +31,19 @@ board). Drop the exports into this folder when available.
 | `mo-ready-portrait.webp` | `aca6ad4d-d5e9-49b4-928d-59d14d10eb99` (stamp `20260720_072555`) | **PASS** — face keeps eyes+smile; chest window shows READY; black MØ 3.3 badge beside it. First full bible-v1.1 render |
 | — (rejected) | `0dff068b-b9e7-49e3-acdd-6fdd93d7e11c` | REJECT — rendered READY across the FACE display (violates v1.1 two-displays law); badge was correct |
 
+## Sequence stills — one-style re-render (v1.2 style lock, 2026-07-20)
+
+Founder rulings: ONE style for all animation (the canonical MO render style)
+and the rocket interior is a **command center, never a dining room**. These
+four supersede the Phase-1 photoreal/decal frames for sequence use:
+
+| File | Job | QC |
+|---|---|---|
+| `seq-earth.webp` | `73b1578e-fce0-4314-bac7-ae95b17d1c9a` · `20260720_075608` | **PASS** — porcelain toy Earth, signal arc lands on Florida |
+| `seq-coastline.webp` | `44cfe0c6-5763-41fc-a88a-1f4df116c656` · `20260720_075611` | **PASS** — miniature toy Miami, orange zone boundary |
+| `seq-rocky-flight.webp` | `8afcf428-9cf6-4c09-8cf1-fd0645576771` · `20260720_075617` | **PASS** — canonical cream-hull Rocky, real 3D MO in porthole (no decal) |
+| `seq-command-center.webp` | `d17c5c43-7d4d-45b2-ba83-f766a27dd2d8` · `20260720_075901` | **PASS** — MO navigating; cloche hot-hold bays; all-orange interface. (First take `7d8b9d35…` REJECTED: cyan HUD violated palette law + pixel-dot eyes) |
+
 ## The Reveal — plate roster (generated 2026-07-20)
 
 Seven 2K masters (2752×1536, model `nano_banana_pro` → `nano_banana_2`,
