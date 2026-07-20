@@ -20,7 +20,11 @@ _Updated: 2026-07-19 (brand-era kickoff)._ Deep state: `../MASTER_OPERATING_CONT
 - [ ] Success-moment celebration polish (moved to milestone 2 below)
 
 ## Next milestones (weakest-experience order)
-1. **Cinematic opening** (02 spec, guardrails mandatory) — flagship.
+1. ~~Cinematic opening~~ **SHIPPED 2026-07-19**: stars → Earth → South Florida
+   labels → Kendall descent (roads/glows/routes/tiny rockets) → Mission Control
+   transmission → Rocky fly-in + Three-Three greeting → launch-cloud wipe.
+   All guardrails verified live: session-once ✓, ≤12s ✓, skip/Esc ✓,
+   mobile+reduced-motion exempt ✓, hero handoff ✓, rp_intro_* analytics ✓.
 2. **Success-state celebration** (launch-cloud puff, Three-Three voice) — both forms.
 3. **Section-label pass** to the flight metaphor (Launch Pad → … → Join Launch Crew)
    without breaking anchors/SEO.
