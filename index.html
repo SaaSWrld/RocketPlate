@@ -826,7 +826,7 @@ footer{
   <img class="intro-rocky" id="introRocky" src="assets/brand-mark.png" alt="">
   <div class="intro-speech" id="introSpeech">
     Mission accepted. Welcome aboard.
-    <small>— RKT-3.3 "Three-Three" · Ready to fuel your day?</small>
+    <small>— MO · Ready to fuel your day?</small>
   </div>
   <div id="introClouds"></div>
   <button class="intro-skip" id="introSkip" type="button">Skip intro</button>
@@ -1558,7 +1558,9 @@ if (!prefersReduced && window.gsap) {
       /* 5 · Mission Control transmission */
       .to("#introMC", { opacity: 1, y: -8, duration: 0.5, ease: "power2.out" }, 7.6)
       .to(".mc-line", { opacity: 1, duration: 0.28, stagger: 0.42, ease: "none" }, 7.9)
-      /* 6 · Rocky flies in (banks, never teleports); Three-Three greets */
+      /* 6 · Rocky flies in (banks, never teleports); MO greets — interim caption
+             treatment; Phase-2 rebuild moves speech into MO's display language
+             per brand/canon/MO_CHARACTER_BIBLE.md */
       .to("#introCoast", { opacity: 0.22, duration: 0.7 }, 9.7)
       .fromTo("#introRocky",
         { opacity: 0, x: "-46vw", y: "34vh", rotate: -24, scale: 0.7 },

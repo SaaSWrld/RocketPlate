@@ -21,7 +21,8 @@ cohesive premium product.
 
 1. **Never redesign RocketPlate. Evolve it.** Maintain the current visual identity
    while polishing every interaction.
-2. **Conflict order:** context markdown > uploaded assets > generated artwork >
+2. **Conflict order:** `../brand/canon/` (MO_CHARACTER_BIBLE + EXPERIENCE_LAWS —
+   ABSOLUTE, immutable) > context markdown > uploaded assets > generated artwork >
    assumptions. (Engineering hard rules in CLAUDE.md always win on safety/data.)
 3. **Never ask "what should I build next."** Look at the product → find the weakest
    experience → improve it → repeat, until RocketPlate feels like it shipped from

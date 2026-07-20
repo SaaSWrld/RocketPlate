@@ -1,6 +1,6 @@
 # 03 — EXPERIENCE STORY (canon)
 
-Every journey is a mission with Three-Three as flight attendant and Rocky as the
+Every journey is a mission with MO as flight attendant and Rocky as the
 vehicle. The user is **crew, not customer**.
 
 ## Subscriber arc
@@ -15,7 +15,7 @@ vehicle. The user is **crew, not customer**.
    launch list — preferences updated").
 5. **Celebration** — success = a launch: mini liftoff animation, zone status,
    referral link ("move your ZIP up the launch map"), account magic link.
-   Three-Three's voice: warm, brief, delighted. Motif allowed here.
+   MO's voice: warm, brief, delighted — display language, 2–3 words (Character Bible). Motif allowed here.
 6. **Return** — /account is the crew locker: preferences, referral count, zone.
    Emails land as Mission Control transmissions (worker templates).
 

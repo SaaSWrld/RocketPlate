@@ -80,6 +80,7 @@ unreachable — fail-closed.
 | Question | Doc |
 |---|---|
 | Rules of engagement | CLAUDE.md (constitution) + docs/adr/ADR-001…005 |
+| Character & experience law (ABSOLUTE) | brand/canon/MO_CHARACTER_BIBLE.md + ROCKETPLATE_EXPERIENCE_LAWS.md |
 | Backend model | BACKEND.md · schema: supabase/migrations/ |
 | Launch state / known issues / checklist | LAUNCH-REVIEW.md |
 | Verified current state | ROCKETPLATE_CURRENT_STATE_DELTA.md |

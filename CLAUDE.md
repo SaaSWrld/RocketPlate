@@ -36,3 +36,9 @@ Gate C (Stripe, auth accounts, RBAC) triggers the platform re-evaluation in ADR-
 
 Architecture: README.md + docs/adr/ · Backend: BACKEND.md · State: ROCKETPLATE_CURRENT_STATE_DELTA.md
 Supabase project: `uhmyjevtfrynunxfsyof` (us-east-1) · Netlify: sites `rocketplate` + `gorocketplate`, team `dreone6`
+
+**Brand & character law (ABSOLUTE for all visual/narrative work):**
+`brand/canon/MO_CHARACTER_BIBLE.md` + `brand/canon/ROCKETPLATE_EXPERIENCE_LAWS.md`
+— load these before producing any RocketPlate design, animation, copy, or
+AI-generated asset. Violations are rejected regardless of technical quality.
+Design context stack: `context/00–07`.

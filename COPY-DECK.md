@@ -30,7 +30,7 @@ Brand-era canonical strings (from the official asset set — usage rules in
 context/01_BRAND_GUIDE.md): "3·2·1·LIFTOFF!" (campaign motif, never permanent
 headline; live in the flagship ticker) · "FUELED BY YOUR ORDERS" · "SCAN TO JOIN
 US" · "SEALED HOT AT __:__" · "NOW LAUNCHING IN {region}" · characters: Rocky
-(the rocket) + RKT-3.3 "Three-Three" (the chef robot).
+(the rocket) + MO — visual mark MØ, lore name Mochi (the chef robot; law: brand/canon/MO_CHARACTER_BIBLE.md).
 
 Reserve lines harvested from the archived daily-delights repo (audit D3, all
 on-voice — see docs/audit/03 + ADR-005):

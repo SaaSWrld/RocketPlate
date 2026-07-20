@@ -8,7 +8,7 @@ remains the base layer; this doc extends it with the character era).
 
 - Space is WARM here: cream skies, golden-hour light, navy dusk — never cold
   sci-fi. Stars drift slowly. Steam is kitchen steam.
-- Rocky flies; Three-Three delights. The launch cloud is a recurring shape.
+- Rocky flies; MO delights. The launch cloud is a recurring shape.
 - Mission Control (mono type, telemetry, status lights) frames operational facts
   inside contained navy cards — never the whole page.
 
@@ -28,7 +28,7 @@ LAUNCH PILOT SITE
 READY FOR FIRST DELIVERY
 ```
 
-Tiny ignition. Rocky flies on — confident, elegant, never rushed. Three-Three
+Tiny ignition. Rocky flies on — confident, elegant, never rushed. MO
 waves: "Mission accepted. Welcome aboard. Ready to fuel your day?" → the site
 resolves beneath.
 

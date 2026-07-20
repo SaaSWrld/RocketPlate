@@ -6,7 +6,7 @@ _Updated: 2026-07-19 (brand-era kickoff)._ Deep state: `../MASTER_OPERATING_CONT
 ## Shipped & verified
 - Two live sites + /partners + /admin + /account + legal, smoke 24/24 green.
 - Hardened single backend (RPC-only, rate-limited, schema versioned, md5-verified).
-- Hero film v2 (rotation → Three-Three waves → liftoff), 3D scroll rocket.
+- Hero film v2 (rotation → MO waves → liftoff; predates MO canon), 3D scroll rocket.
 - Consolidation done (ADR-005); CSP/SRI/HSTS; repo pushed + CI.
 - **Brand asset set ingested (2026-07-19):** originals in `brand/`, web
   derivatives in `assets/`; palette sampled; context canon 00–07 written.
@@ -22,13 +22,13 @@ _Updated: 2026-07-19 (brand-era kickoff)._ Deep state: `../MASTER_OPERATING_CONT
 ## Next milestones (weakest-experience order)
 1. ~~Cinematic opening~~ **SHIPPED 2026-07-19**: stars → Earth → South Florida
    labels → Kendall descent (roads/glows/routes/tiny rockets) → Mission Control
-   transmission → Rocky fly-in + Three-Three greeting → launch-cloud wipe.
+   transmission → Rocky fly-in + MO greeting → launch-cloud wipe.
    All guardrails verified live: session-once ✓, ≤12s ✓, skip/Esc ✓,
    mobile+reduced-motion exempt ✓, hero handoff ✓, rp_intro_* analytics ✓.
-2. **Success-state celebration** (launch-cloud puff, Three-Three voice) — both forms.
+2. **Success-state celebration** (launch-cloud puff, MO display language) — both forms.
 3. **Section-label pass** to the flight metaphor (Launch Pad → … → Join Launch Crew)
    without breaking anchors/SEO.
-4. Hero-film v3 with exact brand hexes + Three-Three canon (Higgsfield re-render;
+4. Hero-film v3 with exact brand hexes + full MO canon (MØ 3.3 chest badge) (Higgsfield re-render;
    retires the last crimson).
 5. Weakest-experience loop: /admin loading states, /account consent revoke,
    progressive profiling (audit backlog, docs/audit/06 §B).

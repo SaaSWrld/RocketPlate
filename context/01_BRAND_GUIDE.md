@@ -9,22 +9,24 @@ assets override generated artwork; these docs override assumptions.**
 |---|---|---|
 | Master logo (wordmark, rocket-as-O) | `brand/logos/master-logo.png` → web `assets/brand-logo.png` (transparent, 1200w) | Site headers, footers, documents |
 | Master + slogan lockup | `brand/logos/master-logo-slogan.png` | Marketing where the slogan must appear |
-| Rocket mark (Rocky + Three-Three) | `brand/robot/rocket-robot.png` → web `assets/brand-mark.png` | Square/compact placements, watermark, loaders |
+| Rocket mark (Rocky + MO) | `brand/robot/rocket-robot.png` → web `assets/brand-mark.png` | Square/compact placements, watermark, loaders |
 | App icon (3D render, navy tile) | `brand/logos/app-icon.png` → `assets/favicon-64.png`, `assets/apple-touch-icon.png` | Favicons, app buttons |
 | 3·2·1·LIFTOFF sticker | `brand/stickers/sticker-321-liftoff.png` | Campaign moments only (see motif rule) |
 | Bags / magnets | `brand/bags/`, `brand/magnets/` | Physical system reference; regional variants: South Florida · Miami-Dade · Kendall |
 
-Rules: never recolor the logo; never separate Three-Three from the porthole in the
+Rules: never recolor the logo; never separate MO from the porthole in the
 mark (solo robot art may come later as its own asset); the launch cloud may be used
 as a standalone shape in brand colors; keep clear space ≈ the height of the "R".
 
-## Characters (canon)
+## Characters (canon) — governed by ../brand/canon/MO_CHARACTER_BIBLE.md (ABSOLUTE)
 
 - **Rocky** — the rocket. THE logo. Orange-red hull, white nose, navy outlines.
-- **RKT-3.3 "Three-Three"** — the chef robot in the porthole. White body, navy
-  visor/joints, chef's hat, serves a silver cloche. Friendly, confident, never
-  frantic. Three-Three is the voice of delight moments (success states, emails,
-  Mission Control transmissions); Rocky is the motion.
+  Rocky is MO's home, not a vehicle.
+- **MO** (visual mark **MØ**, lore name **Mochi**, badge **MØ 3.3**) — the chef
+  robot in the porthole. White body, navy display-face, chef's hat, serving
+  cloche. His display is his language (2–3 words max); emotion before
+  information; never feels like software. Full law: the Character Bible.
+  (Lineage: RKT-3.3 → L.I.F.T.-3.3 → MO; the 3.3 endures on the chest badge.)
 
 ## Color (sampled from assets — the law)
 
