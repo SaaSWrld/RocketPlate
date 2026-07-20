@@ -1,9 +1,15 @@
 # RocketPlate Character Canon
 ## MO (Mochi)
 
-Version: 1.0
+Version: 1.1
 Status: **LOCKED**
 Priority: **ABSOLUTE**
+
+v1.1 amendments (2026-07-20, founder-approved): canonical hero render adopted
+(`reference/mo-hero-porthole.png`) · navy accent/finger/joint colorway locked ·
+badge respecified as black lettering on the glossy left chest · speech moved
+to the chest speech window (face = emotion, chest = words) · The Reveal plate
+roster added. Details inline; provenance in Appendix C.
 
 > This document is immutable design law for every designer, animator, developer,
 > and AI agent that touches RocketPlate. Work that violates it is rejected
@@ -55,7 +61,8 @@ The public brand always introduces him as MO.
 # Chest Identification Mark (LOCKED)
 
 A premium manufacturer identification badge on MO's **left upper chest** —
-above and left of the chest plate, never on the face display.
+on the glossy white chest surface beside the chest speech window. Never on
+the face display, never inside either screen.
 
 ```
 MØ
@@ -65,14 +72,15 @@ MØ
 This is NOT a decorative logo. It is a precision-engineered identification
 plate, like advanced aerospace hardware.
 
-Requirements:
+Requirements (v1.1):
 - Extremely subtle. ~15–20 mm tall relative to MO's proportions.
-- Laser-etched or embossed — never printed, never a sticker.
-- Satin white, brushed aluminum, or very soft titanium gray.
+- Precision-applied like aerospace hardware marking — never a sticker.
+- **Black lettering on the glossy white chest plate** (founder ruling
+  2026-07-20 — supersedes the v1.0 satin-white / light-catch-only spec).
+  Legible at rest but quiet: thin strokes, small size, matte black on gloss.
 - No bright colors. No outlines. No drop shadows.
 - Typography: geometric, rounded, minimal — matching RocketPlate's industrial
   design language.
-- Visible only in close-ups or when light naturally catches it.
 - Never distracts from MO's face. Never oversized. Never promotional.
 
 The **MØ** engraving also appears, tiny and quiet, on: the rocket cockpit,
@@ -114,28 +122,56 @@ MO always remains: soft · rounded · approachable · premium · minimal · frie
 
 No sharp edges. No aggressive poses. No military styling. No villain energy.
 
+## Colorway (LOCKED, v1.1)
+
+Glossy warm-white body and chef hat · **deep-navy accents: fingers, joints,
+face-display bezel, chest speech window, torso panels** · polished chrome
+cloche. The navy-accent build is the approved MO (founder selection
+2026-07-20, `reference/mo-hero-porthole.png`). The no-blue-trim, porcelain,
+and toy-prototype variants are rejected — never reference them.
+
 ---
 
-# Face Display
+# The Two Displays (v1.1)
 
-**The display IS his language.**
+**The displays ARE his language.**
 
 Never use comic speech bubbles.
 Never use floating captions.
-Everything appears inside the OLED display.
+Everything appears inside MO's own screens — nothing ever floats beside him.
+
+## Face display — emotion
+
+The face OLED carries expression only: eyes, smile, blinks, and the `...`
+thinking state. Pixar-smooth — every morph eases like character animation,
+never like a UI transition.
 
 ```
-😊  →  ...  →  READY  →  😊
+😊  →  ...  →  😊
 ```
 
-The eyes naturally morph into typography and return.
+## Chest speech window — words
+
+**The screen on MO's chest populates his speech** (founder ruling 2026-07-20).
+All display language renders here, in the same rounded geometry as his face —
+and it animates with the exact same Pixar smoothness as his facial
+expressions. Same easing, same softness, same life. Words never render as a
+static UI label; they arrive and leave like a living thing.
+
+```
+(face) 😊 · (chest) ...  →  READY  →  YUM
+```
+
+The face reacts while the chest speaks. Emotion above, words below —
+never text across his eyes.
 
 ---
 
 # Typography (display language)
 
-Text inherits the exact geometry of MO's facial display:
-rounded, friendly, minimal. **Maximum two or three words.**
+Text renders in the chest speech window and inherits the exact geometry of
+MO's facial display: rounded, friendly, minimal. **Maximum two or three
+words.**
 
 Examples: `HI` · `READY?` · `FOUND IT` · `YUM` · `WELCOME` · `LET'S GO` · `THANK YOU`
 
@@ -186,6 +222,23 @@ delivery visualization system · navigation interface · food presentation
 platform.
 
 One object. Infinite uses.
+
+## The Reveal (v1.1)
+
+Lifting the cloche is MO's signature magic trick — and it never shows the
+same dinner twice. Every reveal presents a different, beautifully plated
+local dish, photoreal and steaming, on the cream ceramic plate at the center
+of the navy mission-console table. `reference/plate-reveal-console.png` is
+the style law: orange-edged navy touch pads, dome indicator lights, polished
+chrome cloche, rising steam, warm key light, navy bokeh.
+
+Rotation roster (founder-set 2026-07-20): smash burger tower · street tacos ·
+Italian (fresh pasta al ragù) · American ribs & BBQ · Asian plate ·
+Mediterranean · Cuban ropa vieja (Miami-local addition). Extend the roster
+only with dishes a real neighborhood kitchen would serve.
+
+Honesty law still applies: these are concept renders, never presented as
+photos of partner dishes; real partner photography replaces them at launch.
 
 ---
 
@@ -260,10 +313,34 @@ rule. MO's own display never does.
 # Appendix B — Known reconciliation debt (tracked, not law)
 
 1. Live flagship intro used the Gen-1 attribution; interim one-line fix
-   applied (name only). The full face-display speech treatment (no floating
-   caption) ships with the Phase-2 cinematic rebuild.
-2. Phase-1 style frames predate this bible (no chest badge). Phase-2
-   Higgsfield Elements must add the MØ 3.3 chest badge + engravings per this
-   document, plus the fin-color and porthole-depth notes in
+   applied (name only). The full speech treatment (words in the chest speech
+   window, no floating caption) ships with the Phase-2 cinematic rebuild.
+2. Phase-1 style frames predate this bible (no chest badge, no chest speech
+   window). Phase-2 Higgsfield Elements must add the black-letter MØ 3.3
+   chest badge + chest speech window + engravings per this document, plus
+   the fin-color and porthole-depth notes in
    context/phase1/CONTINUITY-SHEET.md.
 3. Hero-film v3 re-render adopts full MO canon.
+4. `reference/mo-hero-porthole.png` shows the chest speech window idle
+   (dark) and predates the badge ruling — the black-letter MØ 3.3 badge is
+   additive on top of it for all new work.
+
+# Appendix C — Canonical reference renders (v1.1, founder uploads 2026-07-20)
+
+Staged in `brand/canon/reference/` (full provenance + generated-asset
+registry: `reference/README.md`):
+
+| File | Role | Verdict |
+|---|---|---|
+| mo-hero-porthole.png | **MO's definitive portrait** — porthole wave with cloche; navy accents/fingers/joints; look, material and proportion law | **CANON** |
+| plate-reveal-console.png | **The Reveal style law** — short-rib plate on the navy mission console | **CANON** |
+| rocky-sticker-3d.png | Sticker-style 3D Rocky with MØ porthole line art (icon/badge contexts) | Approved direction |
+| rocky-sticker-flat.png | Flat vector Rocky sticker (decal/icon contexts) | Approved direction |
+| app-icon-art.png / app-icon-iphone-mockup.png | App-icon direction for the future app | Approved direction |
+
+Rejected MO variants (never use): the no-blue-trim, porcelain, and
+toy-look-and-feel prototypes (remain in the founder's Downloads, unstaged).
+
+Not yet staged: the "Rocky liftoff over circuit-board launchpad" 3D renders
+shown in founder chat 2026-07-20 — drop the exports into this folder when
+available.
