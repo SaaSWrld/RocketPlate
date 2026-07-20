@@ -999,6 +999,21 @@ if (!prefersReduced && window.gsap) {
       scrollTrigger: { trigger: el, start: "top 88%", once: true } });
   });
 
+  /* ── FAILSAFE: content must NEVER render blank ──────────────────────────
+     Lenis + ScrollTrigger can desync (anchor jumps, restored/background
+     tabs), leaving `once:true` reveals un-fired and whole sections stuck at
+     opacity:0. This IntersectionObserver force-reveals anything that enters
+     the viewport, independent of the scroll library. */
+  {
+    const sel = ".rv, h1 .wrd, main h2 .wrd, .pain-grid>*, .steps-grid>*, .offer-grid>*, .faq-item";
+    const show = el => gsap.set(el, { opacity: 1, x: 0, y: 0, clearProps: "transform" });
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { show(e.target); io.unobserve(e.target); }
+    }), { rootMargin: "0px 0px -5% 0px" });
+    document.querySelectorAll(sel).forEach(el => io.observe(el));
+    addEventListener("load", () => ScrollTrigger.refresh());
+  }
+
   /* join card lock-in */
   gsap.from(".join-card", {
     y: 70, scale: 0.965, duration: 1.1, ease: EASE_LONG,

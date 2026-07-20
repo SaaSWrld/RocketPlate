@@ -1551,6 +1551,8 @@ if (!prefersReduced && window.gsap) {
         document.documentElement.style.overflow = "";
         window.__lenis?.start();
         window.__playHero?.();
+        /* the intro locked scroll + changed layout — resync reveal triggers */
+        window.ScrollTrigger?.refresh();
       };
       /* hidden tabs get no rAF, so gsap can't tick — resolve instantly there */
       if (document.visibilityState === "hidden") bail();
@@ -1662,6 +1664,26 @@ if (!prefersReduced && window.gsap) {
       scrollTrigger: { trigger: el, start: "top 88%", once: true }
     });
   });
+
+  /* ── FAILSAFE: scrolled content must NEVER render blank ────────────────
+     Lenis + ScrollTrigger can desync (anchor jumps, the intro's stop/start,
+     restored/background tabs) and leave `once:true` reveals un-fired — which
+     leaves whole sections stuck at opacity:0. This IntersectionObserver
+     force-reveals anything that enters the viewport, completely independent
+     of the scroll library, so a desync degrades to "no entrance animation"
+     instead of "invisible page". A load-time refresh re-syncs trigger
+     positions for normal scrolling. (Hero uses its own __playHero handoff.) */
+  {
+    const sel = ".rv, main h2 .wrd, .steps-grid>*, .cuisine-photos>*, .cuisine-wall>*, " +
+      ".plans>*, .resto-points>*, .founding-perks>*, .benefit-grid>*, .path-grid>*, " +
+      ".timeline>*, .pain-points>*, .resto-chips>*";
+    const show = el => gsap.set(el, { opacity: 1, x: 0, y: 0, clearProps: "transform" });
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { show(e.target); io.unobserve(e.target); }
+    }), { rootMargin: "0px 0px -5% 0px" });
+    document.querySelectorAll(sel).forEach(el => io.observe(el));
+    addEventListener("load", () => ScrollTrigger.refresh());
+  }
 
   /* ---- special moment: the fees stack up ---- */
   const receipt = document.querySelector(".receipt");
