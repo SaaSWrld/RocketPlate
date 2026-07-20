@@ -1,6 +1,2 @@
 # Netlify CLI local state (site link lives in DEPLOY-NOTES.md / memory)
 .netlify/
-
-# Phase-2 preview media: deploy-only artifacts, regenerable from the job IDs
-# in brand/canon/reference/README.md + context/phase2/CONTINUITY-SHEET.md
-phase2/media/

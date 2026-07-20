@@ -713,53 +713,42 @@ footer{
   .benefit-grid,.path-grid,.timeline{grid-template-columns:1fr}
 }
 
-/* ---------- cinematic opening (context/02 — guardrails are law) ---------- */
+/* ---------- cinematic opening (context/02 — guardrails are law; Phase-2 film cut) ---------- */
 #intro{
   position:fixed;inset:0;z-index:200;overflow:hidden;
   background:radial-gradient(120% 100% at 50% 110%, #12294f 0%, #0B3468 34%, #061a38 68%, #030d1f 100%);
   color:var(--cream);
 }
 #intro[hidden]{display:none}
-#introStars{position:absolute;inset:0;width:100%;height:100%}
-.intro-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
-/* earth */
-.intro-earth{
-  position:absolute;left:50%;top:130%;width:170vmax;height:170vmax;border-radius:50%;
-  transform:translate(-50%,0);
-  background:radial-gradient(circle at 50% 18%, #17407c 0%, #0B3468 34%, #061c3d 62%, #04122a 100%);
-  box-shadow:0 -30px 140px -20px rgba(241,80,47,.28), inset 0 60px 160px -40px rgba(255,248,238,.14);
+.intro-film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}
+.intro-film.on{opacity:1}
+.intro-vignette{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 45%, transparent 55%, rgba(3,13,31,.6) 100%)}
+/* live captions — mission-control voice; never baked into video */
+.intro-cap{position:absolute;left:0;right:0;bottom:11vh;display:flex;justify-content:center;pointer-events:none}
+.intro-cap span{
+  font-family:var(--font-mono);font-size:clamp(.8rem,1.2vw,1rem);letter-spacing:.26em;
+  text-transform:uppercase;color:#FFEFD9;text-shadow:0 2px 18px rgba(3,13,31,.85);
+  opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s ease;
 }
-.intro-earth i{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--launch);opacity:.85;box-shadow:0 0 10px 2px rgba(241,80,47,.6)}
-/* coast scene */
-.intro-coast{width:min(78vh,900px);opacity:0}
-.intro-coast .road{stroke:rgba(190,204,214,.4);stroke-width:1.6;fill:none;stroke-linecap:round}
-.intro-coast .glow{fill:var(--launch);opacity:0}
-.intro-coast .route{stroke:var(--launch);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-dasharray:5 7;opacity:.85}
-.intro-coast .tinyrocket{fill:#fff}
-.intro-label{
-  font-family:var(--font-mono);letter-spacing:.22em;fill:#FFF8EE;opacity:0;
-  text-transform:uppercase;
+.intro-cap span.show{opacity:1;transform:none}
+.intro-cap span.mc{color:#FFC98C}
+/* MO's chest speech window — words live here, never on his face (bible v1.2) */
+.intro-mo{
+  position:absolute;left:50%;bottom:8vh;transform:translate(-50%,12px) scale(.96);opacity:0;
+  transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1);
+  background:linear-gradient(160deg,#0E2C55,#0B3468 60%,#0A2440);
+  border:2px solid rgba(255,248,238,.16);border-radius:18px;padding:14px 36px 16px;
+  box-shadow:0 10px 44px rgba(3,13,31,.65), inset 0 0 22px rgba(28,58,110,.9);
 }
-/* mission control card */
-.intro-mc{
-  position:absolute;left:50%;bottom:9%;transform:translateX(-50%);
-  background:rgba(4,15,33,.82);border:1px solid rgba(190,204,214,.28);border-radius:16px;
-  padding:18px 26px;min-width:340px;backdrop-filter:blur(6px);
-  font-family:var(--font-mono);font-size:.82rem;letter-spacing:.14em;color:var(--cream);
-  opacity:0;
+.intro-mo.on{opacity:1;transform:translate(-50%,0) scale(1)}
+.intro-mo .mo-word{
+  display:block;text-align:center;font-family:var(--font-display);font-weight:700;
+  font-size:clamp(1.2rem,2vw,1.7rem);letter-spacing:.3em;color:#FFF6E8;
+  text-shadow:0 0 16px rgba(255,236,200,.5);transition:opacity .4s ease,filter .4s ease;
 }
-.intro-mc .mc-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.68rem;color:var(--steel)}
-.intro-mc .mc-head i{width:8px;height:8px;border-radius:50%;background:var(--launch);box-shadow:0 0 8px rgba(241,80,47,.8);animation:mcblink 1.1s steps(2) infinite}
-@keyframes mcblink{50%{opacity:.25}}
-.intro-mc .mc-line{opacity:0;padding:2.5px 0;white-space:nowrap}
-.intro-mc .mc-line b{color:var(--launch)}
-/* rocky + speech */
-.intro-rocky{position:absolute;left:50%;top:50%;width:clamp(150px,22vh,240px);transform:translate(-50%,-40%);opacity:0;filter:drop-shadow(0 24px 44px rgba(3,13,31,.6))}
-.intro-speech{
-  position:absolute;left:50%;top:24%;transform:translateX(-50%);text-align:center;opacity:0;
-  font-family:var(--font-display);font-weight:600;font-size:clamp(1.4rem,3vw,2.1rem);line-height:1.35;
-}
-.intro-speech small{display:block;margin-top:10px;font-family:var(--font-body);font-weight:500;font-size:.95rem;color:var(--steel)}
+.intro-mo .mo-word.swap{opacity:0;filter:blur(6px)}
+.intro-mo .mo-id{position:absolute;right:12px;bottom:5px;font-family:var(--font-mono);font-size:.5rem;letter-spacing:.18em;color:rgba(255,248,238,.4)}
 /* launch cloud wipe */
 .intro-cloud{position:absolute;bottom:-18vh;border-radius:50%;background:var(--launch);opacity:0}
 /* skip */
@@ -776,57 +765,16 @@ footer{
 
 <a class="skip-link" href="#main">Skip to content</a>
 
-<!-- Cinematic opening (context/02). Desktop, motion-OK, once per session; JS un-hides. -->
+<!-- Cinematic opening (context/02 + Phase-2 one-style film, ≤12s cut).
+     Desktop, motion-OK, once per session; JS un-hides. Full film: /phase2/ -->
 <div id="intro" hidden aria-hidden="true">
-  <canvas id="introStars"></canvas>
-  <div class="intro-earth" id="introEarth">
-    <i style="left:47%;top:12%"></i><i style="left:48.5%;top:10.5%;width:4px;height:4px"></i>
-    <i style="left:50%;top:9.5%"></i><i style="left:51%;top:12.5%;width:4px;height:4px"></i>
-    <i style="left:49%;top:14%;width:6px;height:6px"></i><i style="left:46%;top:15%;width:3px;height:3px"></i>
-  </div>
-  <div class="intro-layer">
-    <svg class="intro-coast" id="introCoast" viewBox="0 0 420 330" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M300 10 C320 60 330 110 326 160 C322 210 306 260 282 300 C274 312 262 322 248 328 L60 328 C42 312 34 286 38 258 C42 232 54 214 52 186 C50 156 38 138 42 106 C46 72 66 44 96 28 C140 6 220 2 300 10 Z"
-            fill="rgba(255,248,238,.05)" stroke="rgba(190,204,214,.5)" stroke-width="2"/>
-      <path d="M326 160 C322 210 306 260 282 300 C274 312 262 322 248 328 L420 328 L420 40 C380 60 340 100 326 160 Z" fill="rgba(11,94,143,.32)"/>
-      <g id="introRoads">
-        <path class="road" d="M84 60 L92 300"/><path class="road" d="M150 40 L152 322"/>
-        <path class="road" d="M215 30 L214 324"/><path class="road" d="M270 40 L262 310"/>
-        <path class="road" d="M52 120 L318 112"/><path class="road" d="M48 190 L316 182"/>
-        <path class="road" d="M58 250 L300 246"/>
-      </g>
-      <g id="introGlows">
-        <circle class="glow" cx="238" cy="92" r="4.5"/><circle class="glow" cx="196" cy="140" r="4"/>
-        <circle class="glow" cx="132" cy="168" r="4.5"/><circle class="glow" cx="178" cy="214" r="4"/>
-        <circle class="glow" cx="150" cy="232" r="5.5"/><circle class="glow" cx="118" cy="258" r="4"/>
-        <circle class="glow" cx="204" cy="262" r="3.5"/>
-      </g>
-      <g id="introRoutes">
-        <path class="route" id="route1" d="M238 92 C210 140 180 190 150 232"/>
-        <path class="route" id="route2" d="M118 258 C132 248 142 240 150 232"/>
-        <path class="route" id="route3" d="M204 262 C186 252 166 242 150 232"/>
-      </g>
-      <circle class="tinyrocket" id="tinyR1" r="3.2"/>
-      <circle class="tinyrocket" id="tinyR2" r="2.6"/>
-      <text class="intro-label" font-size="13" x="252" y="84">Miami</text>
-      <text class="intro-label" font-size="12" x="206" y="134">Coral Gables</text>
-      <text class="intro-label" font-size="12" x="70" y="158">Doral</text>
-      <text class="intro-label" font-size="12" x="190" y="222">Pinecrest</text>
-      <text class="intro-label" font-size="15" x="88" y="228" style="fill:#F1502F" font-weight="bold">Kendall</text>
-    </svg>
-  </div>
-  <div class="intro-mc" id="introMC">
-    <div class="mc-head"><i></i>ROCKETPLATE · TRANSMISSION</div>
-    <div class="mc-line">MISSION CONTROL ONLINE</div>
-    <div class="mc-line">SCANNING LOCATION…</div>
-    <div class="mc-line">TARGET ACQUIRED — <b>KENDALL</b></div>
-    <div class="mc-line">LAUNCH PILOT SITE</div>
-    <div class="mc-line"><b>READY FOR FIRST DELIVERY</b></div>
-  </div>
-  <img class="intro-rocky" id="introRocky" src="assets/brand-mark.png" alt="">
-  <div class="intro-speech" id="introSpeech">
-    Mission accepted. Welcome aboard.
-    <small>— MO · Ready to fuel your day?</small>
+  <video class="intro-film" id="introVA" muted playsinline preload="none" aria-hidden="true"></video>
+  <video class="intro-film" id="introVB" muted playsinline preload="none" aria-hidden="true"></video>
+  <div class="intro-vignette"></div>
+  <div class="intro-cap"><span id="introCap"></span></div>
+  <div class="intro-mo" id="introMO" aria-live="polite">
+    <span class="mo-word" id="introMoWord">...</span>
+    <span class="mo-id">MØ 3.3</span>
   </div>
   <div id="introClouds"></div>
   <button class="intro-skip" id="introSkip" type="button">Skip intro</button>
@@ -1458,53 +1406,52 @@ if (!prefersReduced && window.gsap) {
 
   /* ==== cinematic opening (context/02 — every guardrail enforced) ====
      Desktop + motion-OK + first visit this session only. Skippable instantly.
-     All-vector brand world; glowing points are illustrative, never labeled as
-     restaurants (hard rule 5). Total ≤ 12s; handoff plays the hero load-in. */
+     Phase-2 one-style film cut to ≤12s (full six-shot film lives at /phase2/).
+     Captions are live HTML; MO speaks in his chest speech window — never on
+     his face (brand/canon/MO_CHARACTER_BIBLE.md v1.2). Handoff plays hero. */
   (function cinematicOpening(){
     const el = document.getElementById("intro");
-    if (!el || isMobile || sessionStorage.getItem("rp_intro_seen")) return;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!el || isMobile || reduced || sessionStorage.getItem("rp_intro_seen")) return;
     sessionStorage.setItem("rp_intro_seen", "1");
     window.__introActive = true;
     el.hidden = false;
     document.documentElement.style.overflow = "hidden";
     window.__lenis?.stop();
 
-    /* starfield: slow drift, brand-warm whites */
-    const cv = document.getElementById("introStars"), ctx = cv.getContext("2d");
-    let stars = [], rafId;
-    const seedStars = () => {
-      cv.width = innerWidth; cv.height = innerHeight;
-      stars = Array.from({ length: 220 }, () => ({
-        x: Math.random() * cv.width, y: Math.random() * cv.height,
-        r: Math.random() * 1.4 + 0.3, tw: Math.random() * Math.PI * 2,
-        v: 0.02 + Math.random() * 0.05
-      }));
-    };
-    seedStars();
-    let starAlpha = 0; /* timeline ramps this */
-    const drawStars = (t) => {
-      ctx.clearRect(0, 0, cv.width, cv.height);
-      for (const s of stars) {
-        s.x -= s.v; if (s.x < 0) s.x = cv.width;
-        const a = starAlpha * (0.45 + 0.55 * Math.abs(Math.sin(t / 900 + s.tw)));
-        ctx.fillStyle = `rgba(255,248,238,${a.toFixed(3)})`;
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 7); ctx.fill();
-      }
-      rafId = requestAnimationFrame(drawStars);
-    };
-    rafId = requestAnimationFrame(drawStars);
+    /* the cut: first N seconds of each shot, crossfaded — 11.6s + wipe */
+    const CUT = [
+      { src: "assets/film/v1-signal.mp4",  hold: 2.2, cap: "A signal reaches South Florida." },
+      { src: "assets/film/v2-descent.mp4", hold: 2.2, cap: "Kendall launch zone — confirmed.", mc: true },
+      { src: "assets/film/v3-flight.mp4",  hold: 2.2, cap: "Rocky is inbound." },
+      { src: "assets/film/v4-hello.mp4",   hold: 3.4, mo: true },
+      { src: "assets/film/v6-reveal.mp4",  hold: 1.6, cap: "Dinner, cleared for launch." }
+    ];
+    const vA = document.getElementById("introVA"), vB = document.getElementById("introVB");
+    const cap = document.getElementById("introCap");
+    const moWin = document.getElementById("introMO"), moWord = document.getElementById("introMoWord");
+    let cur = vA, nxt = vB, idx = -1;
+    const timers = [];
+    const later = (fn, ms) => { const t = setTimeout(fn, ms); timers.push(t); return t; };
 
-    const $i = s => el.querySelector(s), $$i = s => [...el.querySelectorAll(s)];
-    const coast = $i("#introCoast");
-    /* route paths draw on via dashoffset */
-    $$i(".route").forEach(p => { const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L; });
-    $$i(".road").forEach(p => { const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L; });
-
-    /* tiny rockets ride the route paths */
-    const ride = (dot, path, t0, dur, tl) => {
-      const P = $i(path), D = $i(dot), L = P.getTotalLength();
-      tl.to({ p: 0 }, { p: 1, duration: dur, ease: "power1.inOut",
-        onUpdate: function(){ const pt = P.getPointAtLength(this.targets()[0].p * L); D.setAttribute("cx", pt.x); D.setAttribute("cy", pt.y); } }, t0);
+    const setCap = shot => {
+      cap.classList.remove("show", "mc");
+      later(() => {
+        cap.textContent = shot.cap || "";
+        if (shot.mc) cap.classList.add("mc");
+        if (shot.cap) cap.classList.add("show");
+      }, 320);
+    };
+    const moSpeak = () => {
+      moWin.classList.add("on");
+      later(() => {
+        moWord.classList.add("swap");
+        later(() => { moWord.textContent = "READY"; moWord.classList.remove("swap"); }, 380);
+      }, 1200);
+    };
+    const moQuiet = () => {
+      moWin.classList.remove("on");
+      later(() => { moWord.textContent = "..."; }, 500);
     };
 
     /* launch-cloud wipe puffs (turbulent, not uniform — context/05) */
@@ -1518,57 +1465,55 @@ if (!prefersReduced && window.gsap) {
       cloudWrap.appendChild(c);
     }
 
-    let tl = null;
     const finish = (skipped) => {
       if (finish.done) return; finish.done = true;
-      cancelAnimationFrame(rafId);
-      tl?.kill(); /* only the intro's own timeline — never the page's tweens */
-      gsap.to(el, { opacity: 0, duration: skipped ? 0.25 : 0.6, ease: "power2.in", onComplete: () => {
+      timers.forEach(clearTimeout);
+      try { vA.pause(); vB.pause(); } catch {}
+      const bail = () => {
         el.remove();
         document.documentElement.style.overflow = "";
         window.__lenis?.start();
         window.__playHero?.();
-      }});
+      };
+      /* hidden tabs get no rAF, so gsap can't tick — resolve instantly there */
+      if (document.visibilityState === "hidden") bail();
+      else gsap.to(el, { opacity: 0, duration: skipped ? 0.25 : 0.6, ease: "power2.in", onComplete: bail });
       try { rpTrack(skipped ? "intro_skipped" : "intro_completed"); } catch {}
     };
     document.getElementById("introSkip").addEventListener("click", () => finish(true));
     addEventListener("keydown", e => { if (e.key === "Escape" && !finish.done) finish(true); }, { once: false });
 
-    tl = gsap.timeline({ defaults: { ease: "power2.inOut" }, onComplete: () => finish(false) });
-    tl
-      /* 1 · stars: one, then thousands */
-      .to({ a: 0 }, { a: 1, duration: 2.0, ease: "power1.in", onUpdate: function(){ starAlpha = this.targets()[0].a; } }, 0)
-      /* 2 · Earth rises, night lights glow, camera pushes in */
-      .to("#introEarth", { top: "58%", duration: 2.4, ease: "power2.out" }, 1.2)
-      .to("#introEarth", { scale: 2.6, top: "40%", duration: 2.0, ease: "power2.in" }, 3.0)
-      .to({ a: 1 }, { a: 0.25, duration: 1.6, onUpdate: function(){ starAlpha = this.targets()[0].a; } }, 3.2)
-      /* 3 · South Florida resolves; neighborhood labels soft-appear */
-      .to("#introEarth", { opacity: 0, duration: 0.7 }, 4.6)
-      .to(coast, { opacity: 1, duration: 0.9, ease: "power2.out" }, 4.5)
-      .fromTo(coast, { scale: 0.82 }, { scale: 1, duration: 2.2, ease: "power2.out" }, 4.5)
-      .to(".intro-label", { opacity: 0.9, duration: 0.5, stagger: 0.18, ease: "power1.out" }, 5.0)
-      /* 4 · descend into Kendall: roads sketch, points glow, routes fly */
-      .to(".road", { strokeDashoffset: 0, duration: 1.1, stagger: 0.06, ease: "power1.inOut" }, 5.6)
-      .to(".glow", { opacity: 0.9, duration: 0.4, stagger: 0.08 }, 6.1)
-      .to(coast, { scale: 1.7, x: "12%", y: "-16%", duration: 1.8, ease: "power2.inOut" }, 6.6)
-      .to(".route", { strokeDashoffset: 0, duration: 1.2, stagger: 0.15, ease: "power1.inOut" }, 6.8);
-    ride("#tinyR1", "#route1", 6.9, 1.4, tl);
-    ride("#tinyR2", "#route3", 7.3, 1.0, tl);
-    tl
-      /* 5 · Mission Control transmission */
-      .to("#introMC", { opacity: 1, y: -8, duration: 0.5, ease: "power2.out" }, 7.6)
-      .to(".mc-line", { opacity: 1, duration: 0.28, stagger: 0.42, ease: "none" }, 7.9)
-      /* 6 · Rocky flies in (banks, never teleports); MO greets — interim caption
-             treatment; Phase-2 rebuild moves speech into MO's display language
-             per brand/canon/MO_CHARACTER_BIBLE.md */
-      .to("#introCoast", { opacity: 0.22, duration: 0.7 }, 9.7)
-      .fromTo("#introRocky",
-        { opacity: 0, x: "-46vw", y: "34vh", rotate: -24, scale: 0.7 },
-        { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1, duration: 1.4, ease: "power2.out" }, 9.7)
-      .to("#introSpeech", { opacity: 1, y: -6, duration: 0.5, ease: "power2.out" }, 10.5)
-      /* 7 · launch-cloud wipe → site (sequence lands ≤ 12s, per the guardrail) */
-      .to(".intro-cloud", { opacity: 0.96, bottom: "-4vh", scale: () => 1.4 + Math.random() * 0.9,
-        duration: 0.6, stagger: { each: 0.04, from: "random" }, ease: "power2.out" }, 11.15);
+    const wipe = () => {
+      gsap.to(".intro-cloud", { opacity: 0.96, bottom: "-4vh", scale: () => 1.4 + Math.random() * 0.9,
+        duration: 0.6, stagger: { each: 0.04, from: "random" }, ease: "power2.out" });
+      later(() => finish(false), 750);
+    };
+
+    const play = i => {
+      if (finish.done) return;
+      if (i >= CUT.length) return wipe();
+      idx = i;
+      const shot = CUT[i];
+      shot.mo ? moSpeak() : moQuiet();
+      setCap(shot);
+      nxt.src = shot.src; nxt.load();
+      let started = false, advanced = false;
+      const go = () => { if (advanced || finish.done) return; advanced = true; play(i + 1); };
+      const start = () => {
+        if (started || finish.done) return; started = true;
+        nxt.play().catch(() => {});
+        nxt.classList.add("on"); cur.classList.remove("on");
+        const t = cur; cur = nxt; nxt = t;
+        later(go, shot.hold * 1000);   /* hard cut clock */
+        cur.onended = go;              /* natural end backup */
+        if (CUT[i + 1]) { nxt.src = CUT[i + 1].src; nxt.load(); }
+      };
+      nxt.oncanplay = start;
+      later(start, 1400); /* resilience: begin even on a slow stream */
+    };
+    /* absolute deadline — the intro can never trap the page (guardrail law) */
+    setTimeout(() => { if (!finish.done) finish(false); }, 13500);
+    play(0);
   })();
 
   /* ---- tier 1: headlines split into staggered words ---- */
