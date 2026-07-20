@@ -11,12 +11,13 @@ _Updated: 2026-07-19 (brand-era kickoff)._ Deep state: `../MASTER_OPERATING_CONT
 - **Brand asset set ingested (2026-07-19):** originals in `brand/`, web
   derivatives in `assets/`; palette sampled; context canon 00–07 written.
 
-## In flight (brand-era integration)
+## In flight (brand-era integration) — SHIPPED 2026-07-19 (`d643ee9`)
 - [x] Asset staging + derivatives (logo, mark, favicons)
-- [ ] Logo + favicon swap on every surface (both sites, partners, dashboards, legal)
-- [ ] Token evolution (--launch/--launch-deep/--navy-deep) w/ AA-verified small-text sweep
-- [ ] 3·2·1·LIFTOFF ticker motif + success-moment polish
-- [ ] Deploy + smoke + live visual verification
+- [x] Logo + favicon swap on every surface (both sites, partners, dashboards, legal)
+- [x] Token evolution (--launch/--launch-deep/--navy-deep) w/ AA-verified small-text sweep
+- [x] 3·2·1·LIFTOFF ticker motif
+- [x] Deploy + smoke (27 green incl. brand assets) + live visual verification
+- [ ] Success-moment celebration polish (moved to milestone 2 below)
 
 ## Next milestones (weakest-experience order)
 1. **Cinematic opening** (02 spec, guardrails mandatory) — flagship.
