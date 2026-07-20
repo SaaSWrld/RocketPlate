@@ -34,6 +34,19 @@ async function check(label, url, { status = 200, header, headerValue } = {}) {
   }
 }
 
+async function checkBody(label, url, needles) {
+  try {
+    const r = await fetch(url, { method: "GET" });
+    if (r.status !== 200) return fail(label, `HTTP ${r.status}`);
+    const html = await r.text();
+    const missing = needles.filter((n) => !html.includes(n));
+    if (missing.length) return fail(label, `missing: ${missing.join(", ")}`);
+    ok(label);
+  } catch (e) {
+    fail(label, e.message);
+  }
+}
+
 async function rpc(label, fn, body, validate) {
   try {
     const r = await fetch(`${SB}/rest/v1/rpc/${fn}`, {
@@ -63,17 +76,18 @@ await check("flagship /contact/", `${FLAG}/contact/`);
 await check("flagship /admin/", `${FLAG}/admin/`);
 await check("flagship robots.txt", `${FLAG}/robots.txt`);
 await check("flagship sitemap.xml", `${FLAG}/sitemap.xml`);
-await check("flagship hero webm", `${FLAG}/assets/rocketplate-hero.webm`);
-await check("flagship assets/logo.png (legacy)", `${FLAG}/assets/logo.png`);
+await check("flagship logo.png", `${FLAG}/logo.png`);
 await check("flagship brand logo", `${FLAG}/assets/brand-logo.png`);
-await check("flagship favicon-64", `${FLAG}/assets/favicon-64.png`);
-await check("go brand logo", `${GO}/assets/brand-logo.png`);
+await check("flagship film poster", `${FLAG}/assets/film/f7.webp`);
 await check("/partner 301 → /partners", `${FLAG}/partner/x`, { status: 301 });
 
-console.log("Routes — go");
+// Content guard: the unified home must render its real content, not a blank
+// shell (regression guard for the reveal/blank-render class of bug).
+await checkBody("flagship home content", `${FLAG}/`, ["upsert_lead", "Join the waitlist", "cleared", "for launch"]);
+
+console.log("Routes — go (retiring; still live until domain cutover)");
 await check("go /", `${GO}/`);
 await check("go robots.txt", `${GO}/robots.txt`);
-await check("go hero webm", `${GO}/assets/rocketplate-hero.webm`);
 
 console.log("Security headers");
 await check("flagship nosniff", `${FLAG}/`, { header: "x-content-type-options", headerValue: "nosniff" });
@@ -81,7 +95,7 @@ await check("go nosniff", `${GO}/`, { header: "x-content-type-options", headerVa
 await check("flagship CSP", `${FLAG}/`, { header: "content-security-policy", headerValue: "frame-ancestors 'none'" });
 await check("go CSP", `${GO}/`, { header: "content-security-policy", headerValue: "frame-ancestors 'none'" });
 await check("flagship HSTS", `${FLAG}/`, { header: "strict-transport-security", headerValue: "max-age" });
-await check("assets immutable cache", `${FLAG}/assets/rocketplate-hero-poster.jpg`, { header: "cache-control", headerValue: "immutable" });
+await check("assets immutable cache", `${FLAG}/assets/og.jpg`, { header: "cache-control", headerValue: "immutable" });
 
 console.log("Backend");
 await rpc("zip_wait_count RPC", "zip_wait_count", { p_zip: "33186" }, (d) => typeof d === "number");
