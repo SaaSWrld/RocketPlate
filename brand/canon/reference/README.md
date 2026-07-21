@@ -23,25 +23,48 @@ Conflict order unchanged: `brand/canon/` is ABSOLUTE.
 renders shown in founder chat 2026-07-20 (rocket over glowing route-map
 board). Drop the exports into this folder when available.
 
-## Chest nameplate correction — `BYTE.3.3` (2026-07-21, founder directive)
+## BYTE.3.3 body spec — small nameplate + dominant chest screen (2026-07-21)
 
-Founder directive: *"fix his name plate and center it in the middle etched to
-his body 'BYTE.3.3'."* Prior renders placed the plate low-left and clipped it
-because the porthole/waving pose occludes the center chest. Fixed by
-generating **front-facing, full-torso** portraits from the clean MO reference
-(`mo-hero-porthole.png` → ref media `9a8c4126-e2bf-4953-a014-3eb69e843ba1`).
+Founder-supplied detail mockup `byte-3.3-prototype-callouts.jpg` is the body
+law (callouts: Integrated Chef Hat · OLED Display Face · **BYTE.3.3** small
+nameplate · **Chest Readout** screen · Forged Rocket-Plate Logo on cloche ·
+Waving Hand · Autonomous Joint System). Founder revision: *"Make the BYTE.3.3
+nameplate smaller and center-visible but not obstruct or take attention from
+his chest screen, which displays his written-text language."*
+
+Regenerated front-facing full-torso from the mockup (ref media
+`4f01b73f-b0b0-4a9b-89c1-fdffb8d040a8`), model `nano_banana_pro`:
 
 | File | Job | QC |
 |---|---|---|
-| `byte-3.3-portrait.webp` | `e07f4611` (front-facing, 1:1, 2K) | **PASS / CANON** — full body; **`BYTE.3.3` etched dead-center** in a framed, recessed tone-on-tone nameplate; face keeps eyes+smile; chef hat + navy accents on shoulders/elbows/knees/fingers/neck intact. Selected over `6090ae5b` and `a7832293` (both correct but upper-torso only, plate unframed). |
+| `byte-3.3-portrait.webp` (canonical) | `c12d28fe-5fc1-46a6-b480-63e506d2b1c1` | **PASS / CANON** — small etched `BYTE.3.3` nameplate on the upper chest; large glowing blue **`READY`** chest screen as the torso focal point; navy OLED face w/ cream pixel eyes+smile; chef hat; navy accents on shoulders/elbows/knees/fingers/neck; full body. |
+| alt | `a492337e-7b1a-4e1a-a3ec-c2429ff10671` | PASS — same spec, looser framing. |
+| *superseded* | `e07f4611` | Replaced: nameplate was too large and there was no chest screen. Kept in history only. |
 
-**Nameplate law:** the chest **nameplate** reads `BYTE.3.3`, centered, engraved
-into the chassis as a recessed tone-on-tone plate (never a printed sticker or
-colored decal). This is distinct from the **chest speech window** (which
-displays live status/speech, e.g. `READY`) and the black **`MØ 3.3` badge**.
-Naming note flagged to founder: canon board names the character *Moshi 3.3 /
-MØ 3.3*; the physical nameplate stamp is `BYTE.3.3` per this directive — the
-two coexist (product line vs unit stamp) unless the founder rules otherwise.
+**Nameplate law (revised):** the chest carries TWO distinct elements —
+(1) a **small** `BYTE.3.3` nameplate etched tone-on-tone into the upper chest,
+centered and unobtrusive; and (2) a **larger, dominant chest screen** below it
+that displays BYTE's written speech / status (e.g. `READY`) — this screen is
+the visual focus and where "words come out in the chest, not the face." The
+nameplate must never compete with or obstruct the screen. Both are separate
+from the black **`MØ 3.3` badge**. Naming: canon board names the character
+*Moshi 3.3 / MØ 3.3*; the physical unit stamp is `BYTE.3.3` (product line vs
+unit stamp) unless the founder rules otherwise.
+
+## Luxurious porthole ring — `GOROCKETPLATE.COM` (2026-07-21)
+
+Founder directive: add a luxurious indented ring around the rocket viewport
+engraved `GOROCKETPLATE.COM`, per `porthole-gorocketplate-ring.png` (founder
+reference). Machined-bezel treatment (Leica / Rolex feel).
+
+| File | Job | QC |
+|---|---|---|
+| `porthole-gorocketplate-render.webp` | `a2ca0989-43b1-46a3-a914-8cc751b6bbeb` | **PASS / CANON** — recessed knurled rocket-orange bezel; `GOROCKETPLATE.COM` engraved tone-on-tone around the upper arc, spelled exactly; BYTE waving with silver cloche inside; warm-white hull, starfield right. Alt `44b37954-...` (more ring, smaller bot). Generated from ref media `6fedc6c2-7784-4510-9122-555ad84f613c`. |
+
+Site derivatives: `assets/character/byte-ready.webp`,
+`assets/character/porthole-ring.webp`.
+
+## Generated canon stills (2026-07-20, from `mo-hero-porthole.png` ref media `6c351b8b-bbb8-4329-a94f-6960be374d0e`)
 
 ## Generated canon stills (2026-07-20, from `mo-hero-porthole.png` ref media `6c351b8b-bbb8-4329-a94f-6960be374d0e`)
 
