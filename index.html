@@ -13,21 +13,23 @@
 <meta property="og:url" content="https://www.gorocketplate.com/">
 <meta property="og:image" content="https://www.gorocketplate.com/assets/food-life/hot-meals-hero.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/logo.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon-64.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,600;1,9..144,900&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F4ECDE; --paper-2:#EBE0CD; --ink:#141018; --ink-2:#4A4038;
-    --orange:#F1502F; --orange-deep:#C43A1B; --navy:#0B3468; --gold:#F2A03D;
-    --line:rgba(20,16,24,.14); --space:#0A0E1A;
+    --paper:#FFF8EE; --ink:#0B3468; --ink-2:#3C4D70;
+    --orange:#F1502F; --orange-deep:#C43A1B; --navy:#0B3468; --gold:#FFB38A;
+    --line:rgba(11,52,104,.16); --space:#081a33;
+    --r-sm:9px; --r-lg:20px;
     --maxw:1280px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{background:var(--paper);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{background:var(--paper);color:var(--ink);font-family:"Outfit",system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   ::selection{background:var(--orange);color:#fff}
   a{color:inherit;text-decoration:none}
   img{display:block;max-width:100%}
@@ -35,42 +37,59 @@
   .mono{font-family:"IBM Plex Mono",monospace}
   .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.26em;text-transform:uppercase;color:var(--orange-deep)}
   .display{font-weight:700;line-height:.95;letter-spacing:-.035em}
+  h1,h2,h3,.display,.plan .amt,.foot-word,.how-row h3,.founding h3{font-family:"Fraunces","Fraunces Fallback",Georgia,serif;font-optical-sizing:auto}
   .o{color:var(--orange)}
   .skip{position:absolute;left:-999px}.skip:focus{left:12px;top:12px;background:var(--ink);color:var(--paper);padding:10px 16px;z-index:300}
 
   .rise{opacity:0;transform:translateY(28px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
   .rise.in{opacity:1;transform:none}
-  @media (prefers-reduced-motion:reduce){.rise{opacity:1!important;transform:none!important}}
+  /* differentiated motion — hero copy staggers in; media settle from a soft scale, not a blanket fade */
+  .hero-grid>div:first-child>.rise:nth-child(2){transition-delay:.07s}
+  .hero-grid>div:first-child>.rise:nth-child(3){transition-delay:.15s}
+  .hero-grid>div:first-child>.rise:nth-child(4){transition-delay:.23s}
+  .hero-grid>div:first-child>.rise:nth-child(5){transition-delay:.31s}
+  .story figure:nth-child(2){transition-delay:.12s}.story figure:nth-child(3){transition-delay:.24s}
+  .gal figure:nth-of-type(2){transition-delay:.06s}.gal figure:nth-of-type(3){transition-delay:.12s}.gal figure:nth-of-type(4){transition-delay:.18s}.gal figure:nth-of-type(5){transition-delay:.24s}.gal figure:nth-of-type(6){transition-delay:.30s}.gal figure:nth-of-type(7){transition-delay:.36s}
+  .foodband.rise,.crew-byte.rise,.mission-ring.rise,.hero-media.rise{transform:translateY(30px) scale(.985)}
+  .foodband.rise.in,.crew-byte.rise.in,.mission-ring.rise.in,.hero-media.rise.in{transform:none}
+  @media (prefers-reduced-motion:reduce){.rise{opacity:1!important;transform:none!important}
+    .foodband:hover img,.how-row:hover .how-img img,.story figure:hover img,.gal figure:hover img{transform:none}
+    .btn:hover{transform:none;box-shadow:none}}
 
   /* nav */
   header{position:fixed;inset:0 0 auto 0;z-index:100;padding:20px 0;transition:.3s}
-  header.stuck{background:rgba(244,236,222,.85);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);padding:12px 0}
+  header.stuck{background:rgba(255,248,238,.85);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);padding:12px 0}
   nav{display:flex;align-items:center;justify-content:space-between;gap:20px}
-  .brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:1.14rem;letter-spacing:-.02em}
-  .brand svg{width:28px;height:28px}
+  .brand{display:flex;align-items:center;gap:11px}
+  .brand img{height:34px;width:auto;display:block}
+  header.stuck .brand img{height:30px}
   .nav-links{display:flex;gap:28px}
   .nav-links a{font-size:.92rem;color:var(--ink-2)}.nav-links a:hover{color:var(--ink)}
-  .btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-weight:600;font-size:.98rem;border:none;cursor:pointer;padding:14px 26px;transition:.18s;line-height:1}
-  .btn-primary{background:var(--orange);color:#fff}.btn-primary:hover{background:var(--orange-deep);transform:translateY(-2px)}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-weight:600;font-size:.98rem;border:none;cursor:pointer;padding:14px 26px;transition:transform .18s cubic-bezier(.16,1,.3,1),background .18s,box-shadow .18s;line-height:1;border-radius:var(--r-sm)}
+  .btn-primary{background:var(--orange-deep);color:#fff}.btn-primary:hover{background:#A82F16;transform:translateY(-3px);box-shadow:0 14px 28px -10px rgba(196,58,27,.62)}
   .btn-ink{background:var(--ink);color:var(--paper)}.btn-ink:hover{transform:translateY(-2px)}
   .btn-ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}.btn-ghost:hover{background:var(--ink);color:var(--paper)}
   .btn-lg{padding:18px 34px;font-size:1.05rem}
-  .menu-btn{display:none;background:none;border:none;font-family:"IBM Plex Mono",monospace;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
+  .btn .arw{display:inline-block;transition:transform .22s cubic-bezier(.16,1,.3,1)}
+  .btn:hover .arw{transform:translateX(5px)}
+  .menu-btn{display:none;background:none;border:none;font-family:"IBM Plex Mono",monospace;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;padding:12px 14px;min-height:44px;align-items:center}
 
   /* hero */
   #hero{padding:130px 0 60px;position:relative}
   .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;min-height:min(78vh,760px)}
-  #hero h1{font-size:clamp(2.9rem,7vw,6.2rem);margin:26px 0 26px}
+  #hero h1{font-size:clamp(2.9rem,7vw,6.2rem);font-weight:900;margin:26px 0 26px}
+  #hero h1 em{font-style:italic;font-weight:900;color:var(--orange)}
+  h2{text-wrap:balance}
   #hero .sub{font-size:clamp(1.05rem,1.5vw,1.32rem);color:var(--ink-2);max-width:40ch;margin-bottom:36px}
   .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
   .hero-meta{margin-top:40px;display:flex;gap:30px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-2)}
   .hero-meta b{color:var(--ink);font-weight:500}
   .hero-meta span{display:flex;align-items:center;gap:8px}.hero-meta span::before{content:"";width:7px;height:7px;background:var(--orange);border-radius:50%}
   .hero-media{position:relative;border-radius:26px;overflow:hidden;aspect-ratio:1/1;
-    background:radial-gradient(120% 120% at 30% 20%,#12213f,#0A0E1A 70%);
-    box-shadow:0 40px 90px -30px rgba(10,14,26,.6),inset 0 0 0 1px rgba(255,248,238,.06)}
+    background:radial-gradient(120% 120% at 30% 20%,#12213f,#081a33 70%);
+    box-shadow:0 40px 90px -30px rgba(6,16,34,.6),inset 0 0 0 1px rgba(255,248,238,.06)}
   .hero-media video,.hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .hero-media .chip{position:absolute;left:18px;bottom:18px;z-index:2;font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:#FFE5C4;background:rgba(10,14,26,.55);backdrop-filter:blur(6px);padding:8px 13px;border-radius:100px;border:1px solid rgba(255,229,196,.18)}
+  .hero-media .chip{position:absolute;left:18px;bottom:18px;z-index:2;font-size:.72rem;letter-spacing:.02em;color:var(--paper);background:rgba(6,16,34,.55);backdrop-filter:blur(6px);padding:8px 13px;border-radius:100px;border:1px solid rgba(255,248,238,.2)}
 
   /* ticker */
   .ticker{border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);overflow:hidden;padding:15px 0;background:var(--ink);color:var(--paper);margin-top:40px}
@@ -84,50 +103,59 @@
   .sec-label{display:flex;align-items:center;gap:15px;margin-bottom:30px}.sec-label::before{content:"";width:42px;height:1.5px;background:var(--orange)}
   h2{font-weight:700;line-height:1;letter-spacing:-.03em;font-size:clamp(2.1rem,5vw,4.3rem)}
   .lead{font-size:clamp(1.05rem,1.4vw,1.28rem);color:var(--ink-2);max-width:54ch;margin-top:24px;line-height:1.5}
-  .dark{background:var(--ink);color:var(--paper)}.dark h2{color:var(--paper)}.dark .lead{color:rgba(244,236,222,.72)}.dark .eyebrow{color:var(--gold)}
+  .dark{background:var(--ink);color:var(--paper)}.dark h2{color:var(--paper)}.dark .lead{color:rgba(255,248,238,.72)}.dark .eyebrow{color:var(--gold)}
 
   /* food hero band */
-  .foodband{margin-top:52px;border-radius:24px;overflow:hidden;aspect-ratio:16/8;box-shadow:0 40px 80px -30px rgba(10,14,26,.5)}
+  .foodband{margin-top:52px;border-radius:24px;overflow:hidden;aspect-ratio:16/8;box-shadow:0 40px 80px -30px rgba(6,16,34,.5)}
   .foodband img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease}
   .foodband:hover img{transform:scale(1.04)}
   .cap{margin-top:14px;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
-  .dark .cap{color:rgba(244,236,222,.5)}
+  .dark .cap{color:rgba(255,248,238,.62)}
 
   /* how — image rows */
   .how-row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:76px}
   .how-row:nth-child(even) .how-copy{order:2}
-  .how-row .how-img{border-radius:22px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 30px 70px -30px rgba(10,14,26,.45)}
+  .how-row .how-img{border-radius:22px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 30px 70px -30px rgba(6,16,34,.45)}
   .how-row .how-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s}
   .how-row:hover .how-img img{transform:scale(1.05)}
-  .how-num{font-family:"IBM Plex Mono",monospace;color:var(--orange-deep);font-size:1rem;letter-spacing:.1em}
+  .how-num{font-family:"Fraunces",Georgia,serif;font-weight:900;color:var(--orange);font-size:clamp(2.6rem,5vw,4.2rem);line-height:.9;letter-spacing:-.02em;opacity:.92}
   .how-row h3{font-weight:700;font-size:clamp(1.7rem,3.4vw,2.8rem);letter-spacing:-.03em;line-height:1.02;margin:12px 0 16px}
   .how-row p{color:var(--ink-2);max-width:44ch;font-size:1.05rem}
   @media (max-width:840px){.how-row{grid-template-columns:1fr;gap:26px}.how-row:nth-child(even) .how-copy{order:0}}
 
   /* handoff story — 3 up */
   .story{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
-  .story figure{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:3/4;box-shadow:0 26px 60px -28px rgba(10,14,26,.5)}
+  .story figure{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:3/4;box-shadow:0 26px 60px -28px rgba(6,16,34,.5)}
   .story img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s}
   .story figure:hover img{transform:scale(1.06)}
   .story figcaption{position:absolute;left:0;right:0;bottom:0;padding:20px 18px 16px;color:#fff;
-    background:linear-gradient(to top,rgba(10,14,26,.85),transparent)}
+    background:linear-gradient(to top,rgba(6,16,34,.85),transparent)}
   .story .st-n{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.2em;color:var(--gold)}
   .story .st-t{font-weight:600;font-size:1.15rem;margin-top:5px;letter-spacing:-.01em}
   @media (max-width:760px){.story{grid-template-columns:1fr;max-width:420px;margin-inline:auto}}
 
   /* 3D rocket */
-  .rocket-sec{background:radial-gradient(130% 120% at 70% 10%,#12213f,#070A14 70%);color:var(--paper);overflow:hidden}
+  .rocket-sec{background:radial-gradient(130% 120% at 70% 10%,#12213f,#07142b 70%);color:var(--paper);overflow:hidden}
   .rocket-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
   .rocket-stage{position:relative;aspect-ratio:1/1;min-height:380px}
   #rocketCanvas{position:absolute;inset:0;width:100%;height:100%}
   .rocket-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .5s}
-  .rocket-sec h2{color:var(--paper)}.rocket-sec .lead{color:rgba(244,236,222,.72)}.rocket-sec .eyebrow{color:var(--gold)}
-  .rk-hint{margin-top:26px;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,236,222,.5)}
+  .rocket-sec h2{color:var(--paper)}.rocket-sec .lead{color:rgba(255,248,238,.72)}.rocket-sec .eyebrow{color:var(--gold)}
+  .rk-hint{margin-top:26px;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,248,238,.5)}
   @media (max-width:840px){.rocket-grid{grid-template-columns:1fr}.rocket-stage{min-height:340px}}
+  /* meet the crew */
+  .crew-duo{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;margin-top:44px}
+  .crew-byte{border-radius:24px;overflow:hidden;background:radial-gradient(120% 120% at 32% 16%,#123663,#0a1c38 74%);box-shadow:0 40px 90px -34px rgba(6,16,34,.72),inset 0 0 0 1px rgba(255,248,238,.07)}
+  .crew-byte img{width:100%;height:auto;display:block}
+  .mission-ring{margin-top:44px;position:relative;border-radius:24px;overflow:hidden;box-shadow:0 44px 104px -42px rgba(6,16,34,.8),inset 0 0 0 1px rgba(255,248,238,.06)}
+  .mission-ring img{width:100%;height:auto;display:block}
+  .mission-ring figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 26px 22px;color:#fff;background:linear-gradient(to top,rgba(6,16,34,.86),rgba(6,16,34,0));font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase}
+  .mission-ring figcaption b{color:var(--gold)}
+  @media (max-width:840px){.crew-duo{grid-template-columns:1fr;gap:26px}}
 
   /* food gallery */
   .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px}
-  .gal figure{border-radius:16px;overflow:hidden;aspect-ratio:1/1;box-shadow:0 20px 44px -24px rgba(10,14,26,.4)}
+  .gal figure{border-radius:16px;overflow:hidden;aspect-ratio:1/1;box-shadow:0 20px 44px -24px rgba(6,16,34,.4)}
   .gal img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s}
   .gal figure:hover img{transform:scale(1.08)}
   .gal .wide{grid-column:span 2;aspect-ratio:2/1}
@@ -142,7 +170,7 @@
   .plan .pd{color:var(--ink-2);margin-top:8px}
   .founding{margin-top:24px;background:var(--ink);color:var(--paper);padding:34px 38px;display:flex;justify-content:space-between;gap:22px;align-items:center;flex-wrap:wrap}
   .founding h3{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;letter-spacing:-.02em}
-  .founding p{color:rgba(244,236,222,.72);margin-top:8px;max-width:46ch;font-size:.98rem}
+  .founding p{color:rgba(255,248,238,.72);margin-top:8px;max-width:46ch;font-size:.98rem}
   @media (max-width:720px){.price-grid{grid-template-columns:1fr}.plan{border-right:none;border-bottom:1.5px solid var(--ink)}.plan:last-child{border-bottom:none}}
 
   /* zip */
@@ -154,7 +182,7 @@
   .pilot-tag{display:inline-flex;gap:9px;margin-top:26px;font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2)}.pilot-tag b{color:var(--ink)}
 
   /* waitlist */
-  .join{background:var(--orange);color:#fff}.join h2{color:#fff}.join .lead{color:rgba(255,255,255,.88)}.join .eyebrow{color:#fff}.join .sec-label::before{background:#fff}
+  .join{background:linear-gradient(158deg,#C43A1B 0%,#9E2C13 100%);color:#fff}.join h2{color:#fff}.join .lead{color:rgba(255,255,255,.88)}.join .eyebrow{color:#fff}.join .sec-label::before{background:#fff}
   .join-card{margin-top:46px;background:var(--paper);color:var(--ink);padding:clamp(26px,4vw,46px);max-width:720px}
   .seg{display:flex;margin-bottom:24px;border:1.5px solid var(--ink);width:fit-content;max-width:100%;flex-wrap:wrap}
   .seg button{font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;background:transparent;border:none;padding:12px 17px;cursor:pointer;color:var(--ink-2);border-right:1.5px solid var(--ink)}
@@ -180,12 +208,12 @@
   .faq-item .a{padding:0 0 24px;color:var(--ink-2);max-width:64ch;line-height:1.55}
 
   footer{background:var(--ink);color:var(--paper);padding:clamp(66px,8vw,110px) 0 42px}
-  .foot-word{font-weight:700;letter-spacing:-.04em;font-size:clamp(2.1rem,9vw,7rem);line-height:.9;display:flex;align-items:center;gap:.14em;flex-wrap:wrap}
-  .foot-word svg{width:.7em;height:.7em}
-  .foot-row{margin-top:52px;display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;align-items:end;border-top:1px solid rgba(244,236,222,.18);padding-top:28px}
-  .foot-links{display:flex;gap:24px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:rgba(244,236,222,.66)}
+  .foot-word{font-weight:700;letter-spacing:-.04em;font-size:clamp(1.9rem,8.4vw,6.4rem);line-height:.9;display:flex;align-items:center;gap:.16em;flex-wrap:wrap}
+  .foot-word img{width:.8em;height:.8em;object-fit:contain}
+  .foot-row{margin-top:52px;display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;align-items:end;border-top:1px solid rgba(255,248,238,.18);padding-top:28px}
+  .foot-links{display:flex;gap:24px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,248,238,.66)}
   .foot-links a:hover{color:var(--paper)}
-  .foot-fine{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:rgba(244,236,222,.42);max-width:52ch;line-height:1.7}
+  .foot-fine{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:rgba(255,248,238,.62);max-width:52ch;line-height:1.7}
 
   .m-cta{position:fixed;left:0;right:0;bottom:0;z-index:90;background:var(--ink);padding:12px;transform:translateY(120%);transition:.3s;display:none}
   .m-cta .btn{width:100%;justify-content:center}.m-cta.show{transform:none}
@@ -203,8 +231,7 @@
 <header id="hdr">
   <nav class="wrap">
     <a class="brand" href="#top" aria-label="RocketPlate home">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#F1502F"/><path d="M16 6c3.4 2.8 5 6.6 5 10.4 0 2.2-.7 4.2-2 5.9l-3-1.8-3 1.8c-1.3-1.7-2-3.7-2-5.9C11 12.6 12.6 8.8 16 6Z" fill="#F4ECDE"/><circle cx="16" cy="14.5" r="2.2" fill="#0B3468"/></svg>
-      RocketPlate
+      <img src="assets/brand-logo.png" alt="RocketPlate" width="176" height="64" decoding="async">
     </a>
     <div class="nav-links">
       <a href="#how">How it works</a><a href="#story">The handoff</a><a href="#pricing">Pricing</a><a href="#launch">Launch map</a><a href="/partners/">Restaurants</a>
@@ -220,10 +247,10 @@
     <div class="hero-grid">
       <div>
         <div class="eyebrow rise">Miami-Dade · Now boarding the waitlist</div>
-        <h1 class="display rise">Dinner,<br>cleared for<br>launch<span class="o">.</span></h1>
+        <h1 class="display rise">Dinner,<br>cleared for<br><em>launch</em><span class="o">.</span></h1>
         <p class="sub rise">Real meals from neighborhood restaurants, delivered hot on one nightly route. One weekly plan — no apps, no delivery fees, no reheating.</p>
         <div class="hero-cta rise">
-          <a href="#join" class="btn btn-primary btn-lg">Join the waitlist</a>
+          <a href="#join" class="btn btn-primary btn-lg">Join the waitlist <span class="arw" aria-hidden="true">→</span></a>
           <a href="#how" class="btn btn-ghost btn-lg">How it works</a>
         </div>
         <div class="hero-meta rise">
@@ -231,16 +258,14 @@
         </div>
       </div>
       <div class="hero-media rise">
-        <video autoplay muted loop playsinline poster="assets/film/mo-hero-poster.webp">
-          <source src="assets/film/mo-hero.mp4" type="video/mp4">
-        </video>
-        <div class="chip">MØ · your RocketPlate chef</div>
+        <video id="heroVid" autoplay muted loop playsinline preload="none" poster="assets/film/mo-hero-poster.webp"></video>
+        <div class="chip"><span class="mono" style="letter-spacing:.14em">MØ 3.3</span> · your chef in the porthole</div>
       </div>
     </div>
   </section>
 
   <div class="ticker" aria-hidden="true"><div class="tk" id="tk">
-    <span>Hot at the door — never reheated</span><span>Zero delivery fees · zero tips</span><span>Independent Miami kitchens</span><span>One nightly route · 4:15–6:30 PM</span><span>Founding 100 · first week free</span>
+    <span>3 · 2 · 1 · Liftoff</span><span>Your favorite meals, delivered daily</span><span>Hot at the door — never reheated</span><span>Fueled by your orders</span><span>Zero delivery fees · zero tips</span><span>Independent Miami kitchens</span><span>One nightly route · 4:15–6:30 PM</span><span>Founding 100 · first week free</span>
   </div></div>
 
   <!-- FOOD BEAT -->
@@ -286,19 +311,25 @@
     </div>
   </section>
 
-  <!-- 3D ROCKET -->
+  <!-- MEET THE CREW -->
   <section class="rocket-sec">
-    <div class="wrap rocket-grid">
-      <div>
-        <div class="sec-label rise"><span class="eyebrow">Meet the crew</span></div>
-        <h2 class="rise">Rocky &amp; MØ.</h2>
-        <p class="lead rise">Every RocketPlate run is flown by MØ — your chef in the porthole — aboard Rocky. Give the rocket a spin; the hull wears the mission on its far side.</p>
-        <div class="rk-hint rise">Drag to rotate · GOROCKETPLATE.COM engraved on the far hull</div>
+    <div class="wrap">
+      <div class="sec-label rise"><span class="eyebrow">Meet the crew</span></div>
+      <h2 class="rise">MØ 3.3 &amp; Rocky.</h2>
+      <p class="lead rise">Every RocketPlate run is flown by MØ 3.3 — your chef in the porthole — aboard Rocky. His chest screen lights up <b style="color:var(--gold)">READY</b> the second your dinner's on board. Give Rocky a spin — GOROCKETPLATE.COM is engraved around his porthole.</p>
+      <div class="crew-duo">
+        <figure class="crew-byte rise">
+          <img src="assets/character/byte-ready.webp" alt="MØ 3.3, the RocketPlate chef robot — small BYTE.3.3 nameplate above a glowing READY chest screen, in a white chef hat with navy joints" loading="lazy" width="1024" height="1024">
+        </figure>
+        <div class="rocket-stage rise">
+          <canvas id="rocketCanvas"></canvas>
+          <img class="rocket-fallback" id="rocketFallback" src="assets/character/porthole-ring.webp" loading="lazy" alt="Rocky the rocket with MØ 3.3 waving in the engraved GOROCKETPLATE.COM porthole">
+        </div>
       </div>
-      <div class="rocket-stage rise">
-        <canvas id="rocketCanvas"></canvas>
-        <img class="rocket-fallback" id="rocketFallback" src="assets/film/mo-hero-poster.webp" alt="Rocky the rocket with MØ in the porthole">
-      </div>
+      <figure class="mission-ring rise">
+        <img src="assets/character/porthole-ring.webp" alt="The Mission Ring — GOROCKETPLATE.COM engraved around Rocky's porthole, with MØ 3.3 waving and holding a silver cloche inside" loading="lazy" width="1376" height="768">
+        <figcaption>The Mission Ring · <b>GOROCKETPLATE.COM</b> engraved around every porthole · flight-certified</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -315,6 +346,7 @@
       <figure class="rise"><img src="assets/plates/plate-asian.webp" alt="Teriyaki salmon plate" loading="lazy"></figure>
       <figure class="wide rise"><img src="assets/food/seafood.jpg" alt="Seared seafood with citrus" loading="lazy"></figure>
     </div>
+    <div class="cap rise" style="color:var(--ink-2)">Representative dishes — a sample of the rotation. Partner kitchens revealed at launch.</div>
   </section>
 
   <!-- PRICING -->
@@ -327,7 +359,7 @@
     </div>
     <div class="founding rise">
       <div><h3>Founding 100</h3><p>First week free · 33% off month two · rate locked 12 months · early access — in waitlist order.</p></div>
-      <a href="#join" class="btn btn-primary btn-lg">Claim a spot</a>
+      <a href="#join" class="btn btn-primary btn-lg">Claim a spot <span class="arw" aria-hidden="true">→</span></a>
     </div>
   </section>
 
@@ -368,7 +400,7 @@
             <label class="check"><input type="checkbox" id="f-founding" checked>Count me in for the Founding 100 (first week free, rate lock).</label>
             <label class="check"><input type="checkbox" id="f-consent" checked>Email me launch updates for my area. No spam, unsubscribe anytime.</label>
           </div>
-          <button type="submit" class="btn btn-primary btn-lg">Join the waitlist</button>
+          <button type="submit" class="btn btn-primary btn-lg">Join the waitlist <span class="arw" aria-hidden="true">→</span></button>
           <div class="form-msg" id="formMsg" role="status"></div>
         </form>
       </div>
@@ -390,7 +422,7 @@
 <footer>
   <div class="wrap">
     <div class="foot-word display">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#F1502F"/><path d="M16 6c3.4 2.8 5 6.6 5 10.4 0 2.2-.7 4.2-2 5.9l-3-1.8-3 1.8c-1.3-1.7-2-3.7-2-5.9C11 12.6 12.6 8.8 16 6Z" fill="#F4ECDE"/><circle cx="16" cy="14.5" r="2.2" fill="#0B3468"/></svg>
+      <img src="assets/brand-mark.png" alt="" aria-hidden="true" width="120" height="120">
       GOROCKETPLATE.COM
     </div>
     <div class="foot-row">
@@ -408,7 +440,7 @@
 (function(){
   "use strict";
   var dl = window.dataLayer = window.dataLayer || [];
-  var VARIANT = "rocketplate-unified-v2";
+  var VARIANT = "rocketplate-unified-v3";
   var rpTrack = function(ev, props){ dl.push(Object.assign({ event: "rp_" + ev, variant: VARIANT }, props || {})); };
   var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   document.getElementById("yr").textContent = new Date().getFullYear();
@@ -424,6 +456,15 @@
   var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin:"0px 0px -8% 0px" });
   document.querySelectorAll(".rise").forEach(function(el){ io.observe(el); });
   addEventListener("load", function(){ setTimeout(function(){ document.querySelectorAll(".rise:not(.in)").forEach(function(el){ if(el.getBoundingClientRect().top<innerHeight) el.classList.add("in"); }); }, 600); });
+
+  /* hero video — desktop-gated (rule 7): phones get the poster only, no heavy fetch/decode */
+  (function(){
+    var v=document.getElementById("heroVid"); if(!v) return;
+    if(matchMedia("(min-width:900px)").matches && !reduced){
+      v.innerHTML='<source src="assets/film/mo-hero.mp4" type="video/mp4">';
+      v.load(); var p=v.play(); if(p&&p.catch) p.catch(function(){});
+    }
+  })();
 
   /* header + mobile cta */
   var hdr=document.getElementById("hdr"), mcta=document.getElementById("mcta");
@@ -476,7 +517,7 @@
     finally{ btn.disabled=false; }
   });
 
-  rpTrack("page_view",{page:"unified_home_v2"});
+  rpTrack("page_view",{page:"unified_home_v3"});
 
   /* ============ 3D ROCKET (lazy, contained, GOROCKETPLATE far side) ============ */
   var canvas=document.getElementById("rocketCanvas"), fallback=document.getElementById("rocketFallback");
@@ -499,19 +540,19 @@
       var np=[]; [[0.36,0.00],[0.34,0.18],[0.28,0.40],[0.19,0.58],[0.09,0.70],[0.00,0.74]].forEach(function(p){np.push(new THREE.Vector2(p[0],p[1]));});
       var nose=new THREE.Mesh(new THREE.LatheGeometry(np,64),mat(C.cream,0.28)); nose.position.y=1.04; rocket.add(nose);
       var collar=new THREE.Mesh(new THREE.TorusGeometry(0.355,0.045,16,48),mat(C.navy,0.32)); collar.rotation.x=Math.PI/2; collar.position.y=1.045; rocket.add(collar);
-      /* GOROCKETPLATE.COM engraved band on the far hull */
+      /* GOROCKETPLATE.COM — Mission Ring: engraved tone-on-tone around the porthole latitude */
       var tc=document.createElement("canvas"); tc.width=2048; tc.height=256;
       var tg=tc.getContext("2d"); tg.clearRect(0,0,2048,256);
-      tg.font="600 108px 'IBM Plex Mono', monospace"; tg.fillStyle="#0B3468"; tg.textAlign="center"; tg.textBaseline="middle";
-      tg.globalAlpha=0.9; tg.fillText("GOROCKETPLATE.COM", 1024, 138);
+      tg.font="600 104px 'IBM Plex Mono', monospace"; tg.fillStyle="#C43A1B"; tg.textAlign="center"; tg.textBaseline="middle";
+      tg.globalAlpha=0.85; tg.fillText("GOROCKETPLATE.COM  ·  ", 512, 138); tg.fillText("GOROCKETPLATE.COM  ·  ", 1536, 138);
       var tt=new THREE.CanvasTexture(tc); tt.anisotropy=8;
-      var band=new THREE.Mesh(new THREE.CylinderGeometry(0.632,0.632,0.42,80,1,true),
-        new THREE.MeshStandardMaterial({map:tt,transparent:true,roughness:0.5,metalness:0.0}));
-      band.position.y=0.02; band.rotation.y=Math.PI; rocket.add(band);
+      var band=new THREE.Mesh(new THREE.CylinderGeometry(0.628,0.636,0.30,80,1,true),
+        new THREE.MeshStandardMaterial({map:tt,transparent:true,roughness:0.45,metalness:0.0}));
+      band.position.y=0.30; band.rotation.y=Math.PI; rocket.add(band);
       /* porthole + MO */
       var port=new THREE.Group();
       port.add(new THREE.Mesh(new THREE.TorusGeometry(0.295,0.05,16,48),mat(C.navy,0.3)));
-      port.add(new THREE.Mesh(new THREE.TorusGeometry(0.26,0.06,16,48),mat(C.orange,0.28)));
+      port.add(new THREE.Mesh(new THREE.TorusGeometry(0.26,0.06,16,48),mat(C.launch,0.28)));
       var glass=new THREE.Mesh(new THREE.SphereGeometry(0.24,32,32),new THREE.MeshStandardMaterial({color:C.glass,roughness:0.08,metalness:0.2})); glass.scale.z=0.55; port.add(glass);
       var mc=document.createElement("canvas"); mc.width=mc.height=256; var g=mc.getContext("2d");
       var rr=function(x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();};
@@ -537,13 +578,18 @@
       addEventListener("pointerup",function(){drag=false;});
       function resize(){ var r=canvas.getBoundingClientRect(); renderer.setSize(r.width,r.height,false); camera.aspect=r.width/r.height; camera.updateProjectionMatrix(); }
       addEventListener("resize",resize); resize();
+      /* only render while the stage is on-screen — no idle GPU/battery burn (rule 7) */
+      var onScreen=true;
+      var vio=new IntersectionObserver(function(es){ onScreen=es[0].isIntersecting; }, {rootMargin:"120px"}); vio.observe(canvas);
       var clock=new THREE.Clock();
       (function frame(){
+        requestAnimationFrame(frame);
+        if(!onScreen && !drag) return;
         var t=clock.getElapsedTime();
         if(!drag){ vel*=0.95; rot+=(reduced?0:0.0045)+vel; }
-        rocket.rotation.y=rot; rocket.rotation.z=Math.sin(t*0.6)*0.04;
+        rocket.rotation.y=rot; rocket.rotation.z=reduced?0:Math.sin(t*0.6)*0.04;
         rocket.position.y=reduced?0:Math.sin(t*1.1)*0.05;
-        renderer.render(scene,camera); requestAnimationFrame(frame);
+        renderer.render(scene,camera);
       })();
     }catch(err){ console.error("[rocket]",err); showFallback(); }
   }
