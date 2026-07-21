@@ -6,6 +6,45 @@ Evidence classes: **[V]** verified this session (live request, SQL, or code read
 
 ---
 
+## 0. UPDATE — 2026-07-21: brand-correct homepage + character/rocket canon
+
+Founder drop: official logo set (`RocketPlate.Final.Draft.No.Polish.LogoSet`) +
+four accuracy mockups (BYTE.3.3 prototype-callouts, engraved porthole ring, two
+rocket toy renders). Work applied:
+
+- **Character canon corrected.** BYTE.3.3 nameplate is now **small + etched** on
+  the upper chest, with the glowing **READY chest screen** as the torso focal
+  point (where his written speech shows). Regenerated front-facing (Higgsfield
+  `nano_banana_pro`, job `c12d28fe`) and staged as `brand/canon/reference/
+  byte-3.3-portrait.webp`, superseding the earlier oversized-nameplate render.
+  Nameplate/porthole laws recorded in `brand/canon/reference/README.md`.
+- **Mission Ring render.** Luxurious engraved `GOROCKETPLATE.COM` porthole ring
+  (job `a2ca0989`) generated per the founder reference; site webp at
+  `assets/character/porthole-ring.webp`.
+- **`index.html` brand-corrected** to the color law: navy `#0B3468` + rocket
+  orange on warm-white `#FFF8EE` (dropped cream/near-black/off-palette gold);
+  Fraunces + Outfit + IBM Plex Mono (dropped Space Grotesk); official
+  `brand-logo` in nav, `brand-mark` in footer, app icon favicon/apple-touch;
+  motifs woven; new "Meet the crew" section (corrected BYTE + 3D rocket +
+  Mission Ring). Analytics variant → `rocketplate-unified-v3`.
+- **Adversarial review** (4 dimensions × verify) run via workflow; 29 confirmed
+  findings; high/medium fixes applied — CTA contrast (deep-orange fill → white
+  5.3:1), waitlist section gradient, footer/caption alpha, 44px mobile tap
+  target, reduced-motion coverage, hero video **desktop-gated + preload=none**,
+  3D render gated off-screen + fallback lazy, 3D porthole ring → Rocket Orange,
+  `GOROCKETPLATE.COM` engraving repositioned around the porthole tone-on-tone,
+  food gallery labeled representative (rule 5), plus craft (staggered reveals,
+  oversized numerals, Fraunces 900+italic hero, signature CTA chevron).
+- **Verification:** JS passes `node --check`; all asset refs resolve; smoke
+  needles intact; dev server (`:8734`) serves the corrected page. **Not yet
+  captured on a live deploy** — the browser preview renderer was wedged and the
+  Netlify MCP deploy proxy failed (400/fetch) across 5 attempts. Go-live path is
+  unchanged: reconnect the Vercel `rocketplate` project to `SaaSWrld/RocketPlate`
+  (founder action). Deferred (documented follow-ups): webm hero variant (no
+  ffmpeg locally), bespoke iconography, full radius/spacing tokenization.
+
+---
+
 ## 1. RELEASE GATE VERDICTS (the honest answer)
 
 | Gate | Verdict | Summary |
