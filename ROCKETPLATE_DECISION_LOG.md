@@ -3,20 +3,21 @@
 Significant decisions and their rationale. Newest first. Open decisions at top
 until resolved. (Mirror major entries to `AI-BOS/DECISION_LOG.md`.)
 
-## OPEN — awaiting founder ruling (2026-07-21)
+## RESOLVED — founder ruling 2026-07-21
 
-| # | Decision | Options | Recommendation |
-|---|---|---|---|
-| O1 | **Character name** | `Lift` (L.I.F.T.-3.3, blueprint) vs `MO/MØ` vs `BYTE.3.3` (repo canon) vs other | Pick one now; reconcile all canon docs + assets to match. (Blueprint Q46.) |
-| O2 | **Platform architecture** | (i) Next.js app-first; (ii) static Gate A now + app in parallel | (i) if we want it done right once; (ii) if "live tonight" matters more. See AUDIT §6. |
-| O3 | **Host** | Vercel vs Netlify (ONE) | Vercel if Next.js (blueprint assumes it); Netlify fine for static Gate A. No duplicates. |
-| O4 | **Canonical domain** | `gorocketplate.com` primary, `rocketplate.io` redirect | Confirm both registered + where DNS is managed. |
-| O5 | **Homepage design contest** | N agent-built variants to compare | Run 3 art-directed directions after backend is back; founder picks winner. |
+| # | Decision | Ruling |
+|---|---|---|
+| O1 | **Character name** | **BYTE.3.3** is canonical. The blueprint's "Lift / L.I.F.T.-3.3" is superseded by BYTE.3.3; reconcile canon + copy to BYTE.3.3 (keep the corrected chest-nameplate render as-is). |
+| O2 | **Platform architecture** | **Next.js (App Router) app-first.** Build the real connected platform now; Gate A lives inside it. No throwaway static rework. |
+| O3 | **Host** | **Vercel**, connected to `SaaSWrld/RocketPlate` for git-based CD. One host, no duplicates. |
+| O4 | **Canonical domain** | `gorocketplate.com` primary; `rocketplate.io` → redirect (default unless founder changes). |
+| O5 | **Homepage design contest** | **Run after the backend is back:** 3 art-directed homepage directions per `WEB_DESIGN_LAWS.md`, founder picks the winner. |
 
 ## DECIDED
 
 | Date | Decision | Rationale |
 |---|---|---|
+| 2026-07-21 | **Canonical name = BYTE.3.3; Next.js app-first on Vercel; contest after backend** | Founder ruling on O1–O3, O5 (see above). |
 | 2026-07-21 | **Restart clean from `SaaSWrld/RocketPlate`; treat blueprint V4 as source of truth** | Founder teardown; repo is the one surviving asset. Blueprint staged at `docs/`. |
 | 2026-07-21 | **AI-BOS is read-first via a pointer (Option A), not copied per-project** | Single source of truth, no duplication (founder's "no duplicates" rule). Pointer added to `CLAUDE.md`. |
 | 2026-07-21 | **Adopt `WEB_DESIGN_LAWS.md` as enforceable front-end design law** | Fixes the recurring "generic AI" output by giving Claude explicit design context (the Jack Roberts lesson). |

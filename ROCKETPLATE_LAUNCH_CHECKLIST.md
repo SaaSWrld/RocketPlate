@@ -6,15 +6,16 @@ when verified on the **real deploy** (constitution rule 4).
 
 ## Infrastructure relaunch (blocking — all deleted 2026-07-21)
 
-- [ ] New Supabase project created (record ref + region)
-- [ ] 10 migrations applied cleanly, in order
-- [ ] Security advisors run, zero criticals
-- [ ] `send-emails` edge function recreated **and committed to repo**
-- [ ] Resend API key set in Supabase secrets (never in Git)
-- [ ] New project ref + publishable key swapped in `index.html`, `scripts/smoke.mjs`, dashboards
-- [ ] One host chosen; Gate A deployed
-- [ ] Domain repointed (founder DNS) to the chosen host
-- [ ] Canonical domain + redirects configured
+- [x] **New Supabase project created** — `RocketPlate`, ref `vbphznfghphhluogneyl`, us-east-1, org "A SaaS Nation". URL `https://vbphznfghphhluogneyl.supabase.co`, publishable key `sb_publishable_98eIJe0HpyS2sn6slvUUSg_3EYmjmEs` (2026-07-21)
+- [x] **10 migrations applied cleanly, in order** (2026-07-21)
+- [x] **Security advisors run** — only expected INFO (RLS-no-policy by design) + WARN (anon-executable RPCs by design; admin_* self-gate on token). No new criticals.
+- [ ] Seed `admin_credentials` with a bcrypt token hash (needed for `/admin`)
+- [ ] `send-emails` edge function recreated **and committed to repo** — needs Resend key
+- [ ] Resend API key set in Supabase secrets (never in Git) — **founder to provide**
+- [ ] New URL + publishable key wired into the Next.js app (Gate A)
+- [ ] Vercel project imported from `SaaSWrld/RocketPlate` (git-based CD) — **founder one-time import**
+- [ ] Gate A deployed on Vercel; verified on real deploy + smoke
+- [ ] Domain repointed (founder DNS) to Vercel; canonical + redirects configured
 
 ## Gate A functionality (blueprint §28)
 
