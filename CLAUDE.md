@@ -1,3 +1,15 @@
+# RocketPlate
+
+> **Operates under AI-BOS.** Before doing ANY work in this repo, read
+> `C:\Users\dreon\AI-BOS\MASTER_SYSTEM_PROMPT.md` (the AI Business Operating
+> System) and operate under it for the whole session. AI-BOS governs strategy
+> and working style; this constitution governs engineering. If they conflict on
+> business strategy, AI-BOS wins; a hard safety invariant here always wins.
+>
+> **Design law:** before producing any website design, animation, or front-end,
+> also read `WEB_DESIGN_LAWS.md` (this repo) and the brand canon below.
+> **Build source of truth:** `docs/ROCKETPLATE_MASTER_PLATFORM_BLUEPRINT.md`.
+
 # RocketPlate — Engineering Constitution
 
 RocketPlate is a **long-term software company, not a coding project** (founder directive,
