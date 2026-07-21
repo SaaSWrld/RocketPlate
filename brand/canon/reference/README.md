@@ -23,6 +23,26 @@ Conflict order unchanged: `brand/canon/` is ABSOLUTE.
 renders shown in founder chat 2026-07-20 (rocket over glowing route-map
 board). Drop the exports into this folder when available.
 
+## Chest nameplate correction — `BYTE.3.3` (2026-07-21, founder directive)
+
+Founder directive: *"fix his name plate and center it in the middle etched to
+his body 'BYTE.3.3'."* Prior renders placed the plate low-left and clipped it
+because the porthole/waving pose occludes the center chest. Fixed by
+generating **front-facing, full-torso** portraits from the clean MO reference
+(`mo-hero-porthole.png` → ref media `9a8c4126-e2bf-4953-a014-3eb69e843ba1`).
+
+| File | Job | QC |
+|---|---|---|
+| `byte-3.3-portrait.webp` | `e07f4611` (front-facing, 1:1, 2K) | **PASS / CANON** — full body; **`BYTE.3.3` etched dead-center** in a framed, recessed tone-on-tone nameplate; face keeps eyes+smile; chef hat + navy accents on shoulders/elbows/knees/fingers/neck intact. Selected over `6090ae5b` and `a7832293` (both correct but upper-torso only, plate unframed). |
+
+**Nameplate law:** the chest **nameplate** reads `BYTE.3.3`, centered, engraved
+into the chassis as a recessed tone-on-tone plate (never a printed sticker or
+colored decal). This is distinct from the **chest speech window** (which
+displays live status/speech, e.g. `READY`) and the black **`MØ 3.3` badge**.
+Naming note flagged to founder: canon board names the character *Moshi 3.3 /
+MØ 3.3*; the physical nameplate stamp is `BYTE.3.3` per this directive — the
+two coexist (product line vs unit stamp) unless the founder rules otherwise.
+
 ## Generated canon stills (2026-07-20, from `mo-hero-porthole.png` ref media `6c351b8b-bbb8-4329-a94f-6960be374d0e`)
 
 | File | Job | QC |
